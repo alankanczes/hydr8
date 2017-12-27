@@ -21,7 +21,7 @@
 			containerPortal = E7F0ECC81FCA1E0200F97EE9 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = E7F0ECCF1FCA1E0200F97EE9;
-			remoteInfo = "Hydr8";
+			remoteInfo = Hydr8;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -112,7 +112,7 @@
 			dependencies = (
 			);
 			name = Hydr8;
-			productName = "Hydr8";
+			productName = Hydr8;
 			productReference = E7F0ECD01FCA1E0200F97EE9 /* Hydr8.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -130,7 +130,7 @@
 				E7F0ECE61FCA1E0200F97EE9 /* PBXTargetDependency */,
 			);
 			name = Hydr8Tests;
-			productName = "Hydr8Tests";
+			productName = Hydr8Tests;
 			productReference = E7F0ECE41FCA1E0200F97EE9 /* Hydr8Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
@@ -358,9 +358,9 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5EWMFFD324;
-				INFOPLIST_FILE = "Hydr8/Info.plist";
+				INFOPLIST_FILE = Hydr8/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hydr8.Hydration-Tracker";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hydr8.Hydration-Testing";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -374,9 +374,9 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5EWMFFD324;
-				INFOPLIST_FILE = "Hydr8/Info.plist";
+				INFOPLIST_FILE = Hydr8/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hydr8.Hydration-Tracker";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hydr8.Hydration-Testing";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -390,7 +390,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5EWMFFD324;
-				INFOPLIST_FILE = "Hydr8Tests/Info.plist";
+				INFOPLIST_FILE = Hydr8Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hydr8.Hydration-TrackerTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -407,7 +407,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5EWMFFD324;
-				INFOPLIST_FILE = "Hydr8Tests/Info.plist";
+				INFOPLIST_FILE = Hydr8Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hydr8.Hydration-TrackerTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
