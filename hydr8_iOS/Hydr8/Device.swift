@@ -28,10 +28,10 @@ import Foundation
 
 struct Device {
     
-    static let SensorTagAdvertisingUUID = "AA10"
     
     static let BaseUuid = "E0262760-08C2-11E1-9073-0E8AC72E" // with last XXXX
     
+    static let GattServiceUUID = "E0262760-08C2-11E1-9073-0E8AC72E1801"
     static let HeartRateServiceUUID = "E0262760-08C2-11E1-9073-0E8AC72E180D"
     static let HeartRateMeasurementUUID = "E0262760-08C2-11E1-9073-0E8AC72E2A37"
 

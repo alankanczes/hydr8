@@ -162,6 +162,11 @@
 					E7F0ECCF1FCA1E0200F97EE9 = {
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
 					};
 					E7F0ECE31FCA1E0200F97EE9 = {
 						CreatedOnToolsVersion = 9.1;
