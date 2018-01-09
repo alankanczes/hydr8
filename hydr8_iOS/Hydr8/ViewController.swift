@@ -164,17 +164,23 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
      RSSI - The current received signal strength indicator (RSSI) of the peripheral, in decibels.
      
      */
-    func centralManager(_didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], rssi: NSNumber) {
-        print("centralManager didDiscoverPeripheral - CBAdvertisementDataLocalNameKey is \"\(CBAdvertisementDataLocalNameKey)\"")
+    //func centralManager(_didDiscoverPeripheral, peripheral: CBPeripheral, advertisementData: [String : AnyObject], rssi: NSNumber) {
         
-        statusLog.text = statusLog.text + "\r> SOMETHING FOUND! \(CBAdvertisementDataLocalNameKey) \(rssi)"
+   // func centralManager(_ , didDiscover: CBPeripheral, advertisementData:[String : AnyObject], rssi: NSNumber) {
+        
+        func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+
+
+        print("centralManager didDiscover - CBAdvertisementDataLocalNameKey is \"\(CBAdvertisementDataLocalNameKey)\"")
+        
+        statusLog.text = statusLog.text + "\r> SOMETHING FOUND! \(CBAdvertisementDataLocalNameKey) \(RSSI)"
 
         // Retrieve the peripheral name from the advertisement data using the "kCBAdvDataLocalName" key
         let device = (advertisementData as NSDictionary)
             .object(forKey: CBAdvertisementDataLocalNameKey)
             as? NSString
         
-        statusLog.text = statusLog.text + "\r> SOMETHING FOUND! \(String(describing: device)) \(rssi)"
+        statusLog.text = statusLog.text + "\r> SOMETHING FOUND! \(String(describing: device)) \(RSSI)"
 
         if let peripheralName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
             print("NEXT PERIPHERAL NAME: \(peripheralName)")
@@ -207,7 +213,7 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
      This method is invoked when a call to connectPeripheral:options: is successful.
      You typically implement this method to set the peripheral’s delegate and to discover its services.
      */
-    func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("**** SUCCESSFULLY CONNECTED TO BAND!!!")
         
         galvanicResponseLabel.font = UIFont(name: galvanicResponseLabelFontName, size: galvanicResponseLabelFontSizeMessage)
@@ -327,7 +333,7 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
         if let characteristics = service.characteristics {
             var enableValue:UInt8 = 1
             // OLD: let enableBytes = NSData(bytes: &enableValue, length: sizeof(UInt8))
-            let enableBytes = NSData(bytes: &enableValue, length: MemoryLayout<UInt8>.size)
+            _ = NSData(bytes: &enableValue, length: MemoryLayout<UInt8>.size)
 
             for characteristic in characteristics {
                 // Temperature Data Characteristic
