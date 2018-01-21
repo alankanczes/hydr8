@@ -9,7 +9,7 @@
 import UIKit
 import CoreBluetooth
 
-class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDelegate, UITextViewDelegate{
+class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDelegate, UITextViewDelegate {
 
     //MARK: Properties
     @IBOutlet weak var activityNameTextField: UITextField!
@@ -21,9 +21,9 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
     // Core Bluetooth properties
     var centralManager: CBCentralManager!
     var hydr8Band: CBPeripheral?
+    var sensorTag: CBPeripheral?
     var galvanicCharacteristic:CBCharacteristic?
     var keepScanning = true
-    let hydr8BandName = "MAXREFDES73#"
 
     // define our scanning interval times
     let timerPauseInterval:TimeInterval = 10.0
@@ -66,10 +66,68 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
     }
         
     //MARK: Actions
+    
+    // Set Activity Label Button
     @IBAction func setActivityLabelText(_ sender: UIButton) {
         activityNameLabel.text = "Set default label text."
     }
     
+    @IBAction func disconnectButtonPressed() {
+
+        statusLog.text = ""
+
+        logIt(message: "*** disconnect button tapped...")
+        
+        // if we don't have a sensor tag, start scanning for one...
+        if sensorTag == nil && hydr8Band == nil {
+            logIt(message: "*** Nothing is connected, will resume scanning...")
+
+            keepScanning = true
+            resumeScan()
+            return
+        } else {
+            disconnectDevice()
+        }
+    }
+    
+    func disconnectDevice() {
+        logIt(message:"*** disconnecting...")
+        
+        if (hydr8Band != nil) {
+            logIt(message:"*** disconnecting hydr8Band...")
+            centralManager.cancelPeripheralConnection(hydr8Band!)
+        }
+        
+        if sensorTag != nil {
+            logIt(message:"*** disconnecting sensorTag...")
+            centralManager.cancelPeripheralConnection(sensorTag!)
+        }
+
+        /* REVIEW ME
+        if let sensorTag = self.sensorTag {
+            if let tc = self.temperatureCharacteristic {
+                sensorTag.setNotifyValue(false, for: tc)
+            }
+            if let hc = self.humidityCharacteristic {
+                sensorTag.setNotifyValue(false, for: hc)
+            }
+            
+            /*
+             NOTE: The cancelPeripheralConnection: method is nonblocking, and any CBPeripheral class commands
+             that are still pending to the peripheral you’re trying to disconnect may or may not finish executing.
+             Because other apps may still have a connection to the peripheral, canceling a local connection
+             does not guarantee that the underlying physical link is immediately disconnected.
+             
+             From your app’s perspective, however, the peripheral is considered disconnected, and the central manager
+             object calls the centralManager:didDisconnectPeripheral:error: method of its delegate object.
+             */
+            centralManager.cancelPeripheralConnection(sensorTag)
+        }
+        temperatureCharacteristic = nil
+        humidityCharacteristic = nil
+*/
+    }
+ 
     // MARK: - CBCentralManagerDelegate methods
     
     // Invoked when the central manager’s state is updated.
@@ -92,13 +150,13 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
             showAlert = false
             message = "Bluetooth LE is turned on and ready for communication."
             
-            print(message)
+            logIt(message:message)
             keepScanning = true
-         //   _ = Timer(timeInterval: timerScanInterval, target: self, selector: #selector(pauseScan), userInfo: nil, repeats: false)
+            _ = Timer(timeInterval: timerScanInterval, target: self, selector: #selector(pauseScan), userInfo: nil, repeats: false)
             
             // Initiate Scan for Peripherals
             //Option 1: Scan for all devices
-            statusLog.text = statusLog.text + "\r> Initiating scan."
+            logIt(message:"> Initiating scan.")
             centralManager.scanForPeripherals(withServices: nil, options: nil)
             
             // Option 2: Scan for devices that have the service you're interested in...
@@ -108,7 +166,7 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
             
         }
         
-        statusLog.text = statusLog.text + "\r> state updated.  Message: \(message)"
+        logIt(message:"> state updated.  Message: \(message)")
 
         if showAlert {
             let alertController = UIAlertController(title: "Central Manager State", message: message, preferredStyle: UIAlertControllerStyle.alert)
@@ -123,8 +181,8 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
 
     @objc func pauseScan() {
         // Scanning uses up battery on phone, so pause the scan process for the designated interval.
-        print("*** PAUSING SCAN...")
-        statusLog.text = statusLog.text + "\r> pausing scan "
+        logIt(message:"*** PAUSING SCAN...")
+        
 
         _ = Timer(timeInterval: timerPauseInterval, target: self, selector: #selector(resumeScan), userInfo: nil, repeats: false)
         centralManager.stopScan()
@@ -135,12 +193,11 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
     func resumeScan() {
         if keepScanning {
             // Start scanning again...
-            print("*** RESUMING SCAN!")
-            statusLog.text = "\r> resuming scan "
+            logIt(message:"*** RESUMING SCAN!")
 
             disconnectButton.isEnabled = false
             galvanicResponseLabel.font = UIFont(name: galvanicResponseLabelFontName, size: galvanicResponseLabelFontSizeMessage)
-            statusLog.text = statusLog.text + "\r> Searching"
+            logIt(message:"> Searching")
             _ = Timer(timeInterval: timerScanInterval, target: self, selector: #selector(pauseScan), userInfo: nil, repeats: false)
             centralManager.scanForPeripherals(withServices: nil, options: nil)
         } else {
@@ -164,33 +221,25 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
      RSSI - The current received signal strength indicator (RSSI) of the peripheral, in decibels.
      
      */
-    //func centralManager(_didDiscoverPeripheral, peripheral: CBPeripheral, advertisementData: [String : AnyObject], rssi: NSNumber) {
         
-   // func centralManager(_ , didDiscover: CBPeripheral, advertisementData:[String : AnyObject], rssi: NSNumber) {
-        
-        func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
 
 
-        print("centralManager didDiscover - CBAdvertisementDataLocalNameKey is \"\(CBAdvertisementDataLocalNameKey)\"")
+        logIt(message:"centralManager didDiscover - CBAdvertisementDataLocalNameKey is \"\(CBAdvertisementDataLocalNameKey)\"")
         
-        statusLog.text = statusLog.text + "\r> SOMETHING FOUND! \(CBAdvertisementDataLocalNameKey) \(RSSI)"
-
         // Retrieve the peripheral name from the advertisement data using the "kCBAdvDataLocalName" key
         let device = (advertisementData as NSDictionary)
             .object(forKey: CBAdvertisementDataLocalNameKey)
             as? NSString
         
-        statusLog.text = statusLog.text + "\r> SOMETHING FOUND! \(String(describing: device)) \(RSSI)"
+        logIt(message:"> SOMETHING FOUND! \(String(describing: device)) \(RSSI)")
 
         if let peripheralName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
-            print("NEXT PERIPHERAL NAME: \(peripheralName)")
-            print("NEXT PERIPHERAL UUID: \(peripheral.identifier.uuidString)")
+            logIt(message:"NEXT PERIPHERAL\r\tNAME: \(peripheralName)\r\tUUID: \(peripheral.identifier.uuidString)")
             
-            statusLog.text = statusLog.text + "\r> peripheral \(peripheralName) "
-
-            if peripheralName == hydr8BandName {
-                print("HYDR8 BAND FOUND! ADDING NOW!!!")
-                statusLog.text = statusLog.text + "\r> BAND FOUND! "
+            if peripheralName == Device.Hydr8BandName {
+                logIt(message:"HYDR8 BAND FOUND! ADDING NOW!!!")
+                pauseScan()
                 
                 // to save power, stop scanning for other devices
                 keepScanning = false
@@ -203,6 +252,23 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
                 // Request a connection to the peripheral
                 centralManager.connect(hydr8Band!, options: nil)
             }
+            
+            if peripheralName == Device.SensorTagName {
+                logIt(message:"SensorTagName \(peripheralName) FOUND! ADDING NOW!!!")
+                pauseScan()
+
+                // to save power, stop scanning for other devices
+                keepScanning = false
+                disconnectButton.isEnabled = true
+                
+                // save a reference to the sensor tag
+                sensorTag = peripheral
+                sensorTag!.delegate = self
+                
+                // Request a connection to the peripheral
+                centralManager.connect(sensorTag!, options: nil)
+
+            }
         }
     }
     
@@ -214,7 +280,7 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
      You typically implement this method to set the peripheral’s delegate and to discover its services.
      */
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        print("**** SUCCESSFULLY CONNECTED TO BAND!!!")
+        logIt(message:"**** SUCCESSFULLY CONNECTED TO PERIPHERAL!!!")
         
         galvanicResponseLabel.font = UIFont(name: galvanicResponseLabelFontName, size: galvanicResponseLabelFontSizeMessage)
         statusLog.text = statusLog.text + "\r> Connected"
@@ -235,9 +301,7 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
      in which case you may attempt to connect to the peripheral again.
      */
     /*FIXME*/ func centralManager(_didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
-        print("**** CONNECTION TO BAND FAILED!!!")
-        statusLog.text = statusLog.text + "\r> Connection failed"
-
+        logIt(message:"**** CONNECTION TO BAND FAILED!!!")
     }
     
     
@@ -252,16 +316,16 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
      */
     /*FIXME*/ func centralManager(  _ central: CBCentralManager,
                                     didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        print("**** DISCONNECTED FROM BAND!!!")
-        statusLog.text = statusLog.text + "\r> Disconnected from band"
+        logIt(message:"**** DISCONNECTED FROM BAND!!!")
 
+        
         // CHANGE ME lastTemperature = 0
         //updateBackgroundImageForTemperature(lastTemperature)
         //circleView.hidden = true
         galvanicResponseLabel.font = UIFont(name: galvanicResponseLabelFontName, size: galvanicResponseLabelFontSizeMessage)
         galvanicResponseLabel.text = "Tap to search"
         if error != nil {
-            print("****** DISCONNECTION DETAILS: \(error!.localizedDescription)")
+            logIt(message:"****** DISCONNECTION ERROR DETAILS: \(error!.localizedDescription)")
         }
         hydr8Band = nil
 
@@ -288,17 +352,16 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
     // When the specified services are discovered, the peripheral calls the peripheral:didDiscoverServices: method of its delegate object.
     /*FIXME*/     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if error != nil {
-            print("ERROR DISCOVERING SERVICES: \(String(describing: error?.localizedDescription))")
-            statusLog.text = statusLog.text + "\r> Discovery failed"
-
+            logIt(message:"ERROR DISCOVERING SERVICES: \(String(describing: error?.localizedDescription))")
+            
             return
         }
         
         // Core Bluetooth creates an array of CBService objects —- one for each service that is discovered on the peripheral.
         if let services = peripheral.services {
             for service in services {
-                print("Discovered service \(service)")
-                statusLog.text = statusLog.text + "\r> Discovered service \(service) uuid \(service.uuid)"
+                logIt(message:"Discovered service \(service)")
+                logIt(message:"\(service.uuid)")
 
                 // If we found a service, discover the characteristics for those services.
                 if (service.uuid == CBUUID(string: Device.HeartRateServiceUUID)) {
@@ -324,9 +387,8 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
         error: Error?) {
         
         if error != nil {
-            print("ERROR DISCOVERING CHARACTERISTICS: \(String(describing: error?.localizedDescription))")
-            statusLog.text = statusLog.text + "\r> Error discover characteristics"
-
+            logIt(message:"ERROR DISCOVERING CHARACTERISTICS: \(String(describing: error?.localizedDescription))")
+            
             return
         }
         
@@ -368,12 +430,11 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
      If unsuccessful, the error parameter returns the cause of the failure.
      */
     func peripheral(_didUpdateValueFor characteristic: CBCharacteristic, error: NSError?) {
-        statusLog.text = statusLog.text + "\r> updating characteristic"
+        logIt(message:"\r> updating characteristic")
 
         
         if error != nil {
-            print("ERROR ON UPDATING VALUE FOR CHARACTERISTIC: \(characteristic) - \(String(describing: error?.localizedDescription))")
-            statusLog.text = statusLog.text + "\r> Error updating characteristics"
+            logIt(message: "ERROR ON UPDATING VALUE FOR CHARACTERISTIC: \(characteristic) - \(String(describing: error?.localizedDescription))")
 
             return
         }
@@ -406,8 +467,7 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
         let rawHeartRate:UInt16 = dataArray[Device.HeartRateMeasurementDataIndex]
 
         lastGalvanicResponse = Int(rawHeartRate)
-        print("*** LAST HEARTRATE CAPTURED: \(lastGalvanicResponse)")
-        statusLog.text = statusLog.text + "\r> *** LAST HEARTRATE CAPTURED: \(lastGalvanicResponse)"
+        logIt(message:"*** LAST HEARTRATE CAPTURED: \(lastGalvanicResponse)")
 
         if UIApplication.shared.applicationState == .active {
             updateTemperatureDisplay()
@@ -421,7 +481,11 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
         galvanicResponseLabel.font = UIFont(name: galvanicResponseLabelFontName, size: galvanicResponseLabelFontSizeTemp)
         galvanicResponseLabel.text = " \(lastGalvanicResponse)"
     }
-        
+    
+    func logIt(message: String) {
+        print(message)
+        statusLog.text = statusLog.text + "\r \(message)"
+    }
     
 }
 
