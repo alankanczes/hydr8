@@ -360,8 +360,7 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
         // Core Bluetooth creates an array of CBService objects —- one for each service that is discovered on the peripheral.
         if let services = peripheral.services {
             for service in services {
-                logIt(message:"Discovered service \(service)")
-                logIt(message:"\(service.uuid)")
+                logIt(message:"Discovered service: \r\thash: \(service.hash)\r\tisPrimary: \(service.isPrimary)\r\tuuid: \(service.uuid)")
 
                 // If we found a service, discover the characteristics for those services.
                 if (service.uuid == CBUUID(string: Device.HeartRateServiceUUID)) {
