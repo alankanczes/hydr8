@@ -9,14 +9,17 @@
 import UIKit
 import CoreBluetooth
 
-class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDelegate, UITextViewDelegate {
+class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDelegate, UITextViewDelegate {
 
     //MARK: Properties
-    @IBOutlet weak var activityNameTextField: UITextField!
-    @IBOutlet weak var activityNameLabel: UILabel!
-    @IBOutlet weak var galvanicResponseLabel: UILabel!
+    @IBOutlet weak var sensorNameValueLabel: UILabel!
+    @IBOutlet weak var sensorNameValueTextField: UITextField!
     @IBOutlet weak var disconnectButton: UIButton!
     @IBOutlet weak var statusLog: UITextView!
+    @IBOutlet weak var connectButton: UIButton!
+    @IBOutlet weak var mainView: UIImageView!
+    @IBOutlet weak var sensorValueTextField: UITextField!
+    
     
     // Core Bluetooth properties
     var centralManager: CBCentralManager!
@@ -35,71 +38,76 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
     let galvanicResponseLabelFontSizeTemp:CGFloat = 81.0
     var lastGalvanicResponse:Int!
 
+    var temperatureCharacteristic:CBCharacteristic?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Not sized nicely... self.view.backgroundColor = UIColor(patternImage: UIImage(named: "water-background-42.jpg")!)
+
+        
         // Do any additional setup after loading the view, typically from a nib.
         
-        // Handle the text field’s user input through delegate callbacks.
-        activityNameTextField.delegate = self
         centralManager = CBCentralManager(delegate: self,
                                           queue: nil)
         
         statusLog.delegate = self
         statusLog.isEditable = false
         disconnectButton.isEnabled = false
+        connectButton.isEnabled = true
+        sensorNameValueTextField.isEnabled = false
         statusLog.text = ">> LOG <<"
     }
 
-    //MARK: UITextFieldDelegate
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // Hide the keyboard.
-        textField.resignFirstResponder()
-        
-        return true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        activityNameLabel.text = activityNameTextField.text
-
-    }
-        
     //MARK: Actions
-    
-    // Set Activity Label Button
-    @IBAction func setActivityLabelText(_ sender: UIButton) {
-        activityNameLabel.text = "Set default label text."
+    @IBAction func connectButtonPressed(_ sender: UIButton) {
+        logIt(message: "*** Connect button tapped...")
+
+        connectButton.setTitle("Scanning...", for: .normal)
+        connectButton.isEnabled = false
+        keepScanning = true
+        resumeScan()
+
+        disconnectButton.setTitle("Disconnect", for: .normal)
+        disconnectButton.isEnabled = true
+        
     }
     
     @IBAction func disconnectButtonPressed() {
 
         statusLog.text = ""
 
-        logIt(message: "*** disconnect button tapped...")
+        logIt(message: "*** Disconnect button tapped...")
+        disconnectButton.setTitle("Disconnecting...", for: .normal)
+        disconnectButton.isEnabled = false
         
-        // if we don't have a sensor tag, start scanning for one...
+        
+        // if we don't have a sensor tag or band, allow to start scanning for one...
         if sensorTag == nil && hydr8Band == nil {
-            logIt(message: "*** Nothing is connected, will resume scanning...")
-
-            keepScanning = true
-            resumeScan()
-            return
+            logIt(message: "*** Nothing is connected, allow for scanning.")
         } else {
             disconnectDevice()
         }
+        
+        sensorNameValueTextField.text = ""
+        connectButton.setTitle("Connect", for: .normal)
+        connectButton.isEnabled = true
+
+        disconnectButton.setTitle("Disconnected", for: .normal)
+        disconnectButton.isEnabled = false
+        
     }
     
     func disconnectDevice() {
-        logIt(message:"*** disconnecting...")
+        logIt(message:"*** Disconnecting...")
         
         if (hydr8Band != nil) {
-            logIt(message:"*** disconnecting hydr8Band...")
+            logIt(message:"*** Disconnecting hydr8Band...")
             centralManager.cancelPeripheralConnection(hydr8Band!)
         }
         
         if sensorTag != nil {
-            logIt(message:"*** disconnecting sensorTag...")
+            logIt(message:"*** Disconnecting sensorTag...")
             centralManager.cancelPeripheralConnection(sensorTag!)
         }
 
@@ -151,22 +159,29 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
             message = "Bluetooth LE is turned on and ready for communication."
             
             logIt(message:message)
+            
+            /*
+             * Uncomment for immediate connect, else hit connect button.
+             */
             keepScanning = true
+            
             _ = Timer(timeInterval: timerScanInterval, target: self, selector: #selector(pauseScan), userInfo: nil, repeats: false)
+ 
             
             // Initiate Scan for Peripherals
             //Option 1: Scan for all devices
             logIt(message:"> Initiating scan.")
             centralManager.scanForPeripherals(withServices: nil, options: nil)
-            
+            /* */
+ 
             // Option 2: Scan for devices that have the service you're interested in...
-            //let sensorTagAdvertisingUUID = CBUUID(string: Device.SensorTagAdvertisingUUID)
+            //let sensorTagAdvertisingUUID = CBUUID(string: SensorTagDevice.SensorTagAdvertisingUUID)
             //print("Scanning for SensorTag adverstising with UUID: \(sensorTagAdvertisingUUID)")
-            //centralManager.scanForPeripheralsWithServices([sensorTagAdvertisingUUID], options: nil)
+            //centralManager.scanForPeripherals(withServices: [sensorTagAdvertisingUUID], options: nil)
             
         }
         
-        logIt(message:"> state updated.  Message: \(message)")
+        logIt(message:"> State updated.  Message: \(message)")
 
         if showAlert {
             let alertController = UIAlertController(title: "Central Manager State", message: message, preferredStyle: UIAlertControllerStyle.alert)
@@ -175,7 +190,7 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
             self.show(alertController, sender: self)
         }
     }
-
+    
     // MARK: - Bluetooth scanning
 
 
@@ -196,10 +211,12 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
             logIt(message:"*** RESUMING SCAN!")
 
             disconnectButton.isEnabled = false
-            galvanicResponseLabel.font = UIFont(name: galvanicResponseLabelFontName, size: galvanicResponseLabelFontSizeMessage)
+            connectButton.isEnabled = false
+
             logIt(message:"> Searching")
             _ = Timer(timeInterval: timerScanInterval, target: self, selector: #selector(pauseScan), userInfo: nil, repeats: false)
             centralManager.scanForPeripherals(withServices: nil, options: nil)
+            
         } else {
             disconnectButton.isEnabled = true
         }
@@ -237,15 +254,19 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
         if let peripheralName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
             logIt(message:"NEXT PERIPHERAL\r\tNAME: \(peripheralName)\r\tUUID: \(peripheral.identifier.uuidString)")
             
-            if peripheralName == Device.Hydr8BandName {
+            if peripheralName == Hydr8BandDevice.DeviceName {
                 logIt(message:"HYDR8 BAND FOUND! ADDING NOW!!!")
                 pauseScan()
                 
                 // to save power, stop scanning for other devices
                 keepScanning = false
+                disconnectButton.setTitle("Disconnect", for: .normal)
                 disconnectButton.isEnabled = true
+
+                connectButton.setTitle("Connected", for: .normal)
+                connectButton.isEnabled = false
                 
-                // save a reference to the sensor tag
+                // save a reference to the band
                 hydr8Band = peripheral
                 hydr8Band!.delegate = self
                 
@@ -253,14 +274,19 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
                 centralManager.connect(hydr8Band!, options: nil)
             }
             
-            if peripheralName == Device.SensorTagName {
+            if peripheralName == SensorTagDevice.DeviceName {
                 logIt(message:"SensorTagName \(peripheralName) FOUND! ADDING NOW!!!")
                 pauseScan()
-
+                sensorNameValueTextField.text = peripheralName
+                
                 // to save power, stop scanning for other devices
                 keepScanning = false
+                disconnectButton.setTitle("Disconnect", for: .normal)
                 disconnectButton.isEnabled = true
                 
+                connectButton.setTitle("Connected", for: .normal)
+                connectButton.isEnabled = false
+
                 // save a reference to the sensor tag
                 sensorTag = peripheral
                 sensorTag!.delegate = self
@@ -282,7 +308,6 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         logIt(message:"**** SUCCESSFULLY CONNECTED TO PERIPHERAL!!!")
         
-        galvanicResponseLabel.font = UIFont(name: galvanicResponseLabelFontName, size: galvanicResponseLabelFontSizeMessage)
         statusLog.text = statusLog.text + "\r> Connected"
         
         // Now that we've successfully connected to the SensorTag, let's discover the services.
@@ -316,26 +341,32 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
      */
     /*FIXME*/ func centralManager(  _ central: CBCentralManager,
                                     didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        logIt(message:"**** DISCONNECTED FROM BAND!!!")
+        logIt(message:"**** DISCONNECTED FROM DEVICE!!!")
 
         
         // CHANGE ME lastTemperature = 0
         //updateBackgroundImageForTemperature(lastTemperature)
         //circleView.hidden = true
-        galvanicResponseLabel.font = UIFont(name: galvanicResponseLabelFontName, size: galvanicResponseLabelFontSizeMessage)
-        galvanicResponseLabel.text = "Tap to search"
         if error != nil {
             logIt(message:"****** DISCONNECTION ERROR DETAILS: \(error!.localizedDescription)")
         }
         hydr8Band = nil
 
-        
-        // Ah, just start scanning again
-        keepScanning = true
-        central.scanForPeripherals(withServices: nil, options: nil)
+        disconnectButton.setTitle("Disconnected", for: .normal)
+        disconnectButton.isEnabled = false
 
     }
     
+    func startScanning() {
+        
+        connectButton.setTitle("Scanning...", for: .normal)
+        connectButton.isEnabled = false
+
+        // Ah, just start scanning again
+        keepScanning = true
+        centralManager.scanForPeripherals(withServices: nil, options: nil)
+        
+    }
     
     //MARK: - CBPeripheralDelegate methods
     
@@ -350,7 +381,7 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
      If unsuccessful, the error parameter returns the cause of the failure.
      */
     // When the specified services are discovered, the peripheral calls the peripheral:didDiscoverServices: method of its delegate object.
-    /*FIXME*/     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if error != nil {
             logIt(message:"ERROR DISCOVERING SERVICES: \(String(describing: error?.localizedDescription))")
             
@@ -363,7 +394,8 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
                 logIt(message:"Discovered service: \r\thash: \(service.hash)\r\tisPrimary: \(service.isPrimary)\r\tuuid: \(service.uuid)")
 
                 // If we found a service, discover the characteristics for those services.
-                if (service.uuid == CBUUID(string: Device.HeartRateServiceUUID)) {
+                if (service.uuid == CBUUID(string: SensorTagDevice.TemperatureServiceUUID)) {
+                    logIt(message:"\tDiscovering characteristics for temperature.")
                     peripheral.discoverCharacteristics(nil, for: service)
                 }
             }
@@ -387,28 +419,48 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
         
         if error != nil {
             logIt(message:"ERROR DISCOVERING CHARACTERISTICS: \(String(describing: error?.localizedDescription))")
-            
             return
+        }
+        
+        if (service.uuid == CBUUID(string: SensorTagDevice.TemperatureServiceUUID)) {
+            logIt(message:"Discovered characteristic for temperature.")
         }
         
         if let characteristics = service.characteristics {
             var enableValue:UInt8 = 1
-            // OLD: let enableBytes = NSData(bytes: &enableValue, length: sizeof(UInt8))
-            _ = NSData(bytes: &enableValue, length: MemoryLayout<UInt8>.size)
+            let enableBytes = NSData(bytes: &enableValue, length: MemoryLayout<UInt8>.size)
 
             for characteristic in characteristics {
+                
                 // Temperature Data Characteristic
-                if characteristic.uuid == CBUUID(string: Device.HeartRateMeasurementUUID) {
+                if characteristic.uuid == CBUUID(string: SensorTagDevice.TemperatureDataUUID) {
+                    // Enable the IR Temperature Sensor notifications
+                    logIt(message:"Enable the IR Temperature Sensor notifications.")
+                    temperatureCharacteristic = characteristic
+                    sensorTag?.setNotifyValue(true, for: characteristic)
+                }
+                
+                // Temperature Configuration Characteristic
+                if characteristic.uuid == CBUUID(string: SensorTagDevice.TemperatureConfig) {
+                    logIt(message:"Enable the IR Temperature Sensor.")
+                    sensorTag?.writeValue(enableBytes as Data, for: characteristic, type: .withResponse)
+                }
+                
+          /*
+                // Temperature Data Characteristic
+                if characteristic.uuid == CBUUID(string: Hydr8BandDevice.HeartRateMeasurementUUID) {
                     // Enable the notifications
                     galvanicCharacteristic = characteristic
                     hydr8Band?.setNotifyValue(true, for: characteristic)
                 }
                 
-/*
+
                  // Temperature Configuration Characteristic
-                if characteristic.uuid == CBUUID(string: Device.TemperatureConfig) {
-                    // Enable IR Temperature Sensor
-                    hydr8Band?.writeValue(enableBytes as Data, for: characteristic, type: .withResponse)
+                if characteristic.uuid == CBUUID(string: SensorTagDevice.TemperatureConfig) {
+                    logIt(message:"Set notify on for temperature config characteristic.")
+                   // FIXME hydr8Band?.writeValue(enableBytes as Data, for: characteristic, type: .withResponse)
+                    temperatureCharacteristic = characteristic
+                    sensorTag?.setNotifyValue(true, for: characteristic)
                 }
 */
                 
@@ -434,52 +486,95 @@ class ViewController: UIViewController, UITextFieldDelegate, CBCentralManagerDel
         
         if error != nil {
             logIt(message: "ERROR ON UPDATING VALUE FOR CHARACTERISTIC: \(characteristic) - \(String(describing: error?.localizedDescription))")
+            return
+        }
+        
+        /*
+        // extract the data from the characteristic's value property and display the value based on the characteristic type
+        if let dataBytes = characteristic.value {
+            if characteristic.uuid == CBUUID(string: Hydr8BandDevice.HeartRateMeasurementUUID) {
+                //displayGalvanicResponse(data: dataBytes as NSData)
 
+            }
+        }
+        */
+ 
+    }
+    
+    
+    /*
+     Invoked when you retrieve a specified characteristic’s value,
+     or when the peripheral device notifies your app that the characteristic’s value has changed.
+     
+     This method is invoked when your app calls the readValueForCharacteristic: method,
+     or when the peripheral notifies your app that the value of the characteristic for
+     which notifications and indications are enabled has changed.
+     
+     If successful, the error parameter is nil.
+     If unsuccessful, the error parameter returns the cause of the failure.
+     */
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        logIt(message: "Got peripheral characteristic value: \(String(describing: characteristic.value))")
+        
+        if error != nil {
+            logIt(message: "ERROR ON UPDATING VALUE FOR CHARACTERISTIC: \(characteristic) - \(String(describing: error?.localizedDescription))")
             return
         }
         
         // extract the data from the characteristic's value property and display the value based on the characteristic type
         if let dataBytes = characteristic.value {
-            if characteristic.uuid == CBUUID(string: Device.HeartRateMeasurementUUID) {
-                displayGalvanicResponse(data: dataBytes as NSData)
-/* HUMIDITY
-            } else if characteristic.UUID == CBUUID(string: Device.HumidityDataUUID) {
-                displayHumidity(dataBytes)
- */
+            if characteristic.uuid == CBUUID(string: SensorTagDevice.TemperatureDataUUID) {
+                displayTemperature(data: dataBytes as NSData)
+            } else if characteristic.uuid == CBUUID(string: SensorTagDevice.HumidityDataUUID) {
+                //displayHumidity(data: dataBytes as NSData)
             }
         }
     }
 
-    func displayGalvanicResponse(data:NSData) {
+    func displayTemperature(data:NSData) {
         // We'll get four bytes of data back, so we divide the byte count by two
         // because we're creating an array that holds two 16-bit (two-byte) values
         let dataLength = data.length / MemoryLayout<UInt16>.size
         var dataArray = [UInt16](repeating: 0, count:dataLength)
         data.getBytes(&dataArray, length: dataLength * MemoryLayout<Int16>.size)
         
-        //        // output values for debugging/diagnostic purposes
-        //        for i in 0 ..< dataLength {
-        //            let nextInt:UInt16 = dataArray[i]
-        //            print("next int: \(nextInt)")
-        //        }
+        // output values for debugging/diagnostic purposes
+        for i in 0 ..< dataLength {
+            let nextInt:UInt16 = dataArray[i]
+            print(":\(nextInt)")
+        }
         
-        let rawHeartRate:UInt16 = dataArray[Device.HeartRateMeasurementDataIndex]
-
-        lastGalvanicResponse = Int(rawHeartRate)
-        logIt(message:"*** LAST HEARTRATE CAPTURED: \(lastGalvanicResponse)")
-
+        let rawAmbientTemp:UInt16 = dataArray[SensorTagDevice.SensorDataIndexTempAmbient]
+        let ambientTempC = Double(rawAmbientTemp) / 128.0
+        let ambientTempF = convertCelciusToFahrenheit(celcius: ambientTempC)
+        print("*** AMBIENT TEMPERATURE SENSOR (C/F): \(ambientTempC), \(ambientTempF)");
+        
+        // Device also retrieves an infrared temperature sensor value, which we don't use in this demo.
+        // However, for instructional purposes, here's how to get at it to compare to the ambient temperature:
+        let rawInfraredTemp:UInt16 = dataArray[SensorTagDevice.SensorDataIndexTempInfrared]
+        let infraredTempC = Double(rawInfraredTemp) / 128.0
+        let infraredTempF = convertCelciusToFahrenheit(celcius: infraredTempC)
+        print("*** INFRARED TEMPERATURE SENSOR (C/F): \(infraredTempC), \(infraredTempF)");
+        
+        /*
+        let temp = Int(ambientTempF)
+        lastTemperature = temp
+        print("*** LAST TEMPERATURE CAPTURED: \(lastTemperature)° F")
+        */
+        
         if UIApplication.shared.applicationState == .active {
-            updateTemperatureDisplay()
+            sensorValueTextField.text = " \(ambientTempF) F"
         }
     }
 
+    func convertCelciusToFahrenheit(celcius:Double) -> Double {
+        let fahrenheit = (celcius * 1.8) + Double(32)
+        return fahrenheit
+    }
+
+
     // MARK: - Updating UI
     
-    func updateTemperatureDisplay() {
-
-        galvanicResponseLabel.font = UIFont(name: galvanicResponseLabelFontName, size: galvanicResponseLabelFontSizeTemp)
-        galvanicResponseLabel.text = " \(lastGalvanicResponse)"
-    }
     
     func logIt(message: String) {
         print(message)

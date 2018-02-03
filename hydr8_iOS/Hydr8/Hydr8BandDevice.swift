@@ -1,9 +1,5 @@
 //
-//  BLEConstants.swift
-//  iOSRemoteConfBLEDemo
-//
-//  Created by Evan Stone on 4/9/16.
-//  Copyright © 2016 Cloud City. All rights reserved.
+//  Hydr8BandDevice.swift
 //
 
 import Foundation
@@ -26,7 +22,7 @@ import Foundation
 //                                  ^--^
 //------------------------------------------------------------------------
 
-struct Device {
+struct Hydr8BandDevice {
     
     
     // Sensor Tag Settings
@@ -37,10 +33,9 @@ struct Device {
 
     static let HeartRateMeasurementDataIndex = 0
     
-    static let SensorTagName = "CC2650 SensorTag"
     
     // Hydr8Band Settings
-    static let Hydr8BandName = "MAXREFDES73#"
+    static let DeviceName = "MAXREFDES73#"
 
 }
 

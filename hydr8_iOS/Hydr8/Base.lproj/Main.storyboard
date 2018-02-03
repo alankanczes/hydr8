@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,64 +18,108 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="water-background-42" translatesAutoresizingMaskIntoConstraints="NO" id="XSk-Nd-AvG">
-                                <rect key="frame" x="25" y="20" width="414" height="716"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="FiF-zZ-rhb">
-                                <rect key="frame" x="5" y="39.999999999999993" width="404" height="80.333333333333314"/>
+                                <rect key="frame" x="5" y="40" width="404" height="500"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Activity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4P7-K8-PCv">
-                                        <rect key="frame" x="0.0" y="0.0" width="57" height="20.333333333333332"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Activity Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8QK-mx-mG2">
-                                        <rect key="frame" x="0.0" y="20.333333333333336" width="384" height="30"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WY1-EP-8v7">
-                                        <rect key="frame" x="0.0" y="50.333333333333329" width="404" height="30"/>
-                                        <state key="normal" title="Reset label text"/>
-                                        <connections>
-                                            <action selector="setActivityLabelText:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ikz-nU-JPX"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sc6-Nb-3wz" userLabel="Sensor Name View">
+                                        <rect key="frame" x="0.0" y="0.0" width="221.33333333333334" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sensor:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4P7-K8-PCv" userLabel="Sensor Name Value Label">
+                                                <rect key="frame" x="0.0" y="0.0" width="58.333333333333336" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="No Sensor Connected" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8QK-mx-mG2" userLabel="Sensor Name Value Text Field">
+                                                <rect key="frame" x="58.333333333333343" y="0.0" width="163" height="30"/>
+                                                <accessibility key="accessibilityConfiguration">
+                                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                                </accessibility>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="8QK-mx-mG2" firstAttribute="leading" secondItem="4P7-K8-PCv" secondAttribute="trailing" id="BdZ-56-V3Z" userLabel="Sensor Name Value Text Field.trailing = Superview.TrailingMargin"/>
+                                            <constraint firstItem="8QK-mx-mG2" firstAttribute="leading" secondItem="4P7-K8-PCv" secondAttribute="trailing" id="BeR-76-ZI1" userLabel="Sensor Name Value Text Field.leading = Trailing + Standard"/>
+                                            <constraint firstItem="4P7-K8-PCv" firstAttribute="leading" secondItem="Sc6-Nb-3wz" secondAttribute="leading" id="tLZ-ew-c7m" userLabel="Sensor Name Value Label.leading = Superview.LeadingMargin"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HFX-g9-MqI" userLabel="Sensor Value View">
+                                        <rect key="frame" x="0.0" y="30" width="125.33333333333333" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LdK-AV-ICt" userLabel="Sensor Value Label">
+                                                <rect key="frame" x="0.0" y="0.0" width="46.666666666666664" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="No Value" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ySV-oL-OqP" userLabel="Sensor Value Text Field">
+                                                <rect key="frame" x="46.666666666666664" y="0.0" width="78.666666666666686" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kD0-hz-ipO" userLabel="Connection View">
+                                        <rect key="frame" x="0.0" y="60" width="404" height="55"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ZP-aw-vRy">
+                                                <rect key="frame" x="0.0" y="0.0" width="202.33333333333334" height="55"/>
+                                                <state key="normal" title="Connect"/>
+                                                <connections>
+                                                    <action selector="connectButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yOM-po-8PO"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tge-Tc-hHr">
+                                                <rect key="frame" x="202.33333333333337" y="0.0" width="201.66666666666663" height="55"/>
+                                                <state key="normal" title="Disconnect"/>
+                                                <connections>
+                                                    <action selector="disconnectButtonPressed" destination="BYZ-38-t0r" eventType="touchUpInside" id="6cQ-TO-ITe"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="1ZP-aw-vRy" firstAttribute="width" secondItem="Tge-Tc-hHr" secondAttribute="width" id="idg-rv-kSX"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="iAR-h3-AeX" userLabel="Log View">
+                                        <rect key="frame" x="0.0" y="115" width="404" height="385"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qLH-Wc-a3P">
+                                                <rect key="frame" x="0.0" y="0.0" width="404" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8F8-xj-boy">
+                                                <rect key="frame" x="0.0" y="20.333333333333343" width="404" height="364.66666666666663"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="BYZ-38-t0r" id="C5V-48-VWk"/>
+                                                </connections>
+                                            </textView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="8F8-xj-boy" secondAttribute="trailing" id="3u4-Gh-QUC" userLabel="trailing = Connection View.trailing"/>
+                                            <constraint firstAttribute="width" constant="404" id="PTr-IU-NsF"/>
+                                        </constraints>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="8QK-mx-mG2" secondAttribute="trailing" constant="20" symbolic="YES" id="Sfy-ap-ObW"/>
-                                    <constraint firstItem="WY1-EP-8v7" firstAttribute="trailing" secondItem="FiF-zZ-rhb" secondAttribute="trailingMargin" id="WI9-ul-xW7"/>
+                                    <constraint firstItem="kD0-hz-ipO" firstAttribute="centerX" secondItem="FiF-zZ-rhb" secondAttribute="centerX" id="cuh-JT-rMa"/>
+                                    <constraint firstAttribute="height" constant="500" id="zp2-b8-sTg"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tge-Tc-hHr">
-                                <rect key="frame" x="151" y="177" width="112" height="30"/>
+                            <imageView opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="water-background-42" translatesAutoresizingMaskIntoConstraints="NO" id="XSk-Nd-AvG" userLabel="Water Image View">
+                                <rect key="frame" x="0.0" y="619" width="414" height="117"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Disconnect"/>
-                                <connections>
-                                    <action selector="disconnectButtonPressed" destination="BYZ-38-t0r" eventType="touchUpInside" id="6cQ-TO-ITe"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Gavalnic Response" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ief-DN-s3l">
-                                <rect key="frame" x="122" y="228" width="171" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8F8-xj-boy">
-                                <rect key="frame" x="5" y="307" width="404" height="336"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="C5V-48-VWk"/>
-                                </connections>
-                            </textView>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -87,10 +130,12 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="activityNameLabel" destination="4P7-K8-PCv" id="hQv-49-bm7"/>
-                        <outlet property="activityNameTextField" destination="8QK-mx-mG2" id="Fbh-y3-WvT"/>
+                        <outlet property="connectButton" destination="1ZP-aw-vRy" id="hWN-GM-8bg"/>
                         <outlet property="disconnectButton" destination="Tge-Tc-hHr" id="J0S-Na-aBr"/>
-                        <outlet property="galvanicResponseLabel" destination="ief-DN-s3l" id="hE1-BR-6Sg"/>
+                        <outlet property="mainView" destination="XSk-Nd-AvG" id="edL-dF-SVG"/>
+                        <outlet property="sensorNameValueLabel" destination="4P7-K8-PCv" id="E0d-LJ-09H"/>
+                        <outlet property="sensorNameValueTextField" destination="8QK-mx-mG2" id="6Md-Kq-ThA"/>
+                        <outlet property="sensorValueTextField" destination="ySV-oL-OqP" id="riz-ke-WBZ"/>
                         <outlet property="statusLog" destination="8F8-xj-boy" id="YEP-AY-8ZP"/>
                     </connections>
                 </viewController>
