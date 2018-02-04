@@ -12,13 +12,14 @@ import CoreBluetooth
 class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDelegate, UITextViewDelegate {
 
     //MARK: Properties
-    @IBOutlet weak var sensorNameValueLabel: UILabel!
-    @IBOutlet weak var sensorNameValueTextField: UITextField!
+    @IBOutlet weak var sensorNameLabel: UILabel!
+    @IBOutlet weak var sensorNameTextField: UITextField!
     @IBOutlet weak var disconnectButton: UIButton!
     @IBOutlet weak var statusLog: UITextView!
     @IBOutlet weak var statusLogLabel: UILabel!
     @IBOutlet weak var connectButton: UIButton!
     @IBOutlet weak var mainView: UIImageView!
+    @IBOutlet weak var sensorValueLabel: UILabel!
     @IBOutlet weak var sensorValueTextField: UITextField!
     
     
@@ -56,7 +57,8 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         statusLog.isEditable = false
         disconnectButton.isEnabled = false
         connectButton.isEnabled = true
-        sensorNameValueTextField.isEnabled = false
+        sensorNameTextField.isEnabled = false
+        sensorValueTextField.isEnabled = false
         statusLog.text = ">> LOG <<"
         statusLogLabel.text = "Hide Log"
         statusLogLabel.isUserInteractionEnabled = true
@@ -111,7 +113,8 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             disconnectDevice()
         }
         
-        sensorNameValueTextField.text = ""
+        sensorNameTextField.text = ""
+        sensorValueTextField.text = ""
         connectButton.setTitle("Connect", for: .normal)
         connectButton.isEnabled = true
 
@@ -302,7 +305,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             if peripheralName == SensorTagDevice.DeviceName {
                 logIt(message:"SensorTagName \(peripheralName) FOUND! ADDING NOW!!!", level: LogLevel.debug)
                 pauseScan()
-                sensorNameValueTextField.text = peripheralName
+                sensorNameTextField.text = peripheralName
                 
                 // to save power, stop scanning for other devices
                 keepScanning = false
