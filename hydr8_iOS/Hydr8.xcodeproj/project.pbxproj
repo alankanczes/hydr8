@@ -11,12 +11,16 @@
 		E73412051FF442E2001ACF83 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E73412041FF442E2001ACF83 /* CoreBluetooth.framework */; };
 		E73A6AAA2015192C00AE85CB /* SensorTagDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73A6AA92015192C00AE85CB /* SensorTagDevice.swift */; };
 		E7594C5D20267CCE006C763A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7594C5C20267CCE006C763A /* Log.swift */; };
+		E76ECB5C203B589D003D24CD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76ECB5B203B589D003D24CD /* CloudKit.framework */; };
 		E7F0ECD41FCA1E0200F97EE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F0ECD31FCA1E0200F97EE9 /* AppDelegate.swift */; };
 		E7F0ECD61FCA1E0200F97EE9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F0ECD51FCA1E0200F97EE9 /* ViewController.swift */; };
 		E7F0ECD91FCA1E0200F97EE9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7F0ECD71FCA1E0200F97EE9 /* Main.storyboard */; };
 		E7F0ECDB1FCA1E0200F97EE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7F0ECDA1FCA1E0200F97EE9 /* Assets.xcassets */; };
 		E7F0ECDE1FCA1E0200F97EE9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7F0ECDC1FCA1E0200F97EE9 /* LaunchScreen.storyboard */; };
 		E7F0ECE91FCA1E0200F97EE9 /* Hydr8Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F0ECE81FCA1E0200F97EE9 /* Hydr8Tests.swift */; };
+		E7F4C573204CA439005DFB7D /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F4C572204CA439005DFB7D /* UserInfo.swift */; };
+		E7F4C575204CA951005DFB7D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F4C574204CA951005DFB7D /* Model.swift */; };
+		E7F4C577204CAA90005DFB7D /* PositionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F4C576204CAA90005DFB7D /* PositionRecord.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +38,8 @@
 		E73412041FF442E2001ACF83 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		E73A6AA92015192C00AE85CB /* SensorTagDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTagDevice.swift; sourceTree = "<group>"; };
 		E7594C5C20267CCE006C763A /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		E76ECB5A203B5899003D24CD /* Hydr8.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Hydr8.entitlements; sourceTree = "<group>"; };
+		E76ECB5B203B589D003D24CD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		E7F0ECD01FCA1E0200F97EE9 /* Hydr8.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hydr8.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7F0ECD31FCA1E0200F97EE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E7F0ECD51FCA1E0200F97EE9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -44,6 +50,9 @@
 		E7F0ECE41FCA1E0200F97EE9 /* Hydr8Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Hydr8Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7F0ECE81FCA1E0200F97EE9 /* Hydr8Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hydr8Tests.swift; sourceTree = "<group>"; };
 		E7F0ECEA1FCA1E0200F97EE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7F4C572204CA439005DFB7D /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		E7F4C574204CA951005DFB7D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		E7F4C576204CAA90005DFB7D /* PositionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionRecord.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +61,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E73412051FF442E2001ACF83 /* CoreBluetooth.framework in Frameworks */,
+				E76ECB5C203B589D003D24CD /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +78,7 @@
 		E73412031FF442E2001ACF83 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E76ECB5B203B589D003D24CD /* CloudKit.framework */,
 				E73412041FF442E2001ACF83 /* CoreBluetooth.framework */,
 			);
 			name = Frameworks;
@@ -95,6 +106,8 @@
 		E7F0ECD21FCA1E0200F97EE9 /* Hydr8 */ = {
 			isa = PBXGroup;
 			children = (
+				E7F4C571204CA42A005DFB7D /* Model */,
+				E76ECB5A203B5899003D24CD /* Hydr8.entitlements */,
 				E7F0ECD31FCA1E0200F97EE9 /* AppDelegate.swift */,
 				E7F0ECD51FCA1E0200F97EE9 /* ViewController.swift */,
 				E7F0ECD71FCA1E0200F97EE9 /* Main.storyboard */,
@@ -115,6 +128,16 @@
 				E7F0ECEA1FCA1E0200F97EE9 /* Info.plist */,
 			);
 			path = Hydr8Tests;
+			sourceTree = "<group>";
+		};
+		E7F4C571204CA42A005DFB7D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E7F4C572204CA439005DFB7D /* UserInfo.swift */,
+				E7F4C574204CA951005DFB7D /* Model.swift */,
+				E7F4C576204CAA90005DFB7D /* PositionRecord.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,6 +195,12 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
 						};
 					};
 					E7F0ECE31FCA1E0200F97EE9 = {
@@ -225,9 +254,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7F4C575204CA951005DFB7D /* Model.swift in Sources */,
+				E7F4C577204CAA90005DFB7D /* PositionRecord.swift in Sources */,
 				E73A6AAA2015192C00AE85CB /* SensorTagDevice.swift in Sources */,
 				E720A31B1FF756F30006F399 /* Hydr8BandDevice.swift in Sources */,
 				E7594C5D20267CCE006C763A /* Log.swift in Sources */,
+				E7F4C573204CA439005DFB7D /* UserInfo.swift in Sources */,
 				E7F0ECD61FCA1E0200F97EE9 /* ViewController.swift in Sources */,
 				E7F0ECD41FCA1E0200F97EE9 /* AppDelegate.swift in Sources */,
 			);
@@ -385,14 +417,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Hydr8/Hydr8.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0.01a;
 				DEVELOPMENT_TEAM = 5EWMFFD324;
 				INFOPLIST_FILE = Hydr8/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MODULE_VERSION = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hydr8.Hydration-Testing";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "";
 			};
 			name = Debug;
 		};
@@ -401,14 +437,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Hydr8/Hydr8.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0.01a;
 				DEVELOPMENT_TEAM = 5EWMFFD324;
 				INFOPLIST_FILE = Hydr8/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MODULE_VERSION = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hydr8.Hydration-Testing";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "";
 			};
 			name = Release;
 		};
@@ -421,6 +461,7 @@
 				DEVELOPMENT_TEAM = 5EWMFFD324;
 				INFOPLIST_FILE = Hydr8Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				NSBluetoothPeripheralUsageDescription = "The SmartBluetooth interface is used to connect to the BLE sensors monitored by this device.";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hydr8.Hydration-TrackerTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -438,6 +479,7 @@
 				DEVELOPMENT_TEAM = 5EWMFFD324;
 				INFOPLIST_FILE = Hydr8Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				NSBluetoothPeripheralUsageDescription = "The SmartBluetooth interface is used to connect to the BLE sensors monitored by this device.";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hydr8.Hydration-TrackerTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

@@ -9,6 +9,7 @@ import CoreBluetooth
 //------------------------------------------------------------------------
 // Information about Texas Instruments SensorTag UUIDs can be found at:
 // http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Sensors
+// For UUIDs, see" http://processors.wiki.ti.com/images/a/a8/BLE_SensorTag_GATT_Server.pdf
 //------------------------------------------------------------------------
 // From the TI documentation:
 //  The TI Base 128-bit UUID is: F0000000-0451-4000-B000-000000000000.
@@ -37,6 +38,15 @@ struct SensorTagDevice {
     static let HumidityDataUUID = "F000AA21-0451-4000-B000-000000000000"
     static let HumidityConfig = "F000AA22-0451-4000-B000-000000000000"
     
+    static let AccelerometerServiceUUID = "F000AA10-0451-4000-B000-000000000000"
+    static let AccelerometerDataUUID = "F000AA11-0451-4000-B000-000000000000"
+    static let AccelerometerConfigUUID = "F000AA12-0451-4000-B000-000000000000"
+    static let AccelerometerPeriodUUID = "F000AA13-0451-4000-B000-000000000000"
+
+    static let MagnetometerServiceUUID = "F000AA30-0451-4000-B000-000000000000"
+    static let MagnetometerDataUUID = "F000AA31-0451-4000-B000-000000000000"
+    static let MagnetometerConfigUUID = "F000AA32-0451-4000-B000-000000000000"
+    
     static let SensorDataIndexTempInfrared = 0
     static let SensorDataIndexTempAmbient = 1
     static let SensorDataIndexHumidityTemp = 0
@@ -45,6 +55,6 @@ struct SensorTagDevice {
     static let tempCcbUuid = CBUUID.init(string: SensorTagDevice.TemperatureServiceUUID)
     
     static let DeviceName = "CC2650 SensorTag"
-
+    
 }
 
