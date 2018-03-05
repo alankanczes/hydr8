@@ -38,10 +38,10 @@ struct SensorTagDevice {
     static let HumidityDataUUID = "F000AA21-0451-4000-B000-000000000000"
     static let HumidityConfig = "F000AA22-0451-4000-B000-000000000000"
     
-    static let AccelerometerServiceUUID = "F000AA10-0451-4000-B000-000000000000"
-    static let AccelerometerDataUUID = "F000AA11-0451-4000-B000-000000000000"
-    static let AccelerometerConfigUUID = "F000AA12-0451-4000-B000-000000000000"
-    static let AccelerometerPeriodUUID = "F000AA13-0451-4000-B000-000000000000"
+    static let AccelerometerServiceUUID = "F000AA80-0451-4000-B000-000000000000"
+    static let AccelerometerDataUUID = "F000AA81-0451-4000-B000-000000000000"
+    static let AccelerometerConfigUUID = "F000AA82-0451-4000-B000-000000000000"
+    static let AccelerometerPeriodUUID = "F000AA83-0451-4000-B000-000000000000"
 
     static let MagnetometerServiceUUID = "F000AA30-0451-4000-B000-000000000000"
     static let MagnetometerDataUUID = "F000AA31-0451-4000-B000-000000000000"

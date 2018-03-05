@@ -43,7 +43,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     
     var temperatureCharacteristic:CBCharacteristic?
     var accelerometerCharacteristic:CBCharacteristic?
-
+    
     // Database vars
     // Log into cloudkit
     var container: CKContainer!
@@ -81,13 +81,13 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         statusLogLabel.addGestureRecognizer(tap)
         
         if FileManager.default.ubiquityIdentityToken != nil {
-            logIt(message:  "iCloud Available", level: LogLevel.debug)
+            logIt(message:  "iCloud Available", level: LogLevel.info)
         } else {
-            logIt(message:  "iCloud Unavailable", level: LogLevel.debug)
+            logIt(message:  "iCloud Unavailable", level: LogLevel.info)
         }
         
         logIt(message: "Attempting to load private records.", level: LogLevel.info)
-
+        
         // Log into cloudkit
         container = CKContainer.default()
         publicDatabase = container.publicCloudDatabase
@@ -132,10 +132,14 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         statusLog.isHidden = !statusLog.isHidden
     }
     
+    func clearLog(){
+        statusLog.text = ""
+    }
+    
     //MARK: Actions
     @IBAction func connectButtonPressed(_ sender: UIButton) {
         
-        statusLog.text = ""
+        clearLog()
         logIt(message: "*** Connect button tapped...", level: LogLevel.detail)
         
         connectButton.setTitle("Scanning...", for: .normal)
@@ -150,7 +154,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     
     @IBAction func disconnectButtonPressed() {
         
-        statusLog.text = ""
+        clearLog()
         logIt(message: "*** Disconnect button tapped...", level: LogLevel.detail)
         
         disconnectButton.setTitle("Disconnecting...", for: .normal)
@@ -180,11 +184,13 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         if (hydr8Band != nil) {
             logIt(message:"*** Disconnecting hydr8Band...", level: LogLevel.debug)
             centralManager.cancelPeripheralConnection(hydr8Band!)
+            hydr8Band = nil;
         }
         
         if sensorTag != nil {
             logIt(message:"*** Disconnecting sensorTag...", level: LogLevel.debug)
             centralManager.cancelPeripheralConnection(sensorTag!)
+            sensorTag = nil
         }
         
         /* REVIEW ME
@@ -245,15 +251,17 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             
             
             // Initiate Scan for Peripherals
+            
             //Option 1: Scan for all devices
             logIt(message:"> Initiating scan.", level: LogLevel.info)
             centralManager.scanForPeripherals(withServices: nil, options: nil)
-            /* */
             
-            // Option 2: Scan for devices that have the service you're interested in...
-            //let sensorTagAdvertisingUUID = CBUUID(string: SensorTagDevice.SensorTagAdvertisingUUID)
-            //print("Scanning for SensorTag adverstising with UUID: \(sensorTagAdvertisingUUID)")
-            //centralManager.scanForPeripherals(withServices: [sensorTagAdvertisingUUID], options: nil)
+            /*
+             // Option 2: Scan for devices that have the service you're interested in...
+             let sensorTagAdvertisingUUID = CBUUID(string: SensorTagDevice.SensorTagAdvertisingUUID)
+             print("Scanning for SensorTag adverstising with UUID: \(sensorTagAdvertisingUUID)")
+             centralManager.scanForPeripherals(withServices: [sensorTagAdvertisingUUID], options: nil)
+             */
             
         }
         
@@ -272,7 +280,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     
     @objc func pauseScan() {
         // Scanning uses up battery on phone, so pause the scan process for the designated interval.
-        logIt(message:"*** PAUSING SCAN...", level: LogLevel.debug)
+        logIt(message:"*** PAUSING SCAN...", level: LogLevel.info)
         
         
         _ = Timer(timeInterval: timerPauseInterval, target: self, selector: #selector(resumeScan), userInfo: nil, repeats: false)
@@ -284,7 +292,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     func resumeScan() {
         if keepScanning {
             // Start scanning again...
-            logIt(message:"*** RESUMING SCAN!", level: LogLevel.debug)
+            logIt(message:"*** RESUMING SCAN!", level: LogLevel.info)
             
             disconnectButton.isEnabled = false
             connectButton.isEnabled = false
@@ -325,7 +333,9 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             .object(forKey: CBAdvertisementDataLocalNameKey)
             as? NSString
         
-        logIt(message:"> SOMETHING FOUND! \(String(describing: device)) \(RSSI)", level: LogLevel.detail)
+        if (device != nil) {
+            logIt(message:"> SOMETHING FOUND! \(String(describing: device)) \(RSSI)", level: LogLevel.info)
+        }
         
         if let peripheralName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
             logIt(message:"NEXT PERIPHERAL\r\tNAME: \(peripheralName)\r\tUUID: \(peripheral.identifier.uuidString)", level: LogLevel.debug)
@@ -341,7 +351,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
                 
                 connectButton.setTitle("Connected", for: .normal)
                 connectButton.isEnabled = false
-                statusLog.text = ""
+                clearLog()
                 logIt(message:"*** CONNECTED TO DEVICE", level: LogLevel.info)
                 
                 
@@ -354,7 +364,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             }
             
             if peripheralName == SensorTagDevice.DeviceName {
-                logIt(message:"SensorTagName \(peripheralName) FOUND! ADDING NOW!!!", level: LogLevel.debug)
+                logIt(message:"SensorTagName \(peripheralName) FOUND! ADDING NOW!!!", level: LogLevel.info)
                 pauseScan()
                 sensorNameTextField.text = peripheralName
                 
@@ -365,7 +375,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
                 
                 connectButton.setTitle("Connected", for: .normal)
                 connectButton.isEnabled = false
-                statusLog.text = ""
+                clearLog()
                 logIt(message:"*** CONNECTED TO DEVICE", level: LogLevel.info)
                 
                 
@@ -430,10 +440,10 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         if error != nil {
             logIt(message:"****** DISCONNECTION ERROR DETAILS: \(error!.localizedDescription)", level: LogLevel.error)
         }
-        hydr8Band = nil
         
         disconnectButton.setTitle("Disconnected", for: .normal)
         disconnectButton.isEnabled = false
+        connectButton.isEnabled = true
         
     }
     
@@ -473,9 +483,16 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             for service in services {
                 logIt(message:"Discovered service: \r\thash: \(service.hash)\r\tisPrimary: \(service.isPrimary)\r\tuuid: \(service.uuid)", level: LogLevel.debug)
                 
+                
                 // If we found a service, discover the characteristics for those services.
                 if (service.uuid == CBUUID(string: SensorTagDevice.TemperatureServiceUUID)) {
-                    logIt(message:"\tDiscovering characteristics for temperature.", level: LogLevel.debug)
+                    logIt(message:"\tDiscovering characteristics for temperature.", level: LogLevel.info)
+                    peripheral.discoverCharacteristics(nil, for: service)
+                }
+                
+                // If we found a service, discover the characteristics for those services.
+                if (service.uuid == CBUUID(string: SensorTagDevice.AccelerometerServiceUUID)) {
+                    logIt(message:"\tDiscovering characteristics for accelerometer.", level: LogLevel.info)
                     peripheral.discoverCharacteristics(nil, for: service)
                 }
             }
@@ -502,8 +519,8 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             return
         }
         
-        logIt(message:"Discovered serivce: \(service.uuid).", level: LogLevel.info)
-
+        logIt(message:"Discovered service: \(service.uuid).", level: LogLevel.info)
+        
         if (service.uuid == CBUUID(string: SensorTagDevice.AccelerometerServiceUUID)) {
             logIt(message:"Discovered characteristic for accelerometer.", level: LogLevel.info)
             
@@ -529,10 +546,10 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
                     
                 }
             }
-
+            
         }
         
-        /*
+        
         if (service.uuid == CBUUID(string: SensorTagDevice.TemperatureServiceUUID)) {
             logIt(message:"Discovered characteristic for temperature.", level: LogLevel.debug)
             
@@ -555,11 +572,10 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
                         logIt(message:"Enable the IR Temperature Sensor.", level: LogLevel.info)
                         sensorTag?.writeValue(enableBytes as Data, for: characteristic, type: .withResponse)
                     }
-
+                    
                 }
             }
         }
-         */
         
     }
     
@@ -620,10 +636,13 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         if let dataBytes = characteristic.value {
             if characteristic.uuid == CBUUID(string: SensorTagDevice.TemperatureDataUUID) {
                 displayTemperature(data: dataBytes as NSData)
-            } else if characteristic.uuid == CBUUID(string: SensorTagDevice.HumidityDataUUID) {
-                //displayHumidity(data: dataBytes as NSData)
+            } else if characteristic.uuid == CBUUID(string: SensorTagDevice.AccelerometerDataUUID) {
+                displayMovement(data: dataBytes as NSData)
             }
+            
         }
+        
+        
     }
     
     func displayTemperature(data:NSData) {
@@ -661,6 +680,72 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         if UIApplication.shared.applicationState == .active {
             sensorValueTextField.text = " \(ambientTempF) F"
         }
+    }
+    
+    func displayMovement(data:NSData) {
+        // We'll get four bytes of data back, so we divide the byte count by two
+        // because we're creating an array that holds two 16-bit (two-byte) values
+        let dataLength = data.length / MemoryLayout<UInt16>.size
+        var dataArray = [UInt16](repeating: 0, count:dataLength)
+        data.getBytes(&dataArray, length: dataLength * MemoryLayout<Int16>.size)
+        
+        //The data consists of nine 16-bit signed values, one for each axis. The order in the data is Gyroscope, Accelerometer, Magnetomer. [0,1,2] Gyroscope; [3,4,5] Accelerometer; [6,7,8] Magnetometer
+        
+        //Gyrometer
+        
+        /*
+         let allGyroValues = SensorTag.getGyroscopeData(characteristic.value!)
+         
+         self.gyroscopeX = allGyroValues[0]
+         
+         self.gyroscopeY = allGyroValues[1]
+         
+         self.gyroscopeZ = allGyroValues[2]
+         
+         self.allSensorValues[9] = self.gyroscopeX
+         
+         self.allSensorValues[10] = self.gyroscopeY
+         
+         self.allSensorValues[11] = self.gyroscopeZ
+         
+         
+         
+         //Accelerometer
+         
+         let allAccelValues = SensorTag.getAccelerometerData(characteristic.value!)
+         
+         self.accelerometerX = allAccelValues[0]
+         
+         self.accelerometerY = allAccelValues[1]
+         
+         self.accelerometerZ = allAccelValues[2]
+         
+         self.allSensorValues[2] = self.accelerometerX
+         
+         self.allSensorValues[3] = self.accelerometerY
+         
+         self.allSensorValues[4] = self.accelerometerZ
+         
+         
+         
+         let allMagValues = SensorTag.getMagnetometerData(characteristic.value!)
+         
+         self.magnetometerX = allMagValues[0]
+         
+         self.magnetometerY = allMagValues[1]
+         
+         self.magnetometerZ = allMagValues[2]
+         
+         self.allSensorValues[6] = self.magnetometerX
+         
+         self.allSensorValues[7] = self.magnetometerY
+         
+         self.allSensorValues[8] = self.magnetometerZ
+         
+         if UIApplication.shared.applicationState == .active {
+         sensorValueTextField.text = " \(ambientTempF) F"
+         }
+         */
     }
     
     func convertCelciusToFahrenheit(celcius:Double) -> Double {
