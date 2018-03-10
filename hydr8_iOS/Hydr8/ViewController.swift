@@ -30,6 +30,10 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     var sensorTag: CBPeripheral?
     var galvanicCharacteristic:CBCharacteristic?
     var keepScanning = true
+
+    // Sensor Values
+    var movement: SensorTagMovement?
+
     
     // define our scanning interval times
     let timerPauseInterval:TimeInterval = 10.0
@@ -691,61 +695,12 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         
         //The data consists of nine 16-bit signed values, one for each axis. The order in the data is Gyroscope, Accelerometer, Magnetomer. [0,1,2] Gyroscope; [3,4,5] Accelerometer; [6,7,8] Magnetometer
         
-        //Gyrometer
+        // Gyrometer
+        self.movement = SensorTagMovement(data: dataArray)
         
-        /*
-         let allGyroValues = SensorTag.getGyroscopeData(characteristic.value!)
-         
-         self.gyroscopeX = allGyroValues[0]
-         
-         self.gyroscopeY = allGyroValues[1]
-         
-         self.gyroscopeZ = allGyroValues[2]
-         
-         self.allSensorValues[9] = self.gyroscopeX
-         
-         self.allSensorValues[10] = self.gyroscopeY
-         
-         self.allSensorValues[11] = self.gyroscopeZ
-         
-         
-         
-         //Accelerometer
-         
-         let allAccelValues = SensorTag.getAccelerometerData(characteristic.value!)
-         
-         self.accelerometerX = allAccelValues[0]
-         
-         self.accelerometerY = allAccelValues[1]
-         
-         self.accelerometerZ = allAccelValues[2]
-         
-         self.allSensorValues[2] = self.accelerometerX
-         
-         self.allSensorValues[3] = self.accelerometerY
-         
-         self.allSensorValues[4] = self.accelerometerZ
-         
-         
-         
-         let allMagValues = SensorTag.getMagnetometerData(characteristic.value!)
-         
-         self.magnetometerX = allMagValues[0]
-         
-         self.magnetometerY = allMagValues[1]
-         
-         self.magnetometerZ = allMagValues[2]
-         
-         self.allSensorValues[6] = self.magnetometerX
-         
-         self.allSensorValues[7] = self.magnetometerY
-         
-         self.allSensorValues[8] = self.magnetometerZ
-         
          if UIApplication.shared.applicationState == .active {
-         sensorValueTextField.text = " \(ambientTempF) F"
+            sensorValueTextField.text = " \(String(describing: movement))"
          }
-         */
     }
     
     func convertCelciusToFahrenheit(celcius:Double) -> Double {
