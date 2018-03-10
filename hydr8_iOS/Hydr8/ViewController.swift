@@ -495,8 +495,8 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
                 }
                 
                 // If we found a service, discover the characteristics for those services.
-                if (service.uuid == CBUUID(string: SensorTagDevice.AccelerometerServiceUUID)) {
-                    logIt(message:"\tDiscovering characteristics for accelerometer.", level: LogLevel.info)
+                if (service.uuid == CBUUID(string: SensorTagDevice.MovementServiceUUID)) {
+                    logIt(message:"\tDiscovering characteristics for movement.", level: LogLevel.info)
                     peripheral.discoverCharacteristics(nil, for: service)
                 }
             }
@@ -523,28 +523,30 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             return
         }
         
-        logIt(message:"Discovered service: \(service.uuid).", level: LogLevel.info)
+        logIt(message:"Discovered characteristics for service: \(service.uuid).", level: LogLevel.info)
         
-        if (service.uuid == CBUUID(string: SensorTagDevice.AccelerometerServiceUUID)) {
-            logIt(message:"Discovered characteristic for accelerometer.", level: LogLevel.info)
+        if (service.uuid == CBUUID(string: SensorTagDevice.MovementServiceUUID)) {
+            logIt(message:"Discovered characteristic for movement.", level: LogLevel.info)
             
             if let characteristics = service.characteristics {
-                var enableValue:UInt8 = 1
-                let enableBytes = NSData(bytes: &enableValue, length: MemoryLayout<UInt8>.size)
+                var enableValue:UInt16 = 0xFF
+                let enableBytes = NSData(bytes: &enableValue, length: MemoryLayout<UInt16>.size)
                 
                 for characteristic in characteristics {
-                    
+                    logIt(message:"Characteristic: \(characteristic) ", level: LogLevel.info)
+                    sensorTag?.setNotifyValue(true, for: characteristic)
+
                     // Accelerometer Data Characteristic
-                    if characteristic.uuid == CBUUID(string: SensorTagDevice.AccelerometerDataUUID) {
-                        // Enable the IR Temperature Sensor notifications
-                        logIt(message:"Enable the Accelerometer notifications.", level: LogLevel.info)
+                    if characteristic.uuid == CBUUID(string: SensorTagDevice.MovementNotificationUUID) {
+                        // Enable the Movement Sensor notifications
+                        logIt(message:"Enable the Movement notifications.", level: LogLevel.info)
                         accelerometerCharacteristic = characteristic
                         sensorTag?.setNotifyValue(true, for: characteristic)
                     }
                     
                     // Accelerometer Configuration Characteristic
-                    if characteristic.uuid == CBUUID(string: SensorTagDevice.AccelerometerConfigUUID) {
-                        logIt(message:"Enable the Accelerometer Sensor.", level: LogLevel.info)
+                    if characteristic.uuid == CBUUID(string: SensorTagDevice.MovementConfigUUID) {
+                        logIt(message:"Enable the Movement Sensor.", level: LogLevel.info)
                         sensorTag?.writeValue(enableBytes as Data, for: characteristic, type: .withResponse)
                     }
                     
@@ -596,7 +598,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
      If unsuccessful, the error parameter returns the cause of the failure.
      */
     func peripheral(_didUpdateValueFor characteristic: CBCharacteristic, error: NSError?) {
-        logIt(message:"\r> updating characteristic", level: LogLevel.detail)
+        logIt(message:"\r> updating characteristic", level: LogLevel.info)
         
         
         if error != nil {
@@ -639,8 +641,10 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         // extract the data from the characteristic's value property and display the value based on the characteristic type
         if let dataBytes = characteristic.value {
             if characteristic.uuid == CBUUID(string: SensorTagDevice.TemperatureDataUUID) {
+                logIt(message: "Got Temp", level: .debug)
                 displayTemperature(data: dataBytes as NSData)
-            } else if characteristic.uuid == CBUUID(string: SensorTagDevice.AccelerometerDataUUID) {
+            } else if characteristic.uuid == CBUUID(string: SensorTagDevice.MovementDataUUID) {
+                logIt(message: "Got Movement", level: .info)
                 displayMovement(data: dataBytes as NSData)
             }
             
@@ -682,7 +686,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
          */
         
         if UIApplication.shared.applicationState == .active {
-            sensorValueTextField.text = " \(ambientTempF) F"
+           sensorValueTextField.text = " \(ambientTempF) F"
         }
     }
     
@@ -699,7 +703,9 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         self.movement = SensorTagMovement(data: dataArray)
         
          if UIApplication.shared.applicationState == .active {
-            sensorValueTextField.text = " \(String(describing: movement))"
+            let message = "Movement \(String(describing: movement))"
+            sensorValueTextField.text = message
+            logIt(message: message, level: .info)
          }
     }
     

@@ -16,9 +16,15 @@ class SensorTagMovement: NSObject {
     static var MAGNOMETER_OFFSET = 2 * 3
 
     var gyroscopeValue: XyzCoordinate
-    var magnometerValue: XyzCoordinate
     var accelerometerValue: XyzCoordinate
+    var magnometerValue: XyzCoordinate
 
+    override var description : String {
+        get {
+            return "SensorTagMovement : gyro : `\(gyroscopeValue)\naccelerometer: \(accelerometerValue)\nmagnometer: \(magnometerValue)"
+        }
+    }
+    
     init (data: [UInt16]) {
         gyroscopeValue = XyzCoordinate(x: NSNumber(value: data[SensorTagMovement.GYRO_OFFSET+0]),
                                        y: NSNumber(value: data[SensorTagMovement.GYRO_OFFSET+1]),

@@ -9,12 +9,18 @@
 import Foundation
 
 
-class XyzCoordinate {
+class XyzCoordinate: NSObject {
 
     var xValue: NSNumber;
     var yValue: NSNumber;
     var zValue: NSNumber;
 
+    override var description : String {
+        get {
+            return "x: \(xValue), y: \(yValue), z: \(zValue)"
+        }
+    }
+    
     init (x:NSNumber, y:NSNumber, z:NSNumber) {
         xValue = x;
         yValue = y;

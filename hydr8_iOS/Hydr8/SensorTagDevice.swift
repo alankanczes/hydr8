@@ -9,7 +9,8 @@ import CoreBluetooth
 //------------------------------------------------------------------------
 // Information about Texas Instruments SensorTag UUIDs can be found at:
 // http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Sensors
-// For UUIDs, see" http://processors.wiki.ti.com/images/a/a8/BLE_SensorTag_GATT_Server.pdf
+// For UUIDs, see: http://processors.wiki.ti.com/images/a/a8/BLE_SensorTag_GATT_Server.pdf
+// For momvement sensor, see: http://processors.wiki.ti.com/index.php/CC2650_SensorTag_User's_Guide#Movement_Sensor
 //------------------------------------------------------------------------
 // From the TI documentation:
 //  The TI Base 128-bit UUID is: F0000000-0451-4000-B000-000000000000.
@@ -38,15 +39,12 @@ struct SensorTagDevice {
     static let HumidityDataUUID = "F000AA21-0451-4000-B000-000000000000"
     static let HumidityConfig = "F000AA22-0451-4000-B000-000000000000"
     
-    static let AccelerometerServiceUUID = "F000AA80-0451-4000-B000-000000000000"
-    static let AccelerometerDataUUID = "F000AA81-0451-4000-B000-000000000000"
-    static let AccelerometerConfigUUID = "F000AA82-0451-4000-B000-000000000000"
-    static let AccelerometerPeriodUUID = "F000AA83-0451-4000-B000-000000000000"
+    static let MovementServiceUUID = "F000AA80-0451-4000-B000-000000000000"
+    static let MovementNotificationUUID = "F0002902-0451-4000-B000-000000000000"
+    static let MovementDataUUID = "F000AA81-0451-4000-B000-000000000000"
+    static let MovementConfigUUID = "F000AA82-0451-4000-B000-000000000000"
+    static let MovementPeriodUUID = "F000AA83-0451-4000-B000-000000000000"
 
-    static let MagnetometerServiceUUID = "F000AA30-0451-4000-B000-000000000000"
-    static let MagnetometerDataUUID = "F000AA31-0451-4000-B000-000000000000"
-    static let MagnetometerConfigUUID = "F000AA32-0451-4000-B000-000000000000"
-    
     static let SensorDataIndexTempInfrared = 0
     static let SensorDataIndexTempAmbient = 1
     static let SensorDataIndexHumidityTemp = 0
