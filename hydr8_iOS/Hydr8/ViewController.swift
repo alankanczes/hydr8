@@ -46,7 +46,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     var lastGalvanicResponse:Int!
     
     var temperatureCharacteristic:CBCharacteristic?
-    var accelerometerCharacteristic:CBCharacteristic?
+    var movementCharacteristic:CBCharacteristic?
     
     // Database vars
     // Log into cloudkit
@@ -338,11 +338,11 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             as? NSString
         
         if (device != nil) {
-            logIt(message:"> SOMETHING FOUND! \(String(describing: device)) \(RSSI)", level: LogLevel.info)
+            logIt(message:"> SOMETHING FOUND! \(String(describing: device)) rssi:\(RSSI)", level: LogLevel.info)
         }
         
         if let peripheralName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
-            logIt(message:"NEXT PERIPHERAL\r\tNAME: \(peripheralName)\r\tUUID: \(peripheral.identifier.uuidString)", level: LogLevel.debug)
+            logIt(message:"NEXT PERIPHERAL\r\tNAME: \(peripheralName)\r\tUUID: \(peripheral.identifier.uuidString)", level: LogLevel.info)
             
             if peripheralName == Hydr8BandDevice.DeviceName {
                 logIt(message:"HYDR8 BAND FOUND! ADDING NOW!!!", level: LogLevel.debug)
@@ -367,7 +367,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
                 centralManager.connect(hydr8Band!, options: nil)
             }
             
-            if peripheralName == SensorTagDevice.DeviceName {
+            if peripheralName == SensorTag.DeviceName {
                 logIt(message:"SensorTagName \(peripheralName) FOUND! ADDING NOW!!!", level: LogLevel.info)
                 pauseScan()
                 sensorNameTextField.text = peripheralName
@@ -487,15 +487,17 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             for service in services {
                 logIt(message:"Discovered service: \r\thash: \(service.hash)\r\tisPrimary: \(service.isPrimary)\r\tuuid: \(service.uuid)", level: LogLevel.debug)
                 
+                // Check out service to see if it is valid
+                SensorTag.validService(service: service)
                 
                 // If we found a service, discover the characteristics for those services.
-                if (service.uuid == CBUUID(string: SensorTagDevice.TemperatureServiceUUID)) {
+                if (service.uuid == CBUUID(string: SensorTag.TemperatureServiceUUID)) {
                     logIt(message:"\tDiscovering characteristics for temperature.", level: LogLevel.info)
                     peripheral.discoverCharacteristics(nil, for: service)
                 }
                 
                 // If we found a service, discover the characteristics for those services.
-                if (service.uuid == CBUUID(string: SensorTagDevice.MovementServiceUUID)) {
+                if (service.uuid == CBUUID(string: SensorTag.MovementServiceUUID)) {
                     logIt(message:"\tDiscovering characteristics for movement.", level: LogLevel.info)
                     peripheral.discoverCharacteristics(nil, for: service)
                 }
@@ -525,7 +527,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         
         logIt(message:"Discovered characteristics for service: \(service.uuid).", level: LogLevel.info)
         
-        if (service.uuid == CBUUID(string: SensorTagDevice.MovementServiceUUID)) {
+        if (service.uuid == CBUUID(string: SensorTag.MovementServiceUUID)) {
             logIt(message:"Discovered characteristic for movement.", level: LogLevel.info)
             
             if let characteristics = service.characteristics {
@@ -533,20 +535,29 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
                 let enableBytes = NSData(bytes: &enableValue, length: MemoryLayout<UInt16>.size)
                 
                 for characteristic in characteristics {
-                    logIt(message:"Characteristic: \(characteristic) ", level: LogLevel.info)
+                    //logIt(message:"Characteristic: \(characteristic) ", level: LogLevel.info)
                     sensorTag?.setNotifyValue(true, for: characteristic)
+                    //logIt(message:"Characteristic: \(characteristic) ", level: LogLevel.info)
 
-                    // Accelerometer Data Characteristic
-                    if characteristic.uuid == CBUUID(string: SensorTagDevice.MovementNotificationUUID) {
+                    // Movement Notification Characteristic
+                    if characteristic.uuid == CBUUID(string: SensorTag.NotificationUUID) {
                         // Enable the Movement Sensor notifications
                         logIt(message:"Enable the Movement notifications.", level: LogLevel.info)
-                        accelerometerCharacteristic = characteristic
+                        movementCharacteristic = characteristic
                         sensorTag?.setNotifyValue(true, for: characteristic)
                     }
                     
-                    // Accelerometer Configuration Characteristic
-                    if characteristic.uuid == CBUUID(string: SensorTagDevice.MovementConfigUUID) {
-                        logIt(message:"Enable the Movement Sensor.", level: LogLevel.info)
+                    // Movement Configuration Characteristic
+                    if characteristic.uuid == CBUUID(string: SensorTag.MovementConfigUUID) {
+                        logIt(message:"Enable all of the movement sensors.", level: LogLevel.info)
+                        sensorTag?.writeValue(enableBytes as Data, for: characteristic, type: .withResponse)
+                    }
+                    
+                    // Movement Period Characteristic
+                    if characteristic.uuid == CBUUID(string: SensorTag.MovementPeriodUUID) {
+                        enableValue = 0x0A
+                        let enableBytes = NSData(bytes: &enableValue, length: MemoryLayout<UInt16>.size)
+                        logIt(message:"Set notification period to: \(enableValue) ", level: LogLevel.info)
                         sensorTag?.writeValue(enableBytes as Data, for: characteristic, type: .withResponse)
                     }
                     
@@ -556,7 +567,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
         
         
-        if (service.uuid == CBUUID(string: SensorTagDevice.TemperatureServiceUUID)) {
+        if (service.uuid == CBUUID(string: SensorTag.TemperatureServiceUUID)) {
             logIt(message:"Discovered characteristic for temperature.", level: LogLevel.debug)
             
             if let characteristics = service.characteristics {
@@ -566,7 +577,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
                 for characteristic in characteristics {
                     
                     // Temperature Data Characteristic
-                    if characteristic.uuid == CBUUID(string: SensorTagDevice.TemperatureDataUUID) {
+                    if characteristic.uuid == CBUUID(string: SensorTag.TemperatureDataUUID) {
                         // Enable the IR Temperature Sensor notifications
                         logIt(message:"Enable the IR Temperature Sensor notifications.", level: LogLevel.info)
                         temperatureCharacteristic = characteristic
@@ -574,7 +585,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
                     }
                     
                     // Temperature Configuration Characteristic
-                    if characteristic.uuid == CBUUID(string: SensorTagDevice.TemperatureConfig) {
+                    if characteristic.uuid == CBUUID(string: SensorTag.TemperatureConfigUUID) {
                         logIt(message:"Enable the IR Temperature Sensor.", level: LogLevel.info)
                         sensorTag?.writeValue(enableBytes as Data, for: characteristic, type: .withResponse)
                     }
@@ -640,10 +651,10 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         
         // extract the data from the characteristic's value property and display the value based on the characteristic type
         if let dataBytes = characteristic.value {
-            if characteristic.uuid == CBUUID(string: SensorTagDevice.TemperatureDataUUID) {
+            if characteristic.uuid == CBUUID(string: SensorTag.TemperatureDataUUID) {
                 logIt(message: "Got Temp", level: .debug)
                 displayTemperature(data: dataBytes as NSData)
-            } else if characteristic.uuid == CBUUID(string: SensorTagDevice.MovementDataUUID) {
+            } else if characteristic.uuid == CBUUID(string: SensorTag.MovementDataUUID) {
                 logIt(message: "Got Movement", level: .info)
                 displayMovement(data: dataBytes as NSData)
             }
@@ -667,14 +678,14 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             logIt(message: "\(i):\(nextInt)", level: LogLevel.detail)
         }
         
-        let rawAmbientTemp:UInt16 = dataArray[SensorTagDevice.SensorDataIndexTempAmbient]
+        let rawAmbientTemp:UInt16 = dataArray[SensorTag.SensorDataIndexTempAmbient]
         let ambientTempC = Double(rawAmbientTemp) / 128.0
         let ambientTempF = convertCelciusToFahrenheit(celcius: ambientTempC)
         logIt(message: "*** AMBIENT TEMPERATURE SENSOR (C/F): \(ambientTempC), \(ambientTempF)", level: LogLevel.detail);
         
         // Device also retrieves an infrared temperature sensor value, which we don't use in this demo.
         // However, for instructional purposes, here's how to get at it to compare to the ambient temperature:
-        let rawInfraredTemp:UInt16 = dataArray[SensorTagDevice.SensorDataIndexTempInfrared]
+        let rawInfraredTemp:UInt16 = dataArray[SensorTag.SensorDataIndexTempInfrared]
         let infraredTempC = Double(rawInfraredTemp) / 128.0
         let infraredTempF = convertCelciusToFahrenheit(celcius: infraredTempC)
         logIt(message: "*** INFRARED TEMPERATURE SENSOR (C/F): \(infraredTempC), \(infraredTempF)", level: LogLevel.detail);

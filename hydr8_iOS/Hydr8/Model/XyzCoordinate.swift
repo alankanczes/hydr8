@@ -17,7 +17,7 @@ class XyzCoordinate: NSObject {
 
     override var description : String {
         get {
-            return "x: \(xValue), y: \(yValue), z: \(zValue)"
+            return "[\(xValue), \(yValue), \(zValue)]"
         }
     }
     

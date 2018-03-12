@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		E720A31B1FF756F30006F399 /* Hydr8BandDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = E720A31A1FF756F30006F399 /* Hydr8BandDevice.swift */; };
 		E73412051FF442E2001ACF83 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E73412041FF442E2001ACF83 /* CoreBluetooth.framework */; };
-		E73A6AAA2015192C00AE85CB /* SensorTagDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73A6AA92015192C00AE85CB /* SensorTagDevice.swift */; };
 		E7594C5D20267CCE006C763A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7594C5C20267CCE006C763A /* Log.swift */; };
 		E76ECB5C203B589D003D24CD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76ECB5B203B589D003D24CD /* CloudKit.framework */; };
 		E7A94FB3205473FC00CE2B6F /* SensorTagMovement.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A94FB2205473FC00CE2B6F /* SensorTagMovement.swift */; };
 		E7A94FB52054759A00CE2B6F /* XyzCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A94FB42054759A00CE2B6F /* XyzCoordinate.swift */; };
+		E7A94FCA2055A36D00CE2B6F /* SensorTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A94FC92055A36D00CE2B6F /* SensorTag.swift */; };
 		E7F0ECD41FCA1E0200F97EE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F0ECD31FCA1E0200F97EE9 /* AppDelegate.swift */; };
 		E7F0ECD61FCA1E0200F97EE9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F0ECD51FCA1E0200F97EE9 /* ViewController.swift */; };
 		E7F0ECD91FCA1E0200F97EE9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7F0ECD71FCA1E0200F97EE9 /* Main.storyboard */; };
@@ -38,12 +38,12 @@
 /* Begin PBXFileReference section */
 		E720A31A1FF756F30006F399 /* Hydr8BandDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hydr8BandDevice.swift; sourceTree = "<group>"; };
 		E73412041FF442E2001ACF83 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
-		E73A6AA92015192C00AE85CB /* SensorTagDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTagDevice.swift; sourceTree = "<group>"; };
 		E7594C5C20267CCE006C763A /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		E76ECB5A203B5899003D24CD /* Hydr8.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Hydr8.entitlements; sourceTree = "<group>"; };
 		E76ECB5B203B589D003D24CD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		E7A94FB2205473FC00CE2B6F /* SensorTagMovement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTagMovement.swift; sourceTree = "<group>"; };
 		E7A94FB42054759A00CE2B6F /* XyzCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XyzCoordinate.swift; sourceTree = "<group>"; };
+		E7A94FC92055A36D00CE2B6F /* SensorTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTag.swift; sourceTree = "<group>"; };
 		E7F0ECD01FCA1E0200F97EE9 /* Hydr8.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hydr8.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7F0ECD31FCA1E0200F97EE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E7F0ECD51FCA1E0200F97EE9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -119,7 +119,6 @@
 				E7F0ECDC1FCA1E0200F97EE9 /* LaunchScreen.storyboard */,
 				E7F0ECDF1FCA1E0200F97EE9 /* Info.plist */,
 				E720A31A1FF756F30006F399 /* Hydr8BandDevice.swift */,
-				E73A6AA92015192C00AE85CB /* SensorTagDevice.swift */,
 				E7594C5C20267CCE006C763A /* Log.swift */,
 			);
 			path = Hydr8;
@@ -142,6 +141,7 @@
 				E7F4C576204CAA90005DFB7D /* PositionRecord.swift */,
 				E7A94FB2205473FC00CE2B6F /* SensorTagMovement.swift */,
 				E7A94FB42054759A00CE2B6F /* XyzCoordinate.swift */,
+				E7A94FC92055A36D00CE2B6F /* SensorTag.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -262,7 +262,7 @@
 			files = (
 				E7F4C575204CA951005DFB7D /* Model.swift in Sources */,
 				E7F4C577204CAA90005DFB7D /* PositionRecord.swift in Sources */,
-				E73A6AAA2015192C00AE85CB /* SensorTagDevice.swift in Sources */,
+				E7A94FCA2055A36D00CE2B6F /* SensorTag.swift in Sources */,
 				E720A31B1FF756F30006F399 /* Hydr8BandDevice.swift in Sources */,
 				E7A94FB3205473FC00CE2B6F /* SensorTagMovement.swift in Sources */,
 				E7594C5D20267CCE006C763A /* Log.swift in Sources */,
