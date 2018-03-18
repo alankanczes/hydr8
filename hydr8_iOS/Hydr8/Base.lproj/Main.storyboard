@@ -18,24 +18,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vitruvian2" translatesAutoresizingMaskIntoConstraints="NO" id="XSk-Nd-AvG" userLabel="Water Image View">
+                            <imageView autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Vitruvian" translatesAutoresizingMaskIntoConstraints="NO" id="XSk-Nd-AvG" userLabel="Water Image View">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="FiF-zZ-rhb">
-                                <rect key="frame" x="0.0" y="39.999999999999972" width="414" height="476.33333333333326"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="FiF-zZ-rhb" userLabel="Full Stack View">
+                                <rect key="frame" x="0.0" y="40" width="414" height="385.33333333333331"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sc6-Nb-3wz" userLabel="Sensor Name View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="314" height="30"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sensor:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4P7-K8-PCv" userLabel="Sensor Name Label">
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lhZ-49-XOc">
                                                 <rect key="frame" x="0.0" y="0.0" width="58.333333333333336" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="iR1-Yq-6Hl">
+                                                        <rect key="frame" x="0.0" y="0.0" width="58.333333333333336" height="30"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sensor:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4P7-K8-PCv" userLabel="Sensor Name Label">
+                                                                <rect key="frame" x="0.0" y="0.0" width="58.333333333333336" height="30"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
                                             <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="No Sensor Connected" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8QK-mx-mG2" userLabel="Sensor Name Text Field">
-                                                <rect key="frame" x="58.333333333333343" y="0.0" width="355.66666666666663" height="30"/>
+                                                <rect key="frame" x="58.333333333333329" y="0.0" width="255.66666666666669" height="30"/>
                                                 <accessibility key="accessibilityConfiguration">
                                                     <accessibilityTraits key="traits" notEnabled="YES"/>
                                                 </accessibility>
@@ -46,7 +56,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HFX-g9-MqI" userLabel="Sensor Value View">
-                                        <rect key="frame" x="0.0" y="30" width="414" height="30"/>
+                                        <rect key="frame" x="0.0" y="30" width="314" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LdK-AV-ICt" userLabel="Sensor Value Label">
                                                 <rect key="frame" x="0.0" y="0.0" width="46.666666666666664" height="30"/>
@@ -54,12 +64,17 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="None" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ySV-oL-OqP" userLabel="Sensor Value Text Field">
-                                                <rect key="frame" x="46.666666666666657" y="0.0" width="367.33333333333337" height="30"/>
-                                                <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="h1I-vu-SVW">
+                                                <rect key="frame" x="46.666666666666657" y="0.0" width="267.33333333333337" height="30"/>
+                                                <subviews>
+                                                    <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="None" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ySV-oL-OqP" userLabel="Sensor Value Text Field">
+                                                        <rect key="frame" x="0.0" y="0.0" width="267.33333333333331" height="30"/>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                </subviews>
+                                            </stackView>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kD0-hz-ipO" userLabel="Connection View">
@@ -85,7 +100,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="iAR-h3-AeX" userLabel="Log View">
-                                        <rect key="frame" x="0.0" y="89.999999999999972" width="414" height="386.33333333333326"/>
+                                        <rect key="frame" x="0.0" y="90" width="414" height="295.33333333333331"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qLH-Wc-a3P">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="20.333333333333332"/>
@@ -94,12 +109,12 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8F8-xj-boy">
-                                                <rect key="frame" x="0.0" y="20.333333333333343" width="414" height="366"/>
+                                                <rect key="frame" x="0.0" y="20.333333333333343" width="414" height="275"/>
                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="366" id="HZC-bQ-Quk"/>
+                                                    <constraint firstAttribute="height" constant="275" id="HZC-bQ-Quk"/>
                                                 </constraints>
-                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <connections>
@@ -112,10 +127,12 @@
                                     </stackView>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="kD0-hz-ipO" firstAttribute="centerX" secondItem="FiF-zZ-rhb" secondAttribute="centerX" id="3dD-Rw-LiH"/>
+                                    <constraint firstAttribute="trailing" secondItem="HFX-g9-MqI" secondAttribute="trailing" constant="100" id="4Yr-ca-0bM"/>
                                     <constraint firstItem="Sc6-Nb-3wz" firstAttribute="centerX" secondItem="FiF-zZ-rhb" secondAttribute="centerX" id="ChN-w9-ONG"/>
                                     <constraint firstItem="HFX-g9-MqI" firstAttribute="centerX" secondItem="FiF-zZ-rhb" secondAttribute="centerX" id="Q6i-aF-pI8"/>
-                                    <constraint firstItem="kD0-hz-ipO" firstAttribute="trailing" secondItem="Sc6-Nb-3wz" secondAttribute="trailing" id="RIW-oA-HVX"/>
-                                    <constraint firstItem="iAR-h3-AeX" firstAttribute="trailing" secondItem="kD0-hz-ipO" secondAttribute="trailing" id="zb4-NR-zJY"/>
+                                    <constraint firstItem="iAR-h3-AeX" firstAttribute="centerX" secondItem="FiF-zZ-rhb" secondAttribute="centerX" id="tVG-I6-LEe"/>
+                                    <constraint firstAttribute="trailing" secondItem="Sc6-Nb-3wz" secondAttribute="trailing" constant="100" id="vTY-pv-eA6"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -149,6 +166,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="vitruvian2" width="431" height="427"/>
+        <image name="Vitruvian" width="532" height="944"/>
     </resources>
 </document>

@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "vitruvian2.gif",
+      "filename" : "vitruvian.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "vitruvian-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "vitruvian-2.png",
       "scale" : "3x"
     }
   ],
