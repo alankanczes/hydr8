@@ -62,6 +62,10 @@ class SensorTag: NSObject {
     // Primary
     //static let PrimaryServiceUUID = "F000AA80-0451-4000-B000-000000000000"
     
+    // Misc Services
+    static let DeviceInformationServiceUUID = "180A"
+    static let BatteryServiceUUID = "180F"
+
     // Movement
     static let MovementServiceUUID = "F000AA80-0451-4000-B000-000000000000"
     static let MovementDataUUID = "F000AA81-0451-4000-B000-000000000000"
@@ -80,7 +84,7 @@ class SensorTag: NSObject {
     static let HumidityPeriodUUID = "F000AA23-0451-4000-B000-000000000000"
     
     // Barometer
-    static let BarometerServiceUUID = "F000AA41-0451-4000-B000-000000000000"
+    static let BarometerServiceUUID = "F000AA40-0451-4000-B000-000000000000"
     static let BarometerDataUUID = "F000AA41-0451-4000-B000-000000000000"
     static let BarometerConfigUUID = "F000AA22-0451-4000-B000-000000000000"
     static let BarometerPeriodUUID = "F000AA22-0451-4000-B000-000000000000"
@@ -92,8 +96,25 @@ class SensorTag: NSObject {
     static let OpticalSensorPeriodUUID = "F000A732-0451-4000-B000-000000000000"
     
     // Key Sensor - Bit 0: left key (user button), Bit 1: right key (power button), Bit 2: reed relay
+    static let KeySensorServiceUUID = "FFE0"
     static let KeySensorDataUUID = "F000FFE1-0451-4000-B000-000000000000"
     
+    // Register Service
+    static let RegisterServiceUUID = "F000AC00-0451-4000-B000-000000000000"
+
+    // Connection Control Service
+    static let ConnectionControlServiceUUID = "F000CCC0-0451-4000-B000-000000000000"
+    
+    // OAD Service
+    static let OADServiceUUID = "F000FFC0-0451-4000-B000-000000000000"
+    
+    // BAD FORMAT static let SerialNumberCharacteristic = "02:12:00:25:2A"
+    static let SerialNumberCharacteristicValue = "02:12:00:25:2A"
+
+    // Device Information Characteristics
+    static let SystemIdCharacteristicUUID = "2A23"
+    static let SerialNumberCharacteristicUUID = "2A25"
+
     // IO Service
     static let IOServiceUUID = "F000AA64-0451-4000-B000-000000000000"
     static let IODataUUID = "F000AA65-0451-4000-B000-000000000000"
@@ -106,6 +127,12 @@ class SensorTag: NSObject {
         SensorTag.BarometerServiceUUID : "BarometerServiceUUID",
         SensorTag.OpticalSensorServiceUUID : "OpticalSensorServiceUUID",
         SensorTag.IOServiceUUID : "IOServiceUUID",
+        SensorTag.BatteryServiceUUID : "BatteryServiceUUID",
+        SensorTag.DeviceInformationServiceUUID : "DeviceServiceUUID",
+        SensorTag.KeySensorServiceUUID : "KeySensorServiceUUID",
+        SensorTag.RegisterServiceUUID : "RegisterServiceUUID",
+        SensorTag.ConnectionControlServiceUUID : "ConnectionControlServiceUUID",
+        SensorTag.OADServiceUUID : "OADServiceUUID",
         ]
     
     static let DataCharacteristics = [
@@ -131,52 +158,33 @@ class SensorTag: NSObject {
     static let SensorDataIndexHumidityTemp = 0
     static let SensorDataIndexHumidity = 1
     
-    /*
-     // Service UUIDs
-     static let IRTemperatureServiceUUID = CBUUID(string: "F000AA00-0451-4000-B000-000000000000")
-     static let AccelerometerServiceUUID = CBUUID(string: "F000AA10-0451-4000-B000-000000000000")
-     static let HumidityServiceUUID      = CBUUID(string: "F000AA20-0451-4000-B000-000000000000")
-     static let MagnetometerServiceUUID  = CBUUID(string: "F000AA30-0451-4000-B000-000000000000")
-     static let BarometerServiceUUID     = CBUUID(string: "F000AA40-0451-4000-B000-000000000000")
-     static let GyroscopeServiceUUID     = CBUUID(string: "F000AA50-0451-4000-B000-000000000000")
-     
-     // OLD Characteristic UUIDs
-     static let IRTemperatureDataUUID   = CBUUID(string: "F000AA01-0451-4000-B000-000000000000")
-     static let IRTemperatureConfigUUID = CBUUID(string: "F000AA02-0451-4000-B000-000000000000")
-     static let AccelerometerDataUUID   = CBUUID(string: "F000AA11-0451-4000-B000-000000000000")
-     static let AccelerometerConfigUUID = CBUUID(string: "F000AA12-0451-4000-B000-000000000000")
-     static let HumidityDataUUID        = CBUUID(string: "F000AA21-0451-4000-B000-000000000000")
-     static let HumidityConfigUUID      = CBUUID(string: "F000AA22-0451-4000-B000-000000000000")
-     static let MagnetometerDataUUID    = CBUUID(string: "F000AA31-0451-4000-B000-000000000000")
-     static let MagnetometerConfigUUID  = CBUUID(string: "F000AA32-0451-4000-B000-000000000000")
-     static let BarometerDataUUID       = CBUUID(string: "F000AA41-0451-4000-B000-000000000000")
-     static let BarometerConfigUUID     = CBUUID(string: "F000AA42-0451-4000-B000-000000000000")
-     static let GyroscopeDataUUID       = CBUUID(string: "F000AA51-0451-4000-B000-000000000000")
-     static let GyroscopeConfigUUID     = CBUUID(string: "F000AA52-0451-4000-B000-000000000000")
-     */
-    
     // Check name of device from advertisement data
     class func sensorTagFound (advertisementData: [String : Any]!) -> Bool {
         if (advertisementData["kCBAdvDataLocalName"]) != nil {
             let advData = advertisementData["kCBAdvDataLocalName"] as! String
-            print ("Checking... found: \(advData)")
+            Log.logIt ("Checking... found: \(advData)")
             
             return(advData == SensorTag.DeviceName)
         }
         return false
     }
     
+    // Check if the service has a valid UUID
+    class func serviceName (_ service : CBService) -> String? {
+        if let serviceName = Services[service.uuid.uuidString] {
+            return serviceName
+        }
+        return nil
+    }
+
     
     // Check if the service has a valid UUID
     class func validService (service : CBService) -> Bool {
         
+        Log.logIt ("Checking for  Service uuid \(service.uuid.uuidString) \(service)")
+
         if let serviceName = Services[service.uuid.uuidString] {
-            print ("Service name \(serviceName) found for UUID \(service.uuid)")
-            /*
-             service.uuid == IRTemperatureServiceUUID || service.uuid == AccelerometerServiceUUID ||
-             service.uuid == HumidityServiceUUID || service.uuid == MagnetometerServiceUUID ||
-             service.uuid == BarometerServiceUUID || service.uuid == GyroscopeServiceUUID
-             */
+            Log.logIt ("Service name \(serviceName) found for UUID \(service.uuid)")
             return true
         }  else {
             return false
@@ -187,7 +195,7 @@ class SensorTag: NSObject {
     // Check if the characteristic has a valid data UUID
     class func validDataCharacteristic (characteristic : CBCharacteristic) -> Bool {
         if let characteristicName = DataCharacteristics[characteristic.uuid.uuidString] {
-            print ("Data Characteristic name \(characteristicName) found for UUID \(characteristic.uuid)")
+            Log.logIt ("Data Characteristic name \(characteristicName) found for UUID \(characteristic.uuid)")
             return true
         }
         else {
@@ -199,7 +207,7 @@ class SensorTag: NSObject {
     // Check if the characteristic has a valid config UUID
     class func validConfigCharacteristic (characteristic : CBCharacteristic) -> Bool {
         if let characteristicName = ConfigCharacteristics[characteristic.uuid.uuidString] {
-            print ("Config Characteristic name \(characteristicName) found for UUID \(characteristic.uuid)")
+             Log.logIt("Config Characteristic name \(characteristicName) found for UUID \(characteristic.uuid)")
             return true
         }
         else {

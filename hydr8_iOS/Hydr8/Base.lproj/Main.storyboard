@@ -129,8 +129,6 @@
                                 <constraints>
                                     <constraint firstItem="kD0-hz-ipO" firstAttribute="centerX" secondItem="FiF-zZ-rhb" secondAttribute="centerX" id="3dD-Rw-LiH"/>
                                     <constraint firstAttribute="trailing" secondItem="HFX-g9-MqI" secondAttribute="trailing" constant="100" id="4Yr-ca-0bM"/>
-                                    <constraint firstItem="Sc6-Nb-3wz" firstAttribute="centerX" secondItem="FiF-zZ-rhb" secondAttribute="centerX" id="ChN-w9-ONG"/>
-                                    <constraint firstItem="HFX-g9-MqI" firstAttribute="centerX" secondItem="FiF-zZ-rhb" secondAttribute="centerX" id="Q6i-aF-pI8"/>
                                     <constraint firstItem="iAR-h3-AeX" firstAttribute="centerX" secondItem="FiF-zZ-rhb" secondAttribute="centerX" id="tVG-I6-LEe"/>
                                     <constraint firstAttribute="trailing" secondItem="Sc6-Nb-3wz" secondAttribute="trailing" constant="100" id="vTY-pv-eA6"/>
                                 </constraints>
