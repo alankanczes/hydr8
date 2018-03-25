@@ -158,6 +158,13 @@ class SensorTag: NSObject {
     static let SensorDataIndexHumidityTemp = 0
     static let SensorDataIndexHumidity = 1
     
+    let peripheral: CBPeripheral
+    
+    /* Constructor taking only a UUID */
+    init(_ peripheral: CBPeripheral) {
+        self.peripheral = peripheral
+    }
+    
     // Check name of device from advertisement data
     class func sensorTagFound (advertisementData: [String : Any]!) -> Bool {
         if (advertisementData["kCBAdvDataLocalName"]) != nil {
@@ -190,7 +197,6 @@ class SensorTag: NSObject {
             return false
         }
     }
-    
     
     // Check if the characteristic has a valid data UUID
     class func validDataCharacteristic (characteristic : CBCharacteristic) -> Bool {
@@ -328,4 +334,9 @@ class SensorTag: NSObject {
         let zVal = Double(dataFromSensor[2]) * 500 / 65536
         return [xVal, yVal, zVal]
     }
+    
+    override public var description: String {
+        return "Device: \(self.peripheral.identifier.uuidString)"
+    }
+
 }

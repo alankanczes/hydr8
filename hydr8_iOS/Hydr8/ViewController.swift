@@ -21,11 +21,12 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     @IBOutlet weak var mainView: UIImageView!
     @IBOutlet weak var sensorValueLabel: UILabel!
     @IBOutlet weak var sensorValueTextField: UITextField!
-    
+    @IBOutlet weak var deviceTable: UITableView!
     
     // Core Bluetooth properties
     var centralManager: CBCentralManager!
     var sensorTag: CBPeripheral?
+    var sensorTags: [SensorTag] = []
     var keepScanning = true
     
     // Sensor Values
@@ -115,12 +116,6 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
                     //self.logIt(message: "Loading record (\(positionX), \(positionY), \(positionZ))", logLevel: LogLevel.info)
                     print("Loading record (\(positionX), \(positionY), \(positionZ))")
                 }
-                //let queue = OperationQueue.main
-                /*
-                 queue.addOperationWithBlock() {
-                 self.tableView.reloadData()
-                 }
-                 */
             }
         }
         
@@ -170,7 +165,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         if sensorTag == nil {
             Log.logIt("*** Nothing is connected, allow for scanning.", LogLevel.DETAIL)
         } else {
-            disconnectDevice()
+            //disconnectDevice()
         }
         
         sensorNameTextField.text = ""
@@ -183,13 +178,12 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         
     }
     
-    func disconnectDevice() {
-        Log.logIt("*** Disconnecting...", LogLevel.DEBUG)
+    func disconnectDevice(_ sensorTag:CBPeripheral?) {
+        Log.logIt("*** Disconnecting device: \(String(describing: sensorTag))", LogLevel.DEBUG)
         
         if sensorTag != nil {
             Log.logIt("*** Disconnecting sensorTag...", LogLevel.DEBUG)
             centralManager.cancelPeripheralConnection(sensorTag!)
-            sensorTag = nil
         }
         
         /* REVIEW ME
@@ -341,6 +335,11 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             
             if peripheralName == SensorTag.DeviceName {
                 Log.logIt("SensorTagName \(peripheralName) FOUND! ADDING NOW!!!", LogLevel.INFO)
+                sensorTags.append(SensorTag(peripheral))
+                deviceTable.reloadData()
+                
+                printSensorTags()
+                
                 pauseScan()
                 sensorNameTextField.text = peripheralName
                 
@@ -511,17 +510,21 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             for characteristic in characteristics {
                 
                 Log.logIt("Characteristic: \(characteristic) value: \(String(describing: characteristic.value)))", LogLevel.INFO)
+                
+                // SET ALL PERIPHERALS TO NOTIFY!
                 sensorTag?.setNotifyValue(true, for: characteristic)
                 Log.logIt("Setting notify to true for \(characteristic.uuid.uuidString)")
                 
                 if (characteristic.uuid.uuidString == SensorTag.SystemIdCharacteristicUUID) {
                     if let value = characteristic.value {
                         // Getting Data
-                        let data = value.base64EncodedString()
-                        Log.logIt("Unpacked value for System ID Characteristic: \(value), data: \(data)")
-                        let convertedString = NSString(data: value, encoding: String.Encoding.utf8.rawValue)
+                        let data = value as NSData
+                        let dataLength = value.count / MemoryLayout<UInt8>.size
+                        var dataArray = [UInt8](repeating: 0, count:dataLength)
+                        data.getBytes(&dataArray, length: dataLength * MemoryLayout<UInt8>.size)
                         
-                        Log.logIt("Converted String = \(String(describing: convertedString))")
+                        Log.logIt("Unpacked value for System ID Characteristic: \(value), dataArray: \(dataArray)")
+                        
                     } else {
                         Log.logIt("No value to unpack for System ID Characteristic. :(")
                     }
@@ -708,7 +711,52 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         let fahrenheit = (celcius * 1.8) + Double(32)
         return fahrenheit
     }
-
+    
+    
+    func printSensorTags() {
+        print ("SensorTags: ")
+        for (sensorTag) in sensorTags {
+            print("Tag: \(sensorTag.peripheral.identifier.uuid)")
+        }
+    }
     
 }
 
+// Setup device table management
+extension ViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return sensorTags.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DeviceCell", for: indexPath)
+        let sensorTag = sensorTags[indexPath.row]
+        cell.textLabel?.text = sensorTag.description
+        cell.detailTextLabel?.text = "SensorTag"
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let sensorTag = sensorTags[indexPath.row]
+            disconnectDevice(sensorTag.peripheral);
+            sensorTags.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+}
+
+extension Data {
+    func copyBytes<T>(as _: T.Type) -> [T] {
+        return withUnsafeBytes { (bytes: UnsafePointer<T>) in
+            Array(UnsafeBufferPointer(start: bytes, count: count / MemoryLayout<T>.stride))
+        }
+    }
+}
