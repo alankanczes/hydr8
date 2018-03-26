@@ -99,7 +99,7 @@
                                             <constraint firstItem="1ZP-aw-vRy" firstAttribute="width" secondItem="Tge-Tc-hHr" secondAttribute="width" id="idg-rv-kSX"/>
                                         </constraints>
                                     </stackView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Nzb-mX-o8i">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" pagingEnabled="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Nzb-mX-o8i">
                                         <rect key="frame" x="0.0" y="90" width="414" height="128"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -148,7 +148,7 @@
                                                 <rect key="frame" x="0.0" y="20.333333333333314" width="414" height="275"/>
                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="275" id="ODG-Rq-wog"/>
+                                                    <constraint firstAttribute="height" constant="275" id="t0Y-sa-30Y"/>
                                                 </constraints>
                                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -165,7 +165,6 @@
                                 <constraints>
                                     <constraint firstItem="kD0-hz-ipO" firstAttribute="centerX" secondItem="FiF-zZ-rhb" secondAttribute="centerX" id="3dD-Rw-LiH"/>
                                     <constraint firstAttribute="trailing" secondItem="HFX-g9-MqI" secondAttribute="trailing" constant="100" id="4Yr-ca-0bM"/>
-                                    <constraint firstItem="Nzb-mX-o8i" firstAttribute="trailing" secondItem="kD0-hz-ipO" secondAttribute="trailing" id="mp4-5r-b21"/>
                                     <constraint firstItem="iAR-h3-AeX" firstAttribute="centerX" secondItem="FiF-zZ-rhb" secondAttribute="centerX" id="tVG-I6-LEe"/>
                                     <constraint firstAttribute="trailing" secondItem="Sc6-Nb-3wz" secondAttribute="trailing" constant="100" id="vTY-pv-eA6"/>
                                 </constraints>
