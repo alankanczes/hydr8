@@ -12,11 +12,11 @@ import UIKit
 
 
 enum LogLevel {
-    case DETAIL
-    case DEBUG
-    case INFO
-    case WARN
-    case ERROR
+    case detail
+    case debug
+    case info
+    case warn
+    case error
 }
 
 class Log {
@@ -35,7 +35,7 @@ class Log {
         }
     }
     
-    static func logIt(_ message: String, _ logLevel: LogLevel = LogLevel.INFO) {
+    static func write(_ message: String, _ logLevel: LogLevel = LogLevel.info) {
         
         if Log.visibleLogLevels.contains(logLevel) {
             print(message)

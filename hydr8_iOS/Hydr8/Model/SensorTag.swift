@@ -97,7 +97,7 @@ class SensorTag: NSObject {
     
     // Key Sensor - Bit 0: left key (user button), Bit 1: right key (power button), Bit 2: reed relay
     static let KeySensorServiceUUID = "FFE0"
-    static let KeySensorDataUUID = "F000FFE1-0451-4000-B000-000000000000"
+    static let KeySensorDataUUID = "FFE1"
     
     // Register Service
     static let RegisterServiceUUID = "F000AC00-0451-4000-B000-000000000000"
@@ -169,7 +169,7 @@ class SensorTag: NSObject {
     class func sensorTagFound (advertisementData: [String : Any]!) -> Bool {
         if (advertisementData["kCBAdvDataLocalName"]) != nil {
             let advData = advertisementData["kCBAdvDataLocalName"] as! String
-            Log.logIt ("Checking... found: \(advData)")
+            Log.write ("Checking... found: \(advData)")
             
             return(advData == SensorTag.DeviceName)
         }
@@ -188,10 +188,10 @@ class SensorTag: NSObject {
     // Check if the service has a valid UUID
     class func validService (service : CBService) -> Bool {
         
-        Log.logIt ("Checking for  Service uuid \(service.uuid.uuidString) \(service)")
+        Log.write ("Checking for Service uuid \(service.uuid.uuidString) \(service)", .detail)
 
         if let serviceName = Services[service.uuid.uuidString] {
-            Log.logIt ("Service name \(serviceName) found for UUID \(service.uuid)")
+            Log.write ("Service name \(serviceName) found for UUID \(service.uuid)", .detail)
             return true
         }  else {
             return false
@@ -201,7 +201,7 @@ class SensorTag: NSObject {
     // Check if the characteristic has a valid data UUID
     class func validDataCharacteristic (characteristic : CBCharacteristic) -> Bool {
         if let characteristicName = DataCharacteristics[characteristic.uuid.uuidString] {
-            Log.logIt ("Data Characteristic name \(characteristicName) found for UUID \(characteristic.uuid)")
+            Log.write ("Data Characteristic name \(characteristicName) found for UUID \(characteristic.uuid)", .detail)
             return true
         }
         else {
@@ -213,7 +213,7 @@ class SensorTag: NSObject {
     // Check if the characteristic has a valid config UUID
     class func validConfigCharacteristic (characteristic : CBCharacteristic) -> Bool {
         if let characteristicName = ConfigCharacteristics[characteristic.uuid.uuidString] {
-             Log.logIt("Config Characteristic name \(characteristicName) found for UUID \(characteristic.uuid)")
+             Log.write("Config Characteristic name \(characteristicName) found for UUID \(characteristic.uuid)", .detail)
             return true
         }
         else {
