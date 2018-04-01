@@ -34,7 +34,14 @@ class Log {
             Log.visibleLogLevels.insert(logLevel)
         }
     }
+
+    // Clear UI log textview, if it is available.
+    static func clear ()
+    {
+        log?.text = ""
+    }
     
+
     static func write(_ message: String, _ logLevel: LogLevel = LogLevel.info) {
         
         if Log.visibleLogLevels.contains(logLevel) {

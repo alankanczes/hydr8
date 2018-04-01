@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		E720A31B1FF756F30006F399 /* Hydr8BandDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = E720A31A1FF756F30006F399 /* Hydr8BandDevice.swift */; };
 		E73412051FF442E2001ACF83 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E73412041FF442E2001ACF83 /* CoreBluetooth.framework */; };
+		E74075A2206FF1F30084DF86 /* DeviceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74075A1206FF1F30084DF86 /* DeviceTableViewController.swift */; };
+		E74075A4206FF52B0084DF86 /* SensorTagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74075A3206FF52B0084DF86 /* SensorTagManager.swift */; };
 		E7594C5D20267CCE006C763A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7594C5C20267CCE006C763A /* Log.swift */; };
 		E76ECB5C203B589D003D24CD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76ECB5B203B589D003D24CD /* CloudKit.framework */; };
 		E7A94FB3205473FC00CE2B6F /* SensorTagMovement.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A94FB2205473FC00CE2B6F /* SensorTagMovement.swift */; };
@@ -38,6 +40,8 @@
 /* Begin PBXFileReference section */
 		E720A31A1FF756F30006F399 /* Hydr8BandDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hydr8BandDevice.swift; sourceTree = "<group>"; };
 		E73412041FF442E2001ACF83 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		E74075A1206FF1F30084DF86 /* DeviceTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTableViewController.swift; sourceTree = "<group>"; };
+		E74075A3206FF52B0084DF86 /* SensorTagManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTagManager.swift; sourceTree = "<group>"; };
 		E7594C5C20267CCE006C763A /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		E76ECB5A203B5899003D24CD /* Hydr8.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Hydr8.entitlements; sourceTree = "<group>"; };
 		E76ECB5B203B589D003D24CD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -113,6 +117,7 @@
 				E7F4C571204CA42A005DFB7D /* Model */,
 				E76ECB5A203B5899003D24CD /* Hydr8.entitlements */,
 				E7F0ECD31FCA1E0200F97EE9 /* AppDelegate.swift */,
+				E74075A1206FF1F30084DF86 /* DeviceTableViewController.swift */,
 				E7F0ECD51FCA1E0200F97EE9 /* ViewController.swift */,
 				E7F0ECD71FCA1E0200F97EE9 /* Main.storyboard */,
 				E7F0ECDA1FCA1E0200F97EE9 /* Assets.xcassets */,
@@ -142,6 +147,7 @@
 				E7A94FB2205473FC00CE2B6F /* SensorTagMovement.swift */,
 				E7A94FB42054759A00CE2B6F /* XyzCoordinate.swift */,
 				E7A94FC92055A36D00CE2B6F /* SensorTag.swift */,
+				E74075A3206FF52B0084DF86 /* SensorTagManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -191,7 +197,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0910;
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Alan Kanczes";
 				TargetAttributes = {
 					E7F0ECCF1FCA1E0200F97EE9 = {
@@ -261,10 +267,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7F4C575204CA951005DFB7D /* Model.swift in Sources */,
+				E74075A4206FF52B0084DF86 /* SensorTagManager.swift in Sources */,
 				E7F4C577204CAA90005DFB7D /* PositionRecord.swift in Sources */,
 				E7A94FCA2055A36D00CE2B6F /* SensorTag.swift in Sources */,
 				E720A31B1FF756F30006F399 /* Hydr8BandDevice.swift in Sources */,
 				E7A94FB3205473FC00CE2B6F /* SensorTagMovement.swift in Sources */,
+				E74075A2206FF1F30084DF86 /* DeviceTableViewController.swift in Sources */,
 				E7594C5D20267CCE006C763A /* Log.swift in Sources */,
 				E7F4C573204CA439005DFB7D /* UserInfo.swift in Sources */,
 				E7F0ECD61FCA1E0200F97EE9 /* ViewController.swift in Sources */,
@@ -325,6 +333,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -332,6 +341,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -383,6 +393,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -390,6 +401,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
