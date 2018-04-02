@@ -15,8 +15,7 @@ protocol ModelDelegate {
 class Model {
     
     static let share = Model()
-    static let PositionRecordType = "PositionRecordType"
-
+  
     var container: CKContainer!
     var publicDb: CKDatabase!
     var privateDb: CKDatabase!
@@ -26,7 +25,10 @@ class Model {
     // MARK: - Properties
     static let sharedInstance = Model()
     var delegate: ModelDelegate?
-    var items: [PositionRecord] = []
+    var positionTypes: [PositionType] = []
+    var sessionTypes: [SessionType] = []
+    var sessions: [Session] = []
+    var instructors: [Instructor] = []
     let userInfo: UserInfo
     
     // Define databases.
@@ -45,7 +47,7 @@ class Model {
     
     @objc func refresh() {
         
-        let query = CKQuery(recordType: "PostionRecordType", predicate: NSPredicate(value: true))
+        let query = CKQuery(recordType: "PostionType", predicate: NSPredicate(value: true))
         
         publicDb.perform(query, inZoneWith: nil) { [unowned self] results, error in
             
@@ -57,10 +59,10 @@ class Model {
                 return
             }
             
-            self.items.removeAll(keepingCapacity: true)
+            self.positionTypes.removeAll(keepingCapacity: true)
             
             for record in results! {
-                let positionRecord = PositionRecord(record: record, database: self.publicDb)
+                let positionTypeRecord = PositionType(record: record, database: self.publicDb)
                 self.items.append(positionRecord)
             }
             
@@ -70,9 +72,9 @@ class Model {
         }
     }
    
-    func fetchPositionRecords() {
+    func fetchPositionTypes() {
 
-        let query = CKQuery(recordType: Model.PositionRecordType, predicate: NSPredicate(value: true))
+        let query = CKQuery(recordType: PositionType.RecordType, predicate: NSPredicate(value: true))
 
         publicDb.perform(query, inZoneWith: nil) { [unowned self] results, error in
             if let error = error {
@@ -95,7 +97,7 @@ class Model {
         }
     }
     
-    func fetchPositions(completion: @escaping (_ results: [PositionRecord]?, _ error: NSError?) -> ()) {
+    func fetchSessions(completion: @escaping (_ results: [PositionRecord]?, _ error: NSError?) -> ()) {
     
         /*
         let predicate = NSPredicate(value :true)

@@ -120,7 +120,7 @@ class SensorTag: NSObject {
     static let IODataUUID = "F000AA65-0451-4000-B000-000000000000"
     static let IOConfigUUID = "F000AA66-0451-4000-B000-000000000000"
     
-    static let Services = [
+    static let ServiceNames = [
         SensorTag.MovementServiceUUID : "MovementServiceUUID",
         SensorTag.TemperatureServiceUUID :"TemperatureServiceUUID",
         SensorTag.HumidityServiceUUID : "HumidityServiceUUID",
@@ -178,7 +178,7 @@ class SensorTag: NSObject {
     
     // Check if the service has a valid UUID
     class func serviceName (_ service : CBService) -> String? {
-        if let serviceName = Services[service.uuid.uuidString] {
+        if let serviceName = ServiceNames[service.uuid.uuidString] {
             return serviceName
         }
         return nil
@@ -190,7 +190,7 @@ class SensorTag: NSObject {
         
         Log.write ("Checking for Service uuid \(service.uuid.uuidString) \(service)", .detail)
 
-        if let serviceName = Services[service.uuid.uuidString] {
+        if let serviceName = ServiceNames[service.uuid.uuidString] {
             Log.write ("Service name \(serviceName) found for UUID \(service.uuid)", .detail)
             return true
         }  else {

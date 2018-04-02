@@ -26,16 +26,16 @@
                                 <rect key="frame" x="0.0" y="40" width="414" height="385"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sc6-Nb-3wz" userLabel="Sensor Name View">
-                                        <rect key="frame" x="0.0" y="0.0" width="314" height="29.666666666666668"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="314" height="25.666666666666668"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lhZ-49-XOc">
-                                                <rect key="frame" x="0.0" y="0.0" width="58.333333333333336" height="29.666666666666668"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="58.333333333333336" height="25.666666666666668"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="iR1-Yq-6Hl">
-                                                        <rect key="frame" x="0.0" y="0.0" width="58.333333333333336" height="29.666666666666668"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="58.333333333333336" height="25.666666666666668"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sensor:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4P7-K8-PCv" userLabel="Sensor Name Label">
-                                                                <rect key="frame" x="0.0" y="0.0" width="58.333333333333336" height="29.666666666666668"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="58.333333333333336" height="25.666666666666668"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -45,7 +45,7 @@
                                                 </subviews>
                                             </stackView>
                                             <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="No Sensor Connected" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8QK-mx-mG2" userLabel="Sensor Name Text Field">
-                                                <rect key="frame" x="58.333333333333329" y="0.0" width="255.66666666666669" height="29.666666666666668"/>
+                                                <rect key="frame" x="58.333333333333329" y="0.0" width="255.66666666666669" height="25.666666666666668"/>
                                                 <accessibility key="accessibilityConfiguration">
                                                     <accessibilityTraits key="traits" notEnabled="YES"/>
                                                 </accessibility>
@@ -56,7 +56,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HFX-g9-MqI" userLabel="Sensor Value View">
-                                        <rect key="frame" x="0.0" y="29.666666666666671" width="314" height="30"/>
+                                        <rect key="frame" x="0.0" y="25.666666666666671" width="314" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LdK-AV-ICt" userLabel="Sensor Value Label">
                                                 <rect key="frame" x="0.0" y="0.0" width="46.666666666666664" height="30"/>
@@ -78,26 +78,46 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kD0-hz-ipO" userLabel="Connection View">
-                                        <rect key="frame" x="0.0" y="59.666666666666671" width="414" height="30"/>
+                                        <rect key="frame" x="0.0" y="55.666666666666671" width="414" height="34"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3mx-h4-YUa">
-                                                <rect key="frame" x="0.0" y="0.0" width="207" height="30"/>
-                                                <state key="normal" title="Manage Devices"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="153" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="153" id="ZEv-to-wz1"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
+                                                <size key="titleShadowOffset" width="1" height="0.0"/>
+                                                <state key="normal" title="Manage Devices">
+                                                    <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
                                                 <connections>
                                                     <segue destination="ehA-kX-nPb" kind="show" id="stz-zD-8zZ"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yw6-N8-mbG">
+                                                <rect key="frame" x="153" y="0.0" width="145" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="145" id="LVi-IN-O5m"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <size key="titleShadowOffset" width="1" height="0.0"/>
+                                                <state key="normal" title="Start Session">
+                                                    <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tge-Tc-hHr">
-                                                <rect key="frame" x="207" y="0.0" width="207" height="30"/>
-                                                <state key="normal" title="Disconnect All"/>
+                                                <rect key="frame" x="298" y="0.0" width="116" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <size key="titleShadowOffset" width="1" height="0.0"/>
+                                                <state key="normal" title="Disconnect All">
+                                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="disconnectButtonPressed" destination="BYZ-38-t0r" eventType="touchUpInside" id="6cQ-TO-ITe"/>
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="Tge-Tc-hHr" firstAttribute="width" secondItem="3mx-h4-YUa" secondAttribute="width" id="XCh-NC-sf8"/>
-                                        </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="iAR-h3-AeX" userLabel="Log View">
                                         <rect key="frame" x="0.0" y="89.666666666666657" width="414" height="295.33333333333337"/>
@@ -121,6 +141,9 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="8F8-xj-boy" firstAttribute="top" secondItem="qLH-Wc-a3P" secondAttribute="bottom" id="i6p-m0-iXR"/>
+                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <constraints>
@@ -128,6 +151,7 @@
                                     <constraint firstAttribute="trailing" secondItem="Sc6-Nb-3wz" secondAttribute="trailing" constant="100" id="H88-rH-Nfu"/>
                                     <constraint firstItem="Sc6-Nb-3wz" firstAttribute="trailing" secondItem="HFX-g9-MqI" secondAttribute="trailing" id="PPF-J7-cum"/>
                                     <constraint firstAttribute="trailing" secondItem="kD0-hz-ipO" secondAttribute="trailing" id="QFY-R2-wKn"/>
+                                    <constraint firstItem="kD0-hz-ipO" firstAttribute="top" secondItem="HFX-g9-MqI" secondAttribute="bottom" id="xfL-qF-2N9"/>
                                 </constraints>
                             </stackView>
                         </subviews>

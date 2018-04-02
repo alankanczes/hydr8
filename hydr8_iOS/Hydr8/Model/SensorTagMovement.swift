@@ -21,7 +21,7 @@ class SensorTagMovement: NSObject {
 
     override var description : String {
         get {
-            return "SensorTagMovement: G\(gyroscopeValue) A\(accelerometerValue) M\(magnometerValue)"
+            return "G\(gyroscopeValue) A\(accelerometerValue) M\(magnometerValue)"
         }
     }
     
