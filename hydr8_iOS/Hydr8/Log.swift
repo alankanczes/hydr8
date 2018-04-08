@@ -34,24 +34,28 @@ class Log {
             Log.visibleLogLevels.insert(logLevel)
         }
     }
-
+    
     // Clear UI log textview, if it is available.
     static func clear ()
     {
         log?.text = ""
     }
     
-
+    
     static func write(_ message: String, _ logLevel: LogLevel = LogLevel.info) {
         
         if Log.visibleLogLevels.contains(logLevel) {
             print(message)
         }
         
-        // App visible log
+        // App visible log exists, yay!
         if Log.log != nil {
+            // Log levels are not set (log everything) or level is in set of requested visibility
             if (Log.visibleLogLevels.isEmpty || Log.visibleLogLevels.contains(logLevel)) {
-                Log.log!.text = Log.log!.text + "\r\(logLevel): \(message)"
+                DispatchQueue.main.async(execute: {
+                    /* Do UI work here */
+                    Log.log!.text = Log.log!.text + "\r\(logLevel): \(message)"
+                    });
             }
         } else {
             print ("LOG IS NOT INITIALIZED!")

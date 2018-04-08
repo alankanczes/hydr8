@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E70E68E6207984ED00BF883F /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E68E5207984ED00BF883F /* SessionManager.swift */; };
+		E70E68E8207AA56700BF883F /* SensorLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E68E7207AA56700BF883F /* SensorLog.swift */; };
 		E720A31B1FF756F30006F399 /* Hydr8BandDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = E720A31A1FF756F30006F399 /* Hydr8BandDevice.swift */; };
 		E73412051FF442E2001ACF83 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E73412041FF442E2001ACF83 /* CoreBluetooth.framework */; };
 		E74075A2206FF1F30084DF86 /* DeviceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74075A1206FF1F30084DF86 /* DeviceTableViewController.swift */; };
 		E74075A4206FF52B0084DF86 /* SensorTagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74075A3206FF52B0084DF86 /* SensorTagManager.swift */; };
 		E74075A620719D520084DF86 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74075A520719D520084DF86 /* Constants.swift */; };
-		E74075A82071B7030084DF86 /* CloudKitRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74075A72071B7030084DF86 /* CloudKitRecords.swift */; };
+		E74075AD207980B30084DF86 /* SessionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74075AC207980B30084DF86 /* SessionTableViewController.swift */; };
 		E7594C5D20267CCE006C763A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7594C5C20267CCE006C763A /* Log.swift */; };
 		E76ECB5C203B589D003D24CD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76ECB5B203B589D003D24CD /* CloudKit.framework */; };
 		E7A94FB3205473FC00CE2B6F /* SensorTagMovement.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A94FB2205473FC00CE2B6F /* SensorTagMovement.swift */; };
@@ -26,7 +28,7 @@
 		E7F0ECE91FCA1E0200F97EE9 /* Hydr8Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F0ECE81FCA1E0200F97EE9 /* Hydr8Tests.swift */; };
 		E7F4C573204CA439005DFB7D /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F4C572204CA439005DFB7D /* UserInfo.swift */; };
 		E7F4C575204CA951005DFB7D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F4C574204CA951005DFB7D /* Model.swift */; };
-		E7F4C577204CAA90005DFB7D /* PositionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F4C576204CAA90005DFB7D /* PositionRecord.swift */; };
+		E7F4C577204CAA90005DFB7D /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F4C576204CAA90005DFB7D /* Session.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,12 +42,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E70E68E5207984ED00BF883F /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		E70E68E7207AA56700BF883F /* SensorLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorLog.swift; sourceTree = "<group>"; };
 		E720A31A1FF756F30006F399 /* Hydr8BandDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hydr8BandDevice.swift; sourceTree = "<group>"; };
 		E73412041FF442E2001ACF83 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		E74075A1206FF1F30084DF86 /* DeviceTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTableViewController.swift; sourceTree = "<group>"; };
 		E74075A3206FF52B0084DF86 /* SensorTagManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTagManager.swift; sourceTree = "<group>"; };
 		E74075A520719D520084DF86 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		E74075A72071B7030084DF86 /* CloudKitRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitRecords.swift; sourceTree = "<group>"; };
+		E74075AC207980B30084DF86 /* SessionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTableViewController.swift; sourceTree = "<group>"; };
 		E7594C5C20267CCE006C763A /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		E76ECB5A203B5899003D24CD /* Hydr8.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Hydr8.entitlements; sourceTree = "<group>"; };
 		E76ECB5B203B589D003D24CD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -64,7 +68,7 @@
 		E7F0ECEA1FCA1E0200F97EE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E7F4C572204CA439005DFB7D /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		E7F4C574204CA951005DFB7D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		E7F4C576204CAA90005DFB7D /* PositionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionRecord.swift; sourceTree = "<group>"; };
+		E7F4C576204CAA90005DFB7D /* Session.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +134,7 @@
 				E76ECB5A203B5899003D24CD /* Hydr8.entitlements */,
 				E7F0ECD31FCA1E0200F97EE9 /* AppDelegate.swift */,
 				E74075A1206FF1F30084DF86 /* DeviceTableViewController.swift */,
+				E74075AC207980B30084DF86 /* SessionTableViewController.swift */,
 				E7F0ECD51FCA1E0200F97EE9 /* ViewController.swift */,
 				E7F0ECD71FCA1E0200F97EE9 /* Main.storyboard */,
 				E7F0ECDA1FCA1E0200F97EE9 /* Assets.xcassets */,
@@ -155,12 +160,13 @@
 			children = (
 				E7F4C572204CA439005DFB7D /* UserInfo.swift */,
 				E7F4C574204CA951005DFB7D /* Model.swift */,
-				E7F4C576204CAA90005DFB7D /* PositionRecord.swift */,
-				E74075A72071B7030084DF86 /* CloudKitRecords.swift */,
+				E7F4C576204CAA90005DFB7D /* Session.swift */,
+				E70E68E7207AA56700BF883F /* SensorLog.swift */,
 				E7A94FB2205473FC00CE2B6F /* SensorTagMovement.swift */,
 				E7A94FB42054759A00CE2B6F /* XyzCoordinate.swift */,
 				E7A94FC92055A36D00CE2B6F /* SensorTag.swift */,
 				E74075A3206FF52B0084DF86 /* SensorTagManager.swift */,
+				E70E68E5207984ED00BF883F /* SessionManager.swift */,
 				E74075A520719D520084DF86 /* Constants.swift */,
 			);
 			path = Model;
@@ -282,13 +288,15 @@
 			files = (
 				E7F4C575204CA951005DFB7D /* Model.swift in Sources */,
 				E74075A4206FF52B0084DF86 /* SensorTagManager.swift in Sources */,
-				E74075A82071B7030084DF86 /* CloudKitRecords.swift in Sources */,
-				E7F4C577204CAA90005DFB7D /* PositionRecord.swift in Sources */,
+				E7F4C577204CAA90005DFB7D /* Session.swift in Sources */,
 				E7A94FCA2055A36D00CE2B6F /* SensorTag.swift in Sources */,
 				E720A31B1FF756F30006F399 /* Hydr8BandDevice.swift in Sources */,
 				E7A94FB3205473FC00CE2B6F /* SensorTagMovement.swift in Sources */,
+				E70E68E8207AA56700BF883F /* SensorLog.swift in Sources */,
 				E74075A2206FF1F30084DF86 /* DeviceTableViewController.swift in Sources */,
 				E74075A620719D520084DF86 /* Constants.swift in Sources */,
+				E70E68E6207984ED00BF883F /* SessionManager.swift in Sources */,
+				E74075AD207980B30084DF86 /* SessionTableViewController.swift in Sources */,
 				E7594C5D20267CCE006C763A /* Log.swift in Sources */,
 				E7F4C573204CA439005DFB7D /* UserInfo.swift in Sources */,
 				E7F0ECD61FCA1E0200F97EE9 /* ViewController.swift in Sources */,

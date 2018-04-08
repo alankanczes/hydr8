@@ -1,5 +1,5 @@
 //
-//  DeviceTableViewController.swift
+//  SessionTableViewController.swift
 //  Hydr8
 //
 //  Created by Alan Kanczes on 3/31/18.
@@ -8,41 +8,41 @@
 
 import UIKit
 
-class DeviceTableViewController: UITableViewController {
+class SessionTableViewController: UITableViewController {
     
-    @IBOutlet weak var backButton: UIBarButtonItem!
-    @IBOutlet weak var addDevice: UIBarButtonItem!
-    @IBOutlet weak var deviceTable: UITableView!
+    
+    @IBOutlet weak var addButton: UIBarButtonItem!
+    @IBOutlet weak var backButton: UINavigationItem!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         tableView.reloadData()
-
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    @IBAction func addDevice(_ sender: Any) {
+    
+    @IBAction func addSession(_ sender: Any) {
         
         //Log.clear()
-        Log.write("*** Add button tapped... starting to scan", .detail)
-        SensorTagManager.sharedManager.tableViewController = self
-        SensorTagManager.sharedManager.resumeScan()
-        //disconnectButton.isEnabled = true
+        SessionManager.sharedManager.tableViewController = self
+        Log.write("*** Add session tapped... creating a new session", .info)
+        SessionManager.sharedManager.addSession()
         tableView.reloadData()
         
     }
-
-
+    
+    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -64,14 +64,20 @@ class DeviceTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return SensorTagManager.sharedManager.items.count
+        return SessionManager.sharedManager.items.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DeviceCell", for: indexPath)
-        let sensorTag = SensorTagManager.sharedManager.items[indexPath.row]
-        cell.textLabel?.text = sensorTag.description
-        cell.detailTextLabel?.text = "SensorTag"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SessionCell", for: indexPath)
+        let session = SessionManager.sharedManager.items[indexPath.row]
+        if let date = session.startTime {
+            cell.textLabel?.text = "Session Start: \(date)"
+        } else {
+            cell.textLabel?.text = "Started: nil"
+        }
+        
+        cell.detailTextLabel?.text = "Sensors used: \(session.assetCount)"
+        
         
         return cell
     }
@@ -84,14 +90,11 @@ class DeviceTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let sensorTag = SensorTagManager.sharedManager.items[indexPath.row]
-            SensorTagManager.sharedManager.disconnectDevice(sensorTag.peripheral);
-            SensorTagManager.sharedManager.items.remove(at: indexPath.row)
-            //sensorNameTextField.text = "Sensors Connected: \(SensorTagManager.sharedManager.sensorTags.count)"
+            SessionManager.sharedManager.deleteSession(row: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-            SensorTagManager.sharedManager.startScanning()
+            SessionManager.sharedManager.addSession()
             tableView.insertRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
         }
     }

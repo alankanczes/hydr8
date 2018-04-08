@@ -8,31 +8,41 @@
 
 import Foundation
 
-
-enum Instructor {
+enum InstructorT {
     static let RecordType = "Instructor"
     static let InstructorId = "InstructorId"
     static let FirstName = "FirstName"
     static let LastName = "LastName"
 }
 
-enum PositionType {
+enum PositionTypeT {
     static let RecordType = "PositionType"
     static let Name = "Name"
     static let Images = "Images"
 }
 
-enum SessionType {
+enum SessionTypeT {
     static let RecordType = "SessionType"
     static let Name = "Name"
     static let Positions = "Positions"
 }
 
-enum Session {
-    static let RecordType = "Session"
-    static let Instructor = "Instructor"
-    static let Name = "Name"
-    static let RawPositionData = "RawPositionData"
-    static let SessionType = "SessionType"
+
+enum SensorLogT {
+    static let RecordType = "SensorLog"
+    static let StartTime = "StartTime"
+    static let EndTime = "EndTime"
+    static let RawMovementData = "RawMovementData"
+    static let MovementVersion = "MovementDataVersion"
 }
 
+enum DeviceT {
+    static let RecordType = "Device"
+    static let BleUUID = "Uuid"
+    static let ConfiguredLocation = "ConfiguredLocation"
+}
+
+enum DeviceLocationT {
+    static let RecordType = "DeviceLocation"
+    static let LocationName = "LocationName"
+}
