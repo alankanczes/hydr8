@@ -37,38 +37,16 @@ class Model {
         publicDb = container.publicCloudDatabase
         privateDb = container.privateCloudDatabase
         sharedDb = container.privateCloudDatabase
-                
+        
         userInfo = UserInfo(container: container)
+
+        SessionManager.sharedManager.fetchAll()
+        
     }
     
     @objc func refresh() {
         
-        refreshSessions()
         
-    }
-    
-    func refreshSessions() {
-        
-        /*
-         let predicate = NSPredicate(value :true)
-         let query = CKQuery(recordType: PositionRecordType, predicate: predicate)
-         */
-        let query = CKQuery(recordType: RemoteSession.recordType, predicate: NSPredicate(value: true))
-        
-        publicDb.perform(query, inZoneWith: nil) { results, error in
-            if error != nil {
-                print(error?.localizedDescription ?? "From Brian - General Query Error: No Description")
-            } else {
-                guard let records = results else {
-                    return
-                }
-                for record in records {
-                    let session = Session(remoteRecord: record, database: self.privateDb)
-                    self.sessions.append(session!)
-                }
-            }
-    
-        }
     }
     
     func errorUpdating(_ error: NSError) {

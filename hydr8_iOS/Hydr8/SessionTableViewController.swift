@@ -23,6 +23,7 @@ class SessionTableViewController: UITableViewController {
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        // Don in Model -- SessionManager.sharedManager.fetchAll()
         tableView.reloadData()
         
     }

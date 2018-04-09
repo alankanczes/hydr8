@@ -12,7 +12,7 @@ enum RemoteSession {
    static let sessionType = "SessionType"
    static let startTime = "StartTime"
    static let endTime = "EndTime"
-   static let sensorLog = "SensorLog"
+   static let sensorLogs = "SensorLogs"
 }
 
 
@@ -24,19 +24,20 @@ class Session: NSObject {
    var name: String!
    var startTime: Date!
    var endTime: Date!
-   //var sensorLogs: [SensorLog]
+   var sensorLogs: [SensorLog]!
    
    var assetCount = 0
    
    // MARK: - Initializers
    // Since a new record may not have yet be persisted to the database, let it create a blank one
-   init?(remoteRecord: CKRecord, database: CKDatabase?) {
+   init?(remoteRecord: CKRecord) {
       
       guard let name = remoteRecord.object(forKey: RemoteSession.name) as? String,
          let startTime = remoteRecord.object(forKey: RemoteSession.startTime) as? Date,
-         let endTime = remoteRecord.object(forKey: RemoteSession.endTime) as? Date else {
-            
-            //let sensorLog = remoteRecord.object(forKey: RemoteSession.sensorLog) as? [SensorLog] else {
+         let endTime = remoteRecord.object(forKey: RemoteSession.endTime) as? Date
+         //,
+         //let sensorLogs = remoteRecord.object(forKey: RemoteSession.sensorLogs) as? [SensorLog]
+         else {
             return nil
       }
       
@@ -44,7 +45,8 @@ class Session: NSObject {
       self.startTime = startTime
       self.endTime = endTime
       self.remoteRecord = remoteRecord
-      //self.sensorLog = sensorLog
+      self.sensorLogs = [SensorLog]()
+      
    }
    
    init(name: String, startTime: Date, endTime: Date) {
@@ -73,7 +75,7 @@ class Session: NSObject {
             Log.write((error?.localizedDescription)!, .error)
          } else {
             self.remoteRecord = record
-            Log.write(record?.object(forKey: RemoteSession.name) as! String + " recorded.")
+            Log.write("Session record: '\(record?.object(forKey: RemoteSession.name) as! String)' saved.")
          }
       }
    }
@@ -96,6 +98,10 @@ class Session: NSObject {
             Log.write("Remote record: Session deleted.", .info)
          }
       })
+      
+   }
+   
+   func getSensorLog(forDeviceUuid: String) {
       
    }
    

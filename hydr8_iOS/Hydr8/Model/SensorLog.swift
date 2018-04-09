@@ -71,7 +71,7 @@ class SensorLog: NSObject {
             if error != nil {
                 Log.write((error?.localizedDescription)!, .error)
             } else {
-                Log.write(record?.object(forKey: RemoteSensorLog.deviceUuid) as! String + " recorded.")
+                Log.write("SensorLog record: '\(record?.object(forKey: RemoteSensorLog.deviceUuid) as! String)' saved.")
             }
             
         }

@@ -10,6 +10,7 @@
 
 import Foundation
 import UIKit
+import CloudKit
 
 public class SessionManager: NSObject {
     
@@ -41,12 +42,51 @@ public class SessionManager: NSObject {
         SessionManager.sharedManager.items.append(sessionRecord)
     }
 
+    func getActiveSession() -> Session? {
+        guard items.count > 0 else {
+            Log.write ("There is no active session, cant return one.", .debug)
+            return nil
+        }
+        return items[items.count - 1]
+    }
     
     func printSessions() {
-        print ("Sessions: ")
+        Log.write ("Sessions: ", .debug)
         for (session) in items {
-            Log.write("\tSession: \(session)")
+            Log.write("\tSession: \(session)", .debug)
         }
     }
     
+    // This method will read all the sessions from CloudKit and populate the array
+    func fetchAll() {
+        
+        let container = CKContainer.default()
+        let privateDatabase = container.privateCloudDatabase
+        
+        /*
+         let predicate = NSPredicate(value :true)
+         let query = CKQuery(recordType: PositionRecordType, predicate: predicate)
+         */
+        let query = CKQuery(recordType: RemoteSession.recordType, predicate: NSPredicate(value: true))
+        
+        privateDatabase.perform(query, inZoneWith: nil) { results, error in
+            if error != nil {
+                Log.write(error?.localizedDescription ?? "From Brian - General Query Error: No Description", .error)
+            } else {
+                guard let records = results else {
+                    Log.write("No sessions to read.", .error)
+                    return
+                }
+                for record in records {
+                    if let session = Session(remoteRecord: record)  {
+                        self.items.append(session)
+                    } else {
+                        Log.write("Session was not processable.", .error)
+                    }
+                }
+            }
+            
+        }
+    }
+
 }
