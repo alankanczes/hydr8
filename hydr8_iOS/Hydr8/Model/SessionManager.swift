@@ -88,5 +88,16 @@ public class SessionManager: NSObject {
             
         }
     }
+    
+    
+    // Lookup the active session and record the movement, if there is one.
+    func recordMovement(deviceUuid: String, dataArray: [UInt16]) {
+        if let session = getActiveSession() {
+            session.recordMovement(deviceUuid: deviceUuid, dataArray:  dataArray)
+        } else {
+            Log.write("No active session.  Not recording movement.", .warn)
+        }
+        
+    }
 
 }

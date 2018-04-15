@@ -18,7 +18,6 @@ class Model {
     static let share = Model()
     
     var container: CKContainer!
-    var publicDb: CKDatabase!
     var privateDb: CKDatabase!
     var sharedDb: CKDatabase!
     
@@ -34,9 +33,7 @@ class Model {
     init() {
         // Represents the default container specified in the iCloud section of the Capabilities tab for the project.
         container = CKContainer.default()
-        publicDb = container.publicCloudDatabase
         privateDb = container.privateCloudDatabase
-        sharedDb = container.privateCloudDatabase
         
         userInfo = UserInfo(container: container)
 

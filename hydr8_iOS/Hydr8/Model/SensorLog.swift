@@ -23,7 +23,7 @@ class SensorLog: NSObject {
     var deviceUuid: String!
     var startTime: Date!
     var endTime: Date!
-    var rawMovementData: [UInt8]
+    var rawMovementData: [UInt16]
 
     
     var assetCount = 0
@@ -35,7 +35,7 @@ class SensorLog: NSObject {
         guard let deviceUuid = remoteRecord.object(forKey: RemoteSensorLog.deviceUuid) as? String,
             let startTime = remoteRecord.object(forKey: RemoteSensorLog.startTime) as? Date,
             let endTime = remoteRecord.object(forKey: RemoteSensorLog.endTime) as? Date,
-            let rawMovementData = remoteRecord.object(forKey: RemoteSensorLog.rawMovementData) as? [UInt8] else {
+            let rawMovementData = remoteRecord.object(forKey: RemoteSensorLog.rawMovementData) as? [UInt16] else {
                 return nil
         }
         
@@ -46,11 +46,11 @@ class SensorLog: NSObject {
         self.rawMovementData = rawMovementData
     }
     
-    init(deviceUuid: String, startTime: Date, endTime: Date, rawMovementData: [UInt8]) {
+    init(deviceUuid: String, startTime: Date, endTime: Date, rawMovementData: [UInt16]) {
         self.deviceUuid = deviceUuid
         self.startTime = startTime
         self.endTime = endTime
-        self.rawMovementData = [UInt8]()
+        self.rawMovementData = rawMovementData
         
         super.init()
 
@@ -73,8 +73,31 @@ class SensorLog: NSObject {
             } else {
                 Log.write("SensorLog record: '\(record?.object(forKey: RemoteSensorLog.deviceUuid) as! String)' saved.")
             }
-            
         }
+    }
+
+    // Load and return the session logs that have the session reference
+    class func referencedSensorLogs(sessionReference: CKReference) -> [String: SensorLog] {
+        var sensorLogs = [String: SensorLog]()
+        
+        let predicate = NSPredicate(format: "Session == %@", sessionReference)
+        let query = CKQuery(recordType: RemoteSensorLog.recordType, predicate: predicate)
+        CKContainer.default().privateCloudDatabase.perform(query, inZoneWith: nil) {
+            records, error in
+            if error != nil {
+                Log.write("Error: \(String(describing: error?.localizedDescription))")
+            } else {
+                for record in records! {
+                    let sensorLog = SensorLog(deviceUuid: record[RemoteSensorLog.deviceUuid] as! String,
+                                              startTime: record[RemoteSensorLog.startTime] as! Date,
+                                              endTime: record[RemoteSensorLog.endTime] as! Date,
+                                              rawMovementData: record[RemoteSensorLog.rawMovementData] as! [UInt16])
+                    sensorLogs[RemoteSensorLog.deviceUuid] = sensorLog
+                }
+            }
+        }
+        
+        return sensorLogs
     }
 
 }

@@ -24,9 +24,7 @@ class Session: NSObject {
    var name: String!
    var startTime: Date!
    var endTime: Date!
-   var sensorLogs: [SensorLog]!
-   
-   var assetCount = 0
+   var sensorLogs: [String: SensorLog] = [:]
    
    // MARK: - Initializers
    // Since a new record may not have yet be persisted to the database, let it create a blank one
@@ -34,9 +32,8 @@ class Session: NSObject {
       
       guard let name = remoteRecord.object(forKey: RemoteSession.name) as? String,
          let startTime = remoteRecord.object(forKey: RemoteSession.startTime) as? Date,
-         let endTime = remoteRecord.object(forKey: RemoteSession.endTime) as? Date
-         //,
-         //let sensorLogs = remoteRecord.object(forKey: RemoteSession.sensorLogs) as? [SensorLog]
+         let endTime = remoteRecord.object(forKey: RemoteSession.endTime) as? Date,
+         let sensorLogs = remoteRecord.object(forKey: RemoteSession.sensorLogs) as? [SensorLog]
          else {
             return nil
       }
@@ -45,11 +42,12 @@ class Session: NSObject {
       self.startTime = startTime
       self.endTime = endTime
       self.remoteRecord = remoteRecord
-      self.sensorLogs = [SensorLog]()
-      
+      //self.sensorLogs = [String:SensorLog]()
+      let reference = CKReference(record: remoteRecord, action: .none)
+      self.sensorLogs = SensorLog.referencedSensorLogs(sessionReference: reference)
    }
    
-   init(name: String, startTime: Date, endTime: Date) {
+   init(name: String, startTime: Date, endTime: Date?) {
       self.name = name
       self.startTime = startTime
       self.endTime = endTime
@@ -61,15 +59,23 @@ class Session: NSObject {
    
    /* Save the record to the database */
    func save() {
-      let record = CKRecord(recordType: RemoteSession.recordType)
-      record.setObject(name as CKRecordValue, forKey: RemoteSession.name)
-      record.setObject(startTime as CKRecordValue, forKey: RemoteSession.startTime)
-      record.setObject(endTime as CKRecordValue, forKey: RemoteSession.endTime)
+
+      var record = remoteRecord
+      
+      if remoteRecord == nil {
+         record = CKRecord(recordType: RemoteSession.recordType)
+         Log.write("Creating a new record.")
+      } else {
+         name = "Started: \(startTime)"
+      }
+      record!.setObject(name as CKRecordValue, forKey: RemoteSession.name)
+      record!.setObject(startTime as CKRecordValue, forKey: RemoteSession.startTime)
+      record!.setObject(endTime as CKRecordValue, forKey: RemoteSession.endTime)
       
       let container = CKContainer.default()
       let privateDatabase = container.privateCloudDatabase
       
-      privateDatabase.save(record) {
+      privateDatabase.save(record!) {
          record, error in
          if error != nil {
             Log.write((error?.localizedDescription)!, .error)
@@ -92,17 +98,42 @@ class Session: NSObject {
       }
       
       privateDatabase.delete(withRecordID: record.recordID, completionHandler: {recordID, error in
-         if let error = error {
+         if error != nil {
             Log.write("CloudKit error: \(String(describing: error))", .error)
          } else {
             Log.write("Remote record: Session deleted.", .info)
          }
       })
       
+      let deleteOperation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: [record.recordID])
+      deleteOperation.modifyRecordsCompletionBlock = {
+         savedRecords, deletedRecords, error in
+         if error != nil {
+            Log.write((error?.localizedDescription)!)
+         } else {
+            
+            OperationQueue.main.addOperation() {
+               Log.write("Your record has been deleted!")
+            }
+            
+         }
+      }
+      privateDatabase.add(deleteOperation)
    }
    
-   func getSensorLog(forDeviceUuid: String) {
-      
+   // Find the log for the device and add teh raw data, or create a log for the device storing the new start date and movement data.
+   func recordMovement(deviceUuid: String, dataArray: [UInt16]) {
+      if let sensorLog = sensorLogs[deviceUuid] {
+         // CHECK THAT VALUES IS
+         Log.write("Found sensorlog for device \(deviceUuid), appending data array to it.", .info)
+         sensorLog.rawMovementData.append(contentsOf: dataArray)
+      } else {
+         Log.write("Creating new SensorLog for device (\(deviceUuid)", .info)
+         let sensorLog = SensorLog(deviceUuid: deviceUuid, startTime: Date(), endTime: Date(), rawMovementData: dataArray)
+         sensorLogs[deviceUuid] = sensorLog
+      }
+      self.save()
    }
+   
    
 }

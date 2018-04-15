@@ -77,8 +77,8 @@ class SessionTableViewController: UITableViewController {
             cell.textLabel?.text = "Started: nil"
         }
         
-        cell.detailTextLabel?.text = "Sensors used: \(session.assetCount)"
-        
+        cell.detailTextLabel?.text = "Sensors used: \(session.sensorLogs.count)"
+    
         
         return cell
     }
