@@ -16,14 +16,14 @@ public class SessionManager: NSObject {
     
     //  Class variables
     static let sharedManager: SessionManager = SessionManager()
-
+    
     // HACKY Related view controllers
-    var tableViewController: UITableViewController?
+    var sessionTableViewController: UITableViewController?
     var currentUIController: UIViewController?
-
+    
     var keepScanning = false
     var items: [Session] = []
-
+    
     // Initialize the session manager
     override init() {
         super.init()
@@ -36,12 +36,13 @@ public class SessionManager: NSObject {
         sessionRecord.delete()
         SessionManager.sharedManager.items.remove(at: row)
     }
-   
+    
     func addSession(){
         let sessionRecord =  Session (name: "New", startTime: NSDate() as Date, endTime: NSDate() as Date)
         SessionManager.sharedManager.items.append(sessionRecord)
+        SessionManager.sharedManager.saveOldSessions()
     }
-
+    
     func getActiveSession() -> Session? {
         guard items.count > 0 else {
             Log.write ("There is no active session, cant return one.", .debug)
@@ -89,6 +90,21 @@ public class SessionManager: NSObject {
         }
     }
     
+    // This method will save all the sessions from CloudKit and populate the array
+    func saveAll() {
+        for session in items {
+            session.save()
+        }
+    }
+    
+    // This method will save all the sessions from CloudKit and populate the array
+    func saveOldSessions() {
+        for cnt in 0..<items.count-1 {
+            Log.write("Saving old sessions: \(cnt) of \(items.count)")
+            let session = items[cnt]
+            session.save()
+        }
+    }
     
     // Lookup the active session and record the movement, if there is one.
     func recordMovement(deviceUuid: String, dataArray: [UInt16]) {
@@ -97,7 +113,12 @@ public class SessionManager: NSObject {
         } else {
             Log.write("No active session.  Not recording movement.", .warn)
         }
-        
+        if let tvc = SessionManager.sharedManager.sessionTableViewController {
+            tvc.tableView.reloadData()
+            Log.write("Updating sessionTableViewController.", .detail)
+        } else {
+            Log.write("sessionTableViewController is not set", .detail)
+        }
     }
-
+    
 }

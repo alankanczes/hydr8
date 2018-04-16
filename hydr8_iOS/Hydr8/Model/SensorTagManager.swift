@@ -17,7 +17,8 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
     static let sharedManager: SensorTagManager = SensorTagManager()
     
     // HACKY Related view controllers 
-    var tableViewController: UITableViewController?
+    var deviceTableViewController: UITableViewController?
+    var sessionTableViewController: UITableViewController?
     var currentUIController: UIViewController?
     
     // Core Bluetooth properties
@@ -186,7 +187,7 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
                 Log.write("SensorTagName \(peripheralName) FOUND! ADDING NOW!!!", .info)
                 items.append(SensorTag(peripheral))
                 //sensorNameTextField.text = "Sensors Connected: \(DeviceManager.sensorTags.count)"
-                tableViewController?.tableView.reloadData()
+                deviceTableViewController?.tableView.reloadData()
                 
                 printSensorTags()
                 
@@ -489,17 +490,13 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
             } else if characteristic.uuid == CBUUID(string: SensorTag.MovementDataUUID) {
                 Log.write("Got Movement", .debug)
                 displayMovement(data: dataBytes as NSData)
-                if let activeSession = SessionManager.sharedManager.getActiveSession() {
                     // We'll get four bytes of data back, so we divide the byte count by two
                     // because we're creating an array that holds two 16-bit (two-byte) values
                     let data = dataBytes as NSData
                     let dataLength = data.length / MemoryLayout<UInt16>.size
                     var dataArray = [UInt16](repeating: 0, count:dataLength)
                     data.getBytes(&dataArray, length: dataLength * MemoryLayout<Int16>.size)
-                    activeSession.recordMovement(deviceUuid: peripheral.identifier.uuidString, dataArray: dataArray)
-                } else {
-                    Log.write("No active session to record movement for", .debug)
-                }
+                    SessionManager.sharedManager.recordMovement(deviceUuid: peripheral.identifier.uuidString, dataArray: dataArray)
             } else if characteristic.uuid == CBUUID(string: SensorTag.KeySensorDataUUID) {
                 Log.write("Got Key Press", .debug)
                 displayKeyPress(data: dataBytes as NSData)

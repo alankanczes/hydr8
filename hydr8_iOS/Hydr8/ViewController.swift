@@ -24,6 +24,7 @@ class ViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()        
         
         SensorTagManager.sharedManager.currentUIController = self
+        SessionManager.sharedManager.currentUIController = self
         
         // Do any additional setup after loading the view, typically from a nib.
         
@@ -37,7 +38,7 @@ class ViewController: UIViewController, UITextViewDelegate {
         statusLogLabel.isUserInteractionEnabled = true
         
         // Setup Log
-        Log.setLog(statusLog:statusLog, showLogLevels: [.info, .warn, .error, .debug]);
+        Log.setLog(statusLog:statusLog, showLogLevels: [.info, .warn, .error]);
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.tapLogHeader))
         statusLogLabel.isUserInteractionEnabled = true

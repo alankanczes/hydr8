@@ -35,7 +35,7 @@ class DeviceTableViewController: UITableViewController {
         
         //Log.clear()
         Log.write("*** Add button tapped... starting to scan", .detail)
-        SensorTagManager.sharedManager.tableViewController = self
+        SensorTagManager.sharedManager.deviceTableViewController = self
         SensorTagManager.sharedManager.resumeScan()
         //disconnectButton.isEnabled = true
         tableView.reloadData()

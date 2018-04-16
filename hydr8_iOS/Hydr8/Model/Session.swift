@@ -32,8 +32,7 @@ class Session: NSObject {
       
       guard let name = remoteRecord.object(forKey: RemoteSession.name) as? String,
          let startTime = remoteRecord.object(forKey: RemoteSession.startTime) as? Date,
-         let endTime = remoteRecord.object(forKey: RemoteSession.endTime) as? Date,
-         let sensorLogs = remoteRecord.object(forKey: RemoteSession.sensorLogs) as? [SensorLog]
+         let endTime = remoteRecord.object(forKey: RemoteSession.endTime) as? Date
          else {
             return nil
       }
@@ -43,7 +42,7 @@ class Session: NSObject {
       self.endTime = endTime
       self.remoteRecord = remoteRecord
       //self.sensorLogs = [String:SensorLog]()
-      let reference = CKReference(record: remoteRecord, action: .none)
+      let reference = CKReference(record: remoteRecord, action: .deleteSelf)
       self.sensorLogs = SensorLog.referencedSensorLogs(sessionReference: reference)
    }
    
@@ -71,7 +70,7 @@ class Session: NSObject {
       record!.setObject(name as CKRecordValue, forKey: RemoteSession.name)
       record!.setObject(startTime as CKRecordValue, forKey: RemoteSession.startTime)
       record!.setObject(endTime as CKRecordValue, forKey: RemoteSession.endTime)
-      
+
       let container = CKContainer.default()
       let privateDatabase = container.privateCloudDatabase
       
@@ -126,13 +125,15 @@ class Session: NSObject {
       if let sensorLog = sensorLogs[deviceUuid] {
          // CHECK THAT VALUES IS
          Log.write("Found sensorlog for device \(deviceUuid), appending data array to it.", .info)
-         sensorLog.rawMovementData.append(contentsOf: dataArray)
+         sensorLog.rawMovementDataArray.append(contentsOf: dataArray)
+         // Don't save every time...
+         // sensorLog.save()
       } else {
          Log.write("Creating new SensorLog for device (\(deviceUuid)", .info)
-         let sensorLog = SensorLog(deviceUuid: deviceUuid, startTime: Date(), endTime: Date(), rawMovementData: dataArray)
+         let sessionReference = CKReference(record: remoteRecord!, action: .deleteSelf)
+         let sensorLog = SensorLog(deviceUuid: deviceUuid, startTime: Date(), endTime: Date(), rawMovementDataArray: dataArray, sessionReference: sessionReference)
          sensorLogs[deviceUuid] = sensorLog
       }
-      self.save()
    }
    
    

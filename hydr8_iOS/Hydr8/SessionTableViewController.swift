@@ -26,6 +26,9 @@ class SessionTableViewController: UITableViewController {
         // Don in Model -- SessionManager.sharedManager.fetchAll()
         tableView.reloadData()
         
+        //Set so sessionmanager can update the view
+        SessionManager.sharedManager.sessionTableViewController = self
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -36,7 +39,7 @@ class SessionTableViewController: UITableViewController {
     @IBAction func addSession(_ sender: Any) {
         
         //Log.clear()
-        SessionManager.sharedManager.tableViewController = self
+        SessionManager.sharedManager.sessionTableViewController = self
         Log.write("*** Add session tapped... creating a new session", .info)
         SessionManager.sharedManager.addSession()
         tableView.reloadData()
