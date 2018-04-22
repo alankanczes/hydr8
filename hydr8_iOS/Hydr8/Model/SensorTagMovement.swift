@@ -9,6 +9,9 @@
 
 
 /*
+ 
+ SEE: http://processors.wiki.ti.com/index.php/CC2650_SensorTag_User%27s_Guide#Movement_Sensor
+ 
  -(NSString *) calcValue:(NSData *) value {
  
  char vals[value.length];
@@ -48,6 +51,10 @@
  */
 
 
+enum AccelerometerRange: Int {
+    case g2 = 0, g4, g8, g16
+}
+
 import Foundation
 
 class SensorTagMovement: NSObject {
@@ -66,82 +73,73 @@ class SensorTagMovement: NSObject {
         }
     }
     
-    init (data: [UInt16]) {
-        Log.write("Array length: \(data.length)")
+    init (data: [Int16]) {
+        //Log.write("Array length: \(data.count)")
         
-        gyroscopeValue = XyzCoordinate(
-            x: NSNumber ( value:
-                ( ( \
-                    (data[SensorTagMovement.GYRO_OFFSET+0] & 0xff)
-                    | ( (data[SensorTagMovement.GYRO_OFFSET+1] << 8) & 0xff00)
-                  )
-                  / 32768
-                ) * 255 * 1),
-            y: NSNumber(value:
-                ( ( \
-                    (data[SensorTagMovement.GYRO_OFFSET+2] & 0xff)
-                    | ( (data[SensorTagMovement.GYRO_OFFSET+3] << 8) & 0xff00)
-                    )
-                    / 32768
-                    ) * 255 * 1),
-            z: NSNumber(value:
-                ( ( \
-                    (data[SensorTagMovement.GYRO_OFFSET+3] & 0xff)
-                    | ( (data[SensorTagMovement.GYRO_OFFSET+4] << 8) & 0xff00)
-                    )
-                    / 32768
-                    ) * 255 * 1)
-            )
+        var x: Double
+        var y: Double
+        var z: Double
+        
+        x = (Double(data[SensorTagMovement.GYRO_OFFSET+0]) / 32768.0) * 255
+        y = (Double(data[SensorTagMovement.GYRO_OFFSET+1]) / 32768.0) * 255
+        z = (Double(data[SensorTagMovement.GYRO_OFFSET+2])  / 32768.0) * 255
+        
+        gyroscopeValue = XyzCoordinate(x: x, y: y, z: z)
 
-        accelerometerValue = XyzCoordinate(
-            x: NSNumber ( value:
-                ( ( \
-                    (data[SensorTagMovement.ACCELEROMETER_OFFSET+0] & 0xff)
-                    | ( (data[SensorTagMovement.ACCELEROMETER_OFFSET+1] << 8) & 0xff00)
-                    )
-                    / 32768
-                    ) * 8 * 1),
-            y: NSNumber(value:
-                ( ( \
-                    (data[SensorTagMovement.ACCELEROMETER_OFFSET+2] & 0xff)
-                    | ( (data[SensorTagMovement.ACCELEROMETER_OFFSET+3] << 8) & 0xff00)
-                    )
-                    / 32768
-                    ) * 8 * 1),
-            z: NSNumber(value:
-                ( ( \
-                    (data[SensorTagMovement.ACCELEROMETER_OFFSET+3] & 0xff)
-                    | ( (data[SensorTagMovement.ACCELEROMETER_OFFSET+4] << 8) & 0xff00)
-                    )
-                    / 32768
-                    ) * 8 * 1)
-        )
+        x = (Double(data[SensorTagMovement.ACCELEROMETER_OFFSET+0]) / 32768.0) * 8
+        y = (Double(data[SensorTagMovement.ACCELEROMETER_OFFSET+1]) / 32768.0) * 8
+        z = (Double(data[SensorTagMovement.ACCELEROMETER_OFFSET+2]) / 32768.0) * 8
 
-        magnometerValue = XyzCoordinate(
-            x: NSNumber ( value:
-                ( ( \
-                    (data[SensorTagMovement.MAGNOMETER_OFFSET+0] & 0xff)
-                    | ( (data[SensorTagMovement.MAGNOMETER_OFFSET+1] << 8) & 0xff00)
-                    )
-                    / 32768
-                    ) * 4912),
-            y: NSNumber(value:
-                ( ( \
-                    (data[SensorTagMovement.MAGNOMETER_OFFSET+2] & 0xff)
-                    | ( (data[SensorTagMovement.MAGNOMETER_OFFSET+3] << 8) & 0xff00)
-                    )
-                    / 32768
-                    ) * 4912),
-            z: NSNumber(value:
-                ( ( \
-                    (data[SensorTagMovement.MAGNOMETER_OFFSET+3] & 0xff)
-                    | ( (data[SensorTagMovement.MAGNOMETER_OFFSET+4] << 8) & 0xff00)
-                    )
-                    / 32768
-                    ) * 4912)
-        )
+        accelerometerValue = XyzCoordinate(x: x, y: y, z: z)
+
+        x = (Double(data[SensorTagMovement.ACCELEROMETER_OFFSET+0]) / 32768) * 4912
+        y = (Double(data[SensorTagMovement.ACCELEROMETER_OFFSET+1]) / 32768) * 4912
+        z = (Double(data[SensorTagMovement.ACCELEROMETER_OFFSET+2]) / 32768) * 4912
+
+        magnometerValue = XyzCoordinate(x: x, y: y, z: z)
 
      }
+    
+    func sensorMpu9250GyroConvert(data: Int16) -> Double
+    {
+        //-- calculate rotation, unit deg/s, range -250, +250
+        return (Double(data) * 1.0) / (65536.0 / 500.0);
+    }
+    
+    /*
+        Accelerometer raw data make up bytes 6-11 of the data from the movement service, in the order X, Y, Z axis. Data from each axis consists of two bytes, encoded as a signed integer. For conversion from accelerometer raw data to Gravity (G), use the algorithm below on each the three 16-bit values in the incoming data, one for each axis.
+    */
+    func sensorMpu9250AccConvert(accelerometerRange: AccelerometerRange, rawData: Int16) -> Double
+    {
+        var v: Double;
+        
+        switch accelerometerRange {
+        case .g2:
+            //-- calculate acceleration, unit G, range -2, +2
+            v = (Double(rawData) * 1.0) / (32768.0/2);
+        case .g4:
+            //-- calculate acceleration, unit G, range -4, +4
+            v = (Double(rawData) * 1.0) / (32768.0/4);
+        case .g8:
+            //-- calculate acceleration, unit G, range -8, +8
+            v = (Double(rawData) * 1.0) / (32768.0/8);
+        case .g16:
+            //-- calculate acceleration, unit G, range -16, +16
+            v = (Double(rawData) * 1.0) / (32768.0/16);
+        }
+        
+        return v;
+    }
+    
+    
+    /*
+     Magnetometer raw data make up bytes 12-17 of the data from the movement service, in the order X, Y, Z axis. Data from each axis consists of two bytes, encoded as a signed integer. The conversion is done in the SensorTag firmware so there is no calculation involved apart from changing the integer to a float if required. The measurement unit is uT (micro Tesla).
+     */
+    func sensorMpu9250MagConvert(data: Int16) -> Double
+    {
+        //-- calculate magnetism, unit uT, range +-4900
+        return 1.0 * Double(data);
+    }
     
 }
 

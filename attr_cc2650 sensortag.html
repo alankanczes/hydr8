@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CC2650 SensorTag attribute table</title>
+<link rel=stylesheet type="text/css" href="attr.css" />
+</head>
+
+<body>
+<h1>CC2650 SensorTag attribute table</h1><h2>TI Base UUID: F000<b>XXXX</b>-0451-4000-B000-000000000000. 128 bit UUIDs are typed '<b>bold blue</b>'</h2><table><tbody><tr><th>Handle<br />(hex)</th><th>Handle<br />(dec)</th><th>Type<br />(hex)</th><th>Type (text)</th><th>Hex value</th><th>GATT Server<br />Permissions</th><th>Description/Value (text)</th></tr>
+<tr class="service"><td>0x1</td><td>1</td><td class="short">0x2800</td><td>GATT Primary Service Declaration</td><td>0x1800</td><td>R</td><td>Generic Access Service</td></tr>
+<tr class="char"><td>0x2</td><td>2</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>02:03:00:00:2A</td><td>R</td><td>Device Name</td></tr>
+<tr class="data"><td>0x3</td><td>3</td><td class="short">0x2A00</td><td>Device Name</td><td>53:65:6E:73:6F:72:54:61:67:20:32:2E:30</td><td>R</td><td>SensorTag 2.0</td></tr>
+<tr class="char"><td>0x4</td><td>4</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>02:05:00:01:2A</td><td>R</td><td>Appearance</td></tr>
+<tr class="data"><td>0x5</td><td>5</td><td class="short">0x2A01</td><td>Appearance</td><td>00:00</td><td>R</td><td></td></tr>
+<tr class="char"><td>0x6</td><td>6</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>02:07:00:04:2A</td><td>R</td><td>Peripheral Preferred Connection Parameters</td></tr>
+<tr class="data"><td>0x7</td><td>7</td><td class="short">0x2A04</td><td>Peripheral Preferred Connection Parameters</td><td>50:00:A0:00:00:00:E8:03</td><td>R</td><td>P</td></tr>
+<tr class="service"><td>0x8</td><td>8</td><td class="short">0x2800</td><td>GATT Primary Service Declaration</td><td>0x1801</td><td>R</td><td>Generic Attribute Service</td></tr>
+<tr class="char"><td>0x9</td><td>9</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>20:0A:00:05:2A</td><td>R</td><td>Service Changed</td></tr>
+<tr class="data"><td>0xA</td><td>10</td><td class="short">0x2A05</td><td>Service Changed</td><td></td><td>I</td><td></td></tr>
+<tr class="data"><td>0xB</td><td>11</td><td class="short">0x2902</td><td>Client Characteristic Configuration</td><td>00:00</td><td>RW</td><td>Write "01:00" to enable notifications, "00:00" to disable</td></tr>
+<tr class="service"><td>0xC</td><td>12</td><td class="short">0x2800</td><td>GATT Primary Service Declaration</td><td>0x180A</td><td>R</td><td>Device Information Service</td></tr>
+<tr class="char"><td>0xD</td><td>13</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>02:0E:00:23:2A</td><td>R</td><td>System ID</td></tr>
+<tr class="data"><td>0xE</td><td>14</td><td class="short">0x2A23</td><td>System ID</td><td>85:A9:71:00:00:84:BE:C4</td><td>R</td><td>q</td></tr>
+<tr class="char"><td>0xF</td><td>15</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>02:10:00:24:2A</td><td>R</td><td>Model Number String</td></tr>
+<tr class="data"><td>0x10</td><td>16</td><td class="short">0x2A24</td><td>Model Number String</td><td>43:43:32:36:35:30:20:53:65:6E:73:6F:72:54:61:67:00</td><td>R</td><td>CC2650 SensorTag</td></tr>
+<tr class="char"><td>0x11</td><td>17</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>02:12:00:25:2A</td><td>R</td><td>Serial Number String</td></tr>
+<tr class="data"><td>0x12</td><td>18</td><td class="short">0x2A25</td><td>Serial Number String</td><td>4E:2E:41:2E:00</td><td>R</td><td>N.A.</td></tr>
+<tr class="char"><td>0x13</td><td>19</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>02:14:00:26:2A</td><td>R</td><td>Firmware Revision String</td></tr>
+<tr class="data"><td>0x14</td><td>20</td><td class="short">0x2A26</td><td>Firmware Revision String</td><td>31:2E:30:31:20:28:4D:61:72:20:31:33:20:32:30:31:35:29:00</td><td>R</td><td>1.01 (Mar 13 2015)</td></tr>
+<tr class="char"><td>0x15</td><td>21</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>02:16:00:27:2A</td><td>R</td><td>Hardware Revision String</td></tr>
+<tr class="data"><td>0x16</td><td>22</td><td class="short">0x2A27</td><td>Hardware Revision String</td><td>50:43:42:20:31:2E:32:00</td><td>R</td><td>PCB 1.2</td></tr>
+<tr class="char"><td>0x17</td><td>23</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>02:18:00:28:2A</td><td>R</td><td>Software Revision String</td></tr>
+<tr class="data"><td>0x18</td><td>24</td><td class="short">0x2A28</td><td>Software Revision String</td><td>4E:2E:41:2E:00</td><td>R</td><td>N.A.</td></tr>
+<tr class="char"><td>0x19</td><td>25</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>02:1A:00:29:2A</td><td>R</td><td>Manufacturer Name String</td></tr>
+<tr class="data"><td>0x1A</td><td>26</td><td class="short">0x2A29</td><td>Manufacturer Name String</td><td>54:65:78:61:73:20:49:6E:73:74:72:75:6D:65:6E:74:73:00</td><td>R</td><td>Texas Instruments</td></tr>
+<tr class="char"><td>0x1B</td><td>27</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>02:1C:00:2A:2A</td><td>R</td><td>IEEE 11073-20601 Regulatory Certification Data List</td></tr>
+<tr class="data"><td>0x1C</td><td>28</td><td class="short">0x2A2A</td><td>IEEE 11073-20601 Regulatory Certification Data List</td><td>FE:00:65:78:70:65:72:69:6D:65:6E:74:61:6C</td><td>R</td><td>experimental</td></tr>
+<tr class="char"><td>0x1D</td><td>29</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>02:1E:00:50:2A</td><td>R</td><td>PnP ID</td></tr>
+<tr class="data"><td>0x1E</td><td>30</td><td class="short">0x2A50</td><td>PnP ID</td><td>01:0D:00:00:00:10:01</td><td>R</td><td></td></tr>
+<tr class="service"><td>0x1F</td><td>31</td><td class="short">0x2800</td><td>GATT Primary Service Declaration</td><td>F000AA00-0451-4000-B000-000000000000</td><td>R</td><td>IR Temperature Service</td></tr>
+<tr class="char"><td>0x20</td><td>32</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>12:21:00:00:00:00:00:00:00:00:B0:00:40:51:04:01:AA:00:F0</td><td>R</td><td>IR Temperature Data</td></tr>
+<tr class="data"><td>0x21</td><td>33</td><td class="long">0xAA01</td><td>IR Temperature Data</td><td>00:00:00:00</td><td>RN</td><td>ObjectLSB:ObjectMSB:AmbientLSB:AmbientMSB</td></tr>
+<tr class="data"><td>0x22</td><td>34</td><td class="short">0x2902</td><td>Client Characteristic Configuration</td><td>01:00</td><td>RW</td><td>Write "01:00" to enable notifications, "00:00" to disable</td></tr>
+<tr class="char"><td>0x23</td><td>35</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>0A:24:00:00:00:00:00:00:00:00:B0:00:40:51:04:02:AA:00:F0</td><td>R</td><td>IR Temperature Config</td></tr>
+<tr class="data"><td>0x24</td><td>36</td><td class="long">0xAA02</td><td>IR Temperature Config</td><td>00</td><td>RW</td><td>Write "01" to start Sensor and Measurements, "00" to put to sleep</td></tr>
+<tr class="char"><td>0x25</td><td>37</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>0A:26:00:00:00:00:00:00:00:00:B0:00:40:51:04:03:AA:00:F0</td><td>R</td><td>IR Temperature Period</td></tr>
+<tr class="data"><td>0x26</td><td>38</td><td class="long">0xAA03</td><td>IR Temperature Period</td><td>64</td><td>RW</td><td>Period = [Input*10] ms, (lower limit 300 ms), default 1000 ms</td></tr>
+<tr class="service"><td>0x27</td><td>39</td><td class="short">0x2800</td><td>GATT Primary Service Declaration</td><td>F000AA20-0451-4000-B000-000000000000</td><td>R</td><td>Humidity Service</td></tr>
+<tr class="char"><td>0x28</td><td>40</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>12:29:00:00:00:00:00:00:00:00:B0:00:40:51:04:21:AA:00:F0</td><td>R</td><td>Humidity Data</td></tr>
+<tr class="data"><td>0x29</td><td>41</td><td class="long">0xAA21</td><td>Humidity Data</td><td>00:00:00:00</td><td>RN</td><td>TempLSB:TempMSB:HumidityLSB:HumidityMSB</td></tr>
+<tr class="data"><td>0x2A</td><td>42</td><td class="short">0x2902</td><td>Client Characteristic Configuration</td><td>01:00</td><td>RW</td><td>Write "01:00" to enable notifications, "00:00" to disable</td></tr>
+<tr class="char"><td>0x2B</td><td>43</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>0A:2C:00:00:00:00:00:00:00:00:B0:00:40:51:04:22:AA:00:F0</td><td>R</td><td>Humidity Config</td></tr>
+<tr class="data"><td>0x2C</td><td>44</td><td class="long">0xAA22</td><td>Humidity Config</td><td>00</td><td>RW</td><td>Write "01" to start measurements, "00" to stop</td></tr>
+<tr class="char"><td>0x2D</td><td>45</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>0A:2E:00:00:00:00:00:00:00:00:B0:00:40:51:04:23:AA:00:F0</td><td>R</td><td>Humidity Period</td></tr>
+<tr class="data"><td>0x2E</td><td>46</td><td class="long">0xAA23</td><td>Humidity Period</td><td>64</td><td>RW</td><td>Period = [Input*10] ms, (lower limit 100 ms), default 1000 ms</td></tr>
+<tr class="service"><td>0x2F</td><td>47</td><td class="short">0x2800</td><td>GATT Primary Service Declaration</td><td>F000AA40-0451-4000-B000-000000000000</td><td>R</td><td>Barometer Service</td></tr>
+<tr class="char"><td>0x30</td><td>48</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>12:31:00:00:00:00:00:00:00:00:B0:00:40:51:04:41:AA:00:F0</td><td>R</td><td>Barometer Data</td></tr>
+<tr class="data"><td>0x31</td><td>49</td><td class="long">0xAA41</td><td>Barometer Data</td><td>00:00:00:00:00:00</td><td>RN</td><td>TempLSB:TempMSB(:TempEXt):PressureLSB:PressureMSB(:PressureExt). If the length is 6 bytes the extension byte is included.</td></tr>
+<tr class="data"><td>0x32</td><td>50</td><td class="short">0x2902</td><td>Client Characteristic Configuration</td><td>01:00</td><td>RW</td><td>Write "01:00" to enable notifications, "00:00" to disable</td></tr>
+<tr class="char"><td>0x33</td><td>51</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>0A:34:00:00:00:00:00:00:00:00:B0:00:40:51:04:42:AA:00:F0</td><td>R</td><td>Barometer Configuration</td></tr>
+<tr class="data"><td>0x34</td><td>52</td><td class="long">0xAA42</td><td>Barometer Configuration</td><td>00</td><td>RW</td><td>Write "01" to start Sensor and Measurements, "00" to put to sleep, "02" to read calibration values from sensor</td></tr>
+<tr class="char"><td>0x35</td><td>53</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>0A:36:00:00:00:00:00:00:00:00:B0:00:40:51:04:44:AA:00:F0</td><td>R</td><td>Barometer Period</td></tr>
+<tr class="data"><td>0x36</td><td>54</td><td class="long">0xAA44</td><td>Barometer Period</td><td>64</td><td>RW</td><td>Period = [Input*10] ms, (lower limit 100 ms), default 1000 ms</td></tr>
+<tr class="service"><td>0x37</td><td>55</td><td class="short">0x2800</td><td>GATT Primary Service Declaration</td><td>F000AA80-0451-4000-B000-000000000000</td><td>R</td><td>Movement Service</td></tr>
+<tr class="char"><td>0x38</td><td>56</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>12:39:00:00:00:00:00:00:00:00:B0:00:40:51:04:81:AA:00:F0</td><td>R</td><td>Movement Data</td></tr>
+<tr class="data"><td>0x39</td><td>57</td><td class="long">0xAA81</td><td>Movement Data</td><td>00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00</td><td>RN</td><td>GXLSB:GXMSB:GYLSB:GYMSB:GZLSB:GZMSB, AXLSB:AXMSB:AYLSB:AYMSB:AZLSB:AZMSB</td></tr>
+<tr class="data"><td>0x3A</td><td>58</td><td class="short">0x2902</td><td>Client Characteristic Configuration</td><td>01:00</td><td>RW</td><td>Write "01:00" to enable notifications, "00:00" to disable</td></tr>
+<tr class="char"><td>0x3B</td><td>59</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>0A:3C:00:00:00:00:00:00:00:00:B0:00:40:51:04:82:AA:00:F0</td><td>R</td><td>Movement Config</td></tr>
+<tr class="data"><td>0x3C</td><td>60</td><td class="long">0xAA82</td><td>Movement Config</td><td>00:02</td><td>RW</td><td>Axis enable bits:gyro-z=0,gyro-y,gyro-x,acc-z=3,acc-y,acc-x,mag=6 Range: bit 8,9 </td></tr>
+<tr class="char"><td>0x3D</td><td>61</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>0A:3E:00:00:00:00:00:00:00:00:B0:00:40:51:04:83:AA:00:F0</td><td>R</td><td>Movement Period</td></tr>
+<tr class="data"><td>0x3E</td><td>62</td><td class="long">0xAA83</td><td>Movement Period</td><td>64</td><td>RW</td><td>Period = [Input*10]ms (lower limit 100ms), default 1000ms</td></tr>
+<tr class="service"><td>0x3F</td><td>63</td><td class="short">0x2800</td><td>GATT Primary Service Declaration</td><td>F000AA70-0451-4000-B000-000000000000</td><td>R</td><td>Luxometer Service</td></tr>
+<tr class="char"><td>0x40</td><td>64</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>12:41:00:00:00:00:00:00:00:00:B0:00:40:51:04:71:AA:00:F0</td><td>R</td><td>Luxometer Data</td></tr>
+<tr class="data"><td>0x41</td><td>65</td><td class="long">0xAA71</td><td>Luxometer Data</td><td>00:00</td><td>RN</td><td>LSB:MSB</td></tr>
+<tr class="data"><td>0x42</td><td>66</td><td class="short">0x2902</td><td>Client Characteristic Configuration</td><td>01:00</td><td>RW</td><td>Write "01:00" to enable notifications, "00:00" to disable</td></tr>
+<tr class="char"><td>0x43</td><td>67</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>0A:44:00:00:00:00:00:00:00:00:B0:00:40:51:04:72:AA:00:F0</td><td>R</td><td>Luxometer Config</td></tr>
+<tr class="data"><td>0x44</td><td>68</td><td class="long">0xAA72</td><td>Luxometer Config</td><td>00</td><td>RW</td><td>Write "01" to start Sensor and Measurements, "00" to put to sleep</td></tr>
+<tr class="char"><td>0x45</td><td>69</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>0A:46:00:00:00:00:00:00:00:00:B0:00:40:51:04:73:AA:00:F0</td><td>R</td><td>Luxometer Period</td></tr>
+<tr class="data"><td>0x46</td><td>70</td><td class="long">0xAA73</td><td>Luxometer Period</td><td>50</td><td>RW</td><td>Period = [Input*10]ms (lower limit 1000ms), default 2000ms</td></tr>
+<tr class="service"><td>0x47</td><td>71</td><td class="short">0x2800</td><td>GATT Primary Service Declaration</td><td>0xFFE0</td><td>R</td><td>Simple Keys Service</td></tr>
+<tr class="char"><td>0x48</td><td>72</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>10:49:00:E1:FF</td><td>R</td><td>Key press state</td></tr>
+<tr class="data"><td>0x49</td><td>73</td><td class="short">0xFFE1</td><td>Key press state</td><td></td><td>N</td><td></td></tr>
+<tr class="data"><td>0x4A</td><td>74</td><td class="short">0x2902</td><td>Client Characteristic Configuration</td><td>01:00</td><td>RW</td><td>Write "01:00" to enable notifications, "00:00" to disable</td></tr>
+<tr class="data"><td>0x4B</td><td>75</td><td class="short">0x2901</td><td>Characteristic User Description</td><td>4B:65:79:20:50:72:65:73:73:20:53:74:61:74:65</td><td>R</td><td>Key Press State</td></tr>
+<tr class="service"><td>0x4C</td><td>76</td><td class="short">0x2800</td><td>GATT Primary Service Declaration</td><td>F000AA64-0451-4000-B000-000000000000</td><td>R</td><td>IO Service</td></tr>
+<tr class="char"><td>0x4D</td><td>77</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>0A:4E:00:00:00:00:00:00:00:00:B0:00:40:51:04:65:AA:00:F0</td><td>R</td><td>IO Data</td></tr>
+<tr class="data"><td>0x4E</td><td>78</td><td class="long">0xAA65</td><td>IO Data</td><td>7F</td><td>RW</td><td>Local and remote mode: bit 0 - red led; bit 1 - green led; bit 2 - buzzer. In test mode: sensor self test result (exp. 0x5F)</td></tr>
+<tr class="char"><td>0x4F</td><td>79</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>0A:50:00:00:00:00:00:00:00:00:B0:00:40:51:04:66:AA:00:F0</td><td>R</td><td>IO Config</td></tr>
+<tr class="data"><td>0x50</td><td>80</td><td class="long">0xAA66</td><td>IO Config</td><td>00</td><td>RW</td><td>0:local mode; 1:remote mode; 2:test mode</td></tr>
+<tr class="service"><td>0x51</td><td>81</td><td class="short">0x2800</td><td>GATT Primary Service Declaration</td><td>F000AC00-0451-4000-B000-000000000000</td><td>R</td><td>Register Service</td></tr>
+<tr class="char"><td>0x52</td><td>82</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>1A:53:00:00:00:00:00:00:00:00:B0:00:40:51:04:01:AC:00:F0</td><td>R</td><td>Register Data</td></tr>
+<tr class="data"><td>0x53</td><td>83</td><td class="long">0xAC01</td><td>Register Data</td><td>00:00</td><td>RWN</td><td>Data from serial device, variable length (see Register Address)</td></tr>
+<tr class="data"><td>0x54</td><td>84</td><td class="short">0x2902</td><td>Client Characteristic Configuration</td><td>00:00</td><td>RW</td><td>Write "01:00" to enable notifications, "00:00" to disable</td></tr>
+<tr class="char"><td>0x55</td><td>85</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>0A:56:00:00:00:00:00:00:00:00:B0:00:40:51:04:02:AC:00:F0</td><td>R</td><td>Register Address</td></tr>
+<tr class="data"><td>0x56</td><td>86</td><td class="long">0xAC02</td><td>Register Address</td><td>02:02:00:00:00</td><td>RW</td><td>length(byte, max 16);internal addr (1 to 4 bytes)</td></tr>
+<tr class="char"><td>0x57</td><td>87</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>0A:58:00:00:00:00:00:00:00:00:B0:00:40:51:04:03:AC:00:F0</td><td>R</td><td>Register Device ID</td></tr>
+<tr class="data"><td>0x58</td><td>88</td><td class="long">0xAC03</td><td>Register Device ID</td><td>00:44</td><td>RW</td><td>byte 1 (interface): 0=I2C0,1=I2C1,2=SPI1,3=SPI2,4=SPI3,5=MCU; byte 2: device addr</td></tr>
+<tr class="service"><td>0x59</td><td>89</td><td class="short">0x2800</td><td>GATT Primary Service Declaration</td><td>F000CCC0-0451-4000-B000-000000000000</td><td>R</td><td>Connection Control Service</td></tr>
+<tr class="char"><td>0x5A</td><td>90</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>12:5B:00:00:00:00:00:00:00:00:B0:00:40:51:04:C1:CC:00:F0</td><td>R</td><td>Connection Parameters</td></tr>
+<tr class="data"><td>0x5B</td><td>91</td><td class="long">0xCCC1</td><td>Connection Parameters</td><td>06:00:00:00:64:00</td><td>RN</td><td>ConnInterval,SlaveLatency,SupervisionTimeout (2 bytes each)</td></tr>
+<tr class="data"><td>0x5C</td><td>92</td><td class="short">0x2902</td><td>Client Characteristic Configuration</td><td>00:00</td><td>RW</td><td>Write "01:00" to enable notifications, "00:00" to disable</td></tr>
+<tr class="char"><td>0x5D</td><td>93</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>08:5E:00:00:00:00:00:00:00:00:B0:00:40:51:04:C2:CC:00:F0</td><td>R</td><td>Request Connection Parameters</td></tr>
+<tr class="data"><td>0x5E</td><td>94</td><td class="long">0xCCC2</td><td>Request Connection Parameters</td><td></td><td>W</td><td>MinConnInterval,MaxConnInterval,SlaveLatency,SupervisionTimeout (2 bytes each)</td></tr>
+<tr class="char"><td>0x5F</td><td>95</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>08:60:00:00:00:00:00:00:00:00:B0:00:40:51:04:C3:CC:00:F0</td><td>R</td><td>Disconnect request</td></tr>
+<tr class="data"><td>0x60</td><td>96</td><td class="long">0xCCC3</td><td>Disconnect request</td><td></td><td>W</td><td>Change the value to disconnect</td></tr>
+<tr class="service"><td>0x61</td><td>97</td><td class="short">0x2800</td><td>GATT Primary Service Declaration</td><td>F000FFC0-0451-4000-B000-000000000000</td><td>R</td><td>OAD Service</td></tr>
+<tr class="char"><td>0x62</td><td>98</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>1C:63:00:00:00:00:00:00:00:00:B0:00:40:51:04:C1:FF:00:F0</td><td>R</td><td>OAD Image Identify</td></tr>
+<tr class="data"><td>0x63</td><td>99</td><td class="long">0xFFC1</td><td>OAD Image Identify</td><td></td><td>WN</td><td>Write '0' to identify image type 'A', '1' to identify 'B'. Data in notfication 8 bytes: image type (2), size/4 (2), user data (4).</td></tr>
+<tr class="data"><td>0x64</td><td>100</td><td class="short">0x2902</td><td>Client Characteristic Configuration</td><td>01:00</td><td>RW</td><td>Write "01:00" to enable notifications, "00:00" to disable</td></tr>
+<tr class="data"><td>0x65</td><td>101</td><td class="short">0x2901</td><td>Characteristic User Description</td><td>49:6D:67:20:49:64:65:6E:74:69:66:79</td><td>R</td><td>Img Identify</td></tr>
+<tr class="char"><td>0x66</td><td>102</td><td class="short">0x2803</td><td>GATT Characteristic Declaration</td><td>1C:67:00:00:00:00:00:00:00:00:B0:00:40:51:04:C2:FF:00:F0</td><td>R</td><td>OAD Image Block</td></tr>
+<tr class="data"><td>0x67</td><td>103</td><td class="long">0xFFC2</td><td>OAD Image Block</td><td></td><td>WN</td><td>Image block (18 bytes). Block no. (2 bytes), OAD image block (16 bytes)</td></tr>
+<tr class="data"><td>0x68</td><td>104</td><td class="short">0x2902</td><td>Client Characteristic Configuration</td><td>01:00</td><td>RW</td><td>Write "01:00" to enable notifications, "00:00" to disable</td></tr>
+<tr class="data"><td>0x69</td><td>105</td><td class="short">0x2901</td><td>Characteristic User Description</td><td>49:6D:67:20:42:6C:6F:63:6B</td><td>R</td><td>Img Block</td></tr>
+</body></html>

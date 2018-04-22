@@ -11,9 +11,9 @@ import Foundation
 
 class XyzCoordinate: NSObject {
 
-    var xValue: NSNumber;
-    var yValue: NSNumber;
-    var zValue: NSNumber;
+    var xValue: Double;
+    var yValue: Double;
+    var zValue: Double;
 
     override var description : String {
         get {
@@ -21,7 +21,7 @@ class XyzCoordinate: NSObject {
         }
     }
     
-    init (x:NSNumber, y:NSNumber, z:NSNumber) {
+    init (x:Double, y:Double, z:Double) {
         xValue = x;
         yValue = y;
         zValue = z;

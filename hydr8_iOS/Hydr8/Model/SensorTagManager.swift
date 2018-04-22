@@ -471,7 +471,7 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
      If unsuccessful, the error parameter returns the cause of the failure.
      */
     public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        Log.write("Got peripheral characteristic value: \(String(describing: characteristic.value))", .detail)
+        Log.write("Got peripheral characteristic value: \(String(describing: characteristic.value))", .info)
         
         if error != nil {
             Log.write("ERROR ON UPDATING VALUE FOR CHARACTERISTIC: \(characteristic) - \(String(describing: error?.localizedDescription))", .error)
@@ -584,8 +584,11 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
         // We'll get four bytes of data back, so we divide the byte count by two
         // because we're creating an array that holds two 16-bit (two-byte) values
         let dataLength = data.length / MemoryLayout<UInt16>.size
-        var dataArray = [UInt16](repeating: 0, count:dataLength)
+        var dataArray = [Int16](repeating: 0, count:dataLength)
         data.getBytes(&dataArray, length: dataLength * MemoryLayout<Int16>.size)
+        
+        Log.write("Data: \(data), dataArray: \(dataArray)", .info)
+
         
         //The data consists of nine 16-bit signed values, one for each axis. The order in the data is Gyroscope, Accelerometer, Magnetomer. [0,1,2] Gyroscope; [3,4,5] Accelerometer; [6,7,8] Magnetometer
         
