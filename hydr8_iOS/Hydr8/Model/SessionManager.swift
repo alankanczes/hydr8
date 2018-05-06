@@ -38,7 +38,7 @@ public class SessionManager: NSObject {
     }
     
     func addSession(){
-        let sessionRecord =  Session (name: "New", startTime: NSDate() as Date, endTime: NSDate() as Date)
+        let sessionRecord =  Session (startTime: NSDate() as Date, endTime: NSDate() as Date)
         SessionManager.sharedManager.items.append(sessionRecord)
         SessionManager.sharedManager.saveOldSessions()
     }
@@ -97,6 +97,16 @@ public class SessionManager: NSObject {
         }
     }
     
+    // This method will save the active session. BUT not stop it, yet.
+    func saveSession() {
+        guard let session = getActiveSession() else {
+            Log.write("No active session exists.")
+            return
+        }
+        
+        session.save()
+    }
+    
     // This method will save all the sessions from CloudKit and populate the array
     func saveOldSessions() {
         for cnt in 0..<items.count-1 {
@@ -105,9 +115,9 @@ public class SessionManager: NSObject {
             session.save()
         }
     }
-    
+ 
     // Lookup the active session and record the movement, if there is one.
-    func recordMovement(deviceUuid: String, dataArray: [UInt16]) {
+    func recordMovement(deviceUuid: String, dataArray: [Int16]) {
         if let session = getActiveSession() {
             session.recordMovement(deviceUuid: deviceUuid, dataArray:  dataArray)
         } else {

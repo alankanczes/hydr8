@@ -29,7 +29,8 @@ class Session: NSObject {
    // MARK: - Initializers
    // Since a new record may not have yet be persisted to the database, let it create a blank one
    init?(remoteRecord: CKRecord) {
-      
+      Log.write("Loading remoteSession: \(RemoteSession.name) ")
+
       guard let name = remoteRecord.object(forKey: RemoteSession.name) as? String,
          let startTime = remoteRecord.object(forKey: RemoteSession.startTime) as? Date,
          let endTime = remoteRecord.object(forKey: RemoteSession.endTime) as? Date
@@ -43,10 +44,12 @@ class Session: NSObject {
       self.remoteRecord = remoteRecord
       //self.sensorLogs = [String:SensorLog]()
       let reference = CKReference(record: remoteRecord, action: .deleteSelf)
+      
+      
       self.sensorLogs = SensorLog.referencedSensorLogs(sessionReference: reference)
    }
    
-   init(name: String, startTime: Date, endTime: Date?) {
+   init(name: String!, startTime: Date!, endTime: Date?) {
       self.name = name
       self.startTime = startTime
       self.endTime = endTime
@@ -56,16 +59,18 @@ class Session: NSObject {
       self.save()
    }
    
+   convenience init(startTime: Date!, endTime: Date?) {
+      self.init(name: "Started: \(startTime!)", startTime: startTime, endTime: endTime)
+   }
+   
    /* Save the record to the database */
    func save() {
 
       var record = remoteRecord
       
       if remoteRecord == nil {
+         Log.write("Creating a new session record.")
          record = CKRecord(recordType: RemoteSession.recordType)
-         Log.write("Creating a new record.")
-      } else {
-         name = "Started: \(startTime)"
       }
       record!.setObject(name as CKRecordValue, forKey: RemoteSession.name)
       record!.setObject(startTime as CKRecordValue, forKey: RemoteSession.startTime)
@@ -73,6 +78,9 @@ class Session: NSObject {
 
       let container = CKContainer.default()
       let privateDatabase = container.privateCloudDatabase
+      
+      // Save off the sensor logs, too!
+      saveSensorLogs()
       
       privateDatabase.save(record!) {
          record, error in
@@ -83,6 +91,13 @@ class Session: NSObject {
             Log.write("Session record: '\(record?.object(forKey: RemoteSession.name) as! String)' saved.")
          }
       }
+   }
+   
+   func saveSensorLogs() {
+      for sensorLog in sensorLogs.values {
+         sensorLog.save()
+      }
+      
    }
    
    /* Delete the record from the database */
@@ -121,16 +136,20 @@ class Session: NSObject {
    }
    
    // Find the log for the device and add teh raw data, or create a log for the device storing the new start date and movement data.
-   func recordMovement(deviceUuid: String, dataArray: [UInt16]) {
+   func recordMovement(deviceUuid: String, dataArray: [Int16]) {
       if let sensorLog = sensorLogs[deviceUuid] {
          // CHECK THAT VALUES IS
-         Log.write("Found sensorlog for device \(deviceUuid), appending data array to it.", .info)
+         Log.write("Found sensorlog for device \(deviceUuid), appending data array to it.", .debug)
          sensorLog.rawMovementDataArray.append(contentsOf: dataArray)
          // Don't save every time...
          // sensorLog.save()
       } else {
          Log.write("Creating new SensorLog for device (\(deviceUuid)", .info)
-         let sessionReference = CKReference(record: remoteRecord!, action: .deleteSelf)
+         guard let rec = remoteRecord else {
+            Log.write("Could not find remoteRecord for SensorLog for device (\(deviceUuid).  Not ", .warn)
+            return
+         }
+         let sessionReference = CKReference(record: rec, action: .deleteSelf)
          let sensorLog = SensorLog(deviceUuid: deviceUuid, startTime: Date(), endTime: Date(), rawMovementDataArray: dataArray, sessionReference: sessionReference)
          sensorLogs[deviceUuid] = sensorLog
       }
