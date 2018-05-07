@@ -81,7 +81,7 @@ class SessionTableViewController: UITableViewController {
         }
         
         cell.detailTextLabel?.text = "Sensors used: \(session.sensorLogs.count)"
-    
+        
         return cell
     }
     
@@ -140,26 +140,26 @@ class SessionTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //getting the index path of selected row
-        //let indexPath = tableView.indexPathForSelectedRow
+        ///let indexPath = tableView.indexPathForSelectedRow
         //getting the current cell from the index path
-        //let currentCell = tableView.cellForRow(at: indexPath!)! as UITableViewCell
+        ///let currentCell = tableView.cellForRow(at: indexPath!)! as UITableViewCell
         
         var title = "No session found for selected cell. How?!?"
         var message = "No sensorLogs for this session"
+        
+        let session = SessionManager.sharedManager.getSession(row: indexPath.row)
+        
+        title = "Session: " + session.name
+        message = "Sensor logs: \(session.sensorLogs.count)"
 
-        if let session = SessionManager.sharedManager.getActiveSession() {
-            var sessionName: String!
-            sessionName = session.name
-            title = "Session: " + sessionName
-            if let sensorLog = session.sensorLogs.first {
-                message = "Sensor logs: \(session.sensorLogs.count)\n sensorLogs: \(session.sensorLogs) \n sensorLog: \(sensorLog) Observation Count: \(sensorLog.value.rawMovementDataArray.count)"
-            }
+        for sensorLog in session.sensorLogs {
+            message.append("\n\(sensorLog.key), cnt=\(sensorLog.value.rawMovementDataArray.count)")
         }
         
         let vc = UIAlertController(title: title, message:  message, preferredStyle: .alert)
         let defaultAction = UIAlertAction(title: "Close", style: .default, handler: nil)
         vc.addAction(defaultAction)
-
+        
         present(vc, animated: true, completion: nil)
         
     }

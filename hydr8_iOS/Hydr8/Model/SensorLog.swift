@@ -27,14 +27,14 @@ class SensorLog: NSObject {
     var startTime: Date!
     var endTime: Date!
     var rawMovementDataArray = [Int16]()
-
+    
     var assetCount = 0
     
     // MARK: - Initializers
     // Since a new record may not have yet be persisted to the database, let it create a blank one
     init?(remoteRecord: CKRecord) {
-        Log.write("Creating sensor log.")
-
+        Log.write("Creating sensor log.", .debug)
+        
         guard let deviceUuid = remoteRecord.object(forKey: RemoteSensorLog.deviceUuid) as? String,
             let startTime = remoteRecord.object(forKey: RemoteSensorLog.startTime) as? Date,
             let endTime = remoteRecord.object(forKey: RemoteSensorLog.endTime) as? Date,
@@ -51,25 +51,25 @@ class SensorLog: NSObject {
         self.endTime = endTime
         self.remoteRecord = remoteRecord
         self.sessionReference = sessionReference
-
+        
         var assetData: Data
         
         do {
             let size = MemoryLayout<Int16>.stride
             assetData = try Data(contentsOf: rawMovementDataAsset.fileURL)
             
-            let length = assetData.count * MemoryLayout<Int16>.stride
-            self.rawMovementDataArray = [Int16](repeating: 0, count: assetData.count / size)
+            let length = assetData.count * size
+            self.rawMovementDataArray = [Int16](repeating: 0, count: assetData.count)
             (assetData as NSData).getBytes(&rawMovementDataArray, length: length)
             
-            Log.write("Loading of rawMovementData succeeded for: \(deviceUuid) of size: \(assetData.count) and \(rawMovementDataArray.count)")
+            Log.write("Loading rawMovementData succeeded for session: \(sessionReference.recordID.recordName) for device: \(deviceUuid) of size: \(assetData.count), length: \(length) and \(rawMovementDataArray.count)", .debug)
         } catch {
-            Log.write("Loading of rawMovementData FAILED.")
-
+            Log.write("Loading rawMovementData FAILED.", .error)
+            
             return
         }
         
-        Log.write("Created sensor log!!!")
+        Log.write("Created sensor log!!!", .debug)
     }
     
     init(deviceUuid: String, startTime: Date, endTime: Date, rawMovementDataArray: [Int16], sessionReference: CKReference) {
@@ -87,9 +87,9 @@ class SensorLog: NSObject {
     }
     
     func save() {
-
+        
         var record = remoteRecord
-
+        
         if record == nil {
             sleep(1)
             Log.write("Sleeping...", .detail)
@@ -99,14 +99,14 @@ class SensorLog: NSObject {
                 Log.write("Created a new RemoteSensorLog.")
             }
         }
-
+        
         
         record?.setObject(deviceUuid as CKRecordValue, forKey: RemoteSensorLog.deviceUuid)
         record?.setObject(startTime as CKRecordValue, forKey: RemoteSensorLog.startTime)
         record?.setObject(endTime as CKRecordValue, forKey: RemoteSensorLog.endTime)
         //record?.setObject(rawMovementDataArray as CKRecordValue, forKey: RemoteSensorLog.rawMovementDataArray)
         record?.setObject(sessionReference as CKReference, forKey: RemoteSensorLog.sessionReference)
-
+        
         let assetHelper = DataAssetHelper(rawDataArray: rawMovementDataArray)
         if let asset = assetHelper.asset {
             Log.write("Created asset for saving sensorLog rawDataArray")
@@ -114,7 +114,7 @@ class SensorLog: NSObject {
         } else {
             Log.write("Asset is not available to record.")
         }
-
+        
         let container = CKContainer.default()
         let privateDatabase = container.privateCloudDatabase
         
@@ -131,10 +131,9 @@ class SensorLog: NSObject {
     }
     
     // Load and return the session logs that have the session reference
-    class func referencedSensorLogs(sessionReference: CKReference) -> [String: SensorLog] {
-        var sensorLogs = [String: SensorLog]()
+    class func referencedSensorLogs(session: Session, sessionReference: CKReference) {
         
-        Log.write("Finding sensorLogs for session: \(sessionReference) for id: \(sessionReference.recordID)", .info)
+        Log.write("Finding sensorLogs for session: \(sessionReference) for id: \(sessionReference.recordID.recordName)", .info)
         let predicate = NSPredicate(format: "SessionReference == %@", sessionReference)
         let query = CKQuery(recordType: RemoteSensorLog.recordType, predicate: predicate)
         CKContainer.default().privateCloudDatabase.perform(query, inZoneWith: nil) {
@@ -143,21 +142,30 @@ class SensorLog: NSObject {
                 Log.write("Error: \(String(describing: error?.localizedDescription))", .error)
             } else {
                 if records != nil {
-                    Log.write("LOADING SensorLog RECORDS for \(sessionReference.recordID): count=\(records!.count)", .detail)
-                    for record in records! {
-                        Log.write("LOADING one SensorLog record: ", .detail)
+                    Log.write("LOADING SensorLog RECORDS for \(sessionReference.recordID.recordName): count=\(records!.count)", .info)
 
+                    for record in records! {
+                        Log.write("LOADING one SensorLog record for session: \(sessionReference.recordID.recordName)", .info)
+                        
                         let sensorLog = SensorLog(remoteRecord: record)
-                        sensorLogs[RemoteSensorLog.deviceUuid] = sensorLog
+                        session.sensorLogs[(sensorLog?.deviceUuid)!] = sensorLog
+                        Log.write("Sensor Logs: \(session.sensorLogs)", .info)
                     }
+                    var message = "SensorLogs for session: \(sessionReference.recordID.recordName)"
+                    for sensorLog in session.sensorLogs {
+                        message.append("\n\(sensorLog)")
+                    }
+                    Log.write("\(message)", .info)
                 }
             }
         }
-        
-        Log.write("SensorLogs for session: \(sessionReference) \n \(sensorLogs)")
-        
-        return sensorLogs
     }
     
+    override var description : String {
+        get {
+            return "\(deviceUuid), cnt=\(rawMovementDataArray.count)"
+        }
+    }
+
 }
 

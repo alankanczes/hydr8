@@ -33,7 +33,7 @@ class DataAssetHelper: NSObject {
         //             self.fileUrl = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent(NSUUID().UUIDString+".dat")
         self.rawDataArray = rawDataArray
         self.data = NSData(bytes: rawDataArray, length: rawDataArray.count)
-
+        Log.write("Creating assest of length: \(data.length) for \(rawDataArray.count)", .debug)
         do {
             try data.write(to: fileUrl as URL, options: .atomicWrite)
         } catch {

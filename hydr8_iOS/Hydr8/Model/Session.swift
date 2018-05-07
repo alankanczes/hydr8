@@ -29,24 +29,25 @@ class Session: NSObject {
    // MARK: - Initializers
    // Since a new record may not have yet be persisted to the database, let it create a blank one
    init?(remoteRecord: CKRecord) {
-      Log.write("Loading remoteSession: \(RemoteSession.name) ")
-
+      super.init()
+      
       guard let name = remoteRecord.object(forKey: RemoteSession.name) as? String,
          let startTime = remoteRecord.object(forKey: RemoteSession.startTime) as? Date,
          let endTime = remoteRecord.object(forKey: RemoteSession.endTime) as? Date
          else {
+            Log.write("Loading remoteSession failed.", .error)
             return nil
       }
-      
+      Log.write("Loading remoteSession: \(name)", .info)
+
       self.name = name
       self.startTime = startTime
       self.endTime = endTime
       self.remoteRecord = remoteRecord
-      //self.sensorLogs = [String:SensorLog]()
       let reference = CKReference(record: remoteRecord, action: .deleteSelf)
-      
-      
-      self.sensorLogs = SensorLog.referencedSensorLogs(sessionReference: reference)
+
+      // Load sensor logs
+      SensorLog.referencedSensorLogs(session: self, sessionReference: reference)
    }
    
    init(name: String!, startTime: Date!, endTime: Date?) {
@@ -141,6 +142,7 @@ class Session: NSObject {
          // CHECK THAT VALUES IS
          Log.write("Found sensorlog for device \(deviceUuid), appending data array to it.", .debug)
          sensorLog.rawMovementDataArray.append(contentsOf: dataArray)
+         Log.write("Found sensorlog for device \(deviceUuid), arrayCount=\(sensorLog.rawMovementDataArray.count), byteCount=\(sensorLog.rawMovementDataArray.count * 2)", .info)
          // Don't save every time...
          // sensorLog.save()
       } else {

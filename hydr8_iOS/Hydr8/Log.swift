@@ -45,7 +45,7 @@ class Log {
     static func write(_ message: String, _ logLevel: LogLevel = LogLevel.info) {
         
         if Log.visibleLogLevels.contains(logLevel) {
-            print(message)
+            print("[\(logLevel)] \(message)")
         }
         
         // App visible log exists, yay!

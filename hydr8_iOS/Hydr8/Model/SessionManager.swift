@@ -31,21 +31,27 @@ public class SessionManager: NSObject {
     }
     
     func deleteSession(row: Int){
-        let sessionRecord = SessionManager.sharedManager.items[row]
-        Log.write("Deleting session: \(sessionRecord)", .info)
-        sessionRecord.delete()
+        let session = SessionManager.sharedManager.items[row]
+        Log.write("Deleting session: \(session)", .info)
+        session.delete()
         SessionManager.sharedManager.items.remove(at: row)
     }
     
+    func getSession(row: Int) -> Session {
+        let session = SessionManager.sharedManager.items[row]
+        Log.write("Returning session: \(session)", .detail)
+        return session
+    }
+    
     func addSession(){
-        let sessionRecord =  Session (startTime: NSDate() as Date, endTime: NSDate() as Date)
-        SessionManager.sharedManager.items.append(sessionRecord)
+        let session =  Session (startTime: NSDate() as Date, endTime: NSDate() as Date)
+        SessionManager.sharedManager.items.append(session)
         SessionManager.sharedManager.saveOldSessions()
     }
     
     func getActiveSession() -> Session? {
         guard items.count > 0 else {
-            Log.write ("There is no active session, cant return one.", .debug)
+            Log.write ("There is no active session, cant return one.", .info)
             return nil
         }
         return items[items.count - 1]
@@ -68,7 +74,9 @@ public class SessionManager: NSObject {
          let predicate = NSPredicate(value :true)
          let query = CKQuery(recordType: PositionRecordType, predicate: predicate)
          */
+        let sortDescriptor = NSSortDescriptor(key: RemoteSession.startTime, ascending: true)
         let query = CKQuery(recordType: RemoteSession.recordType, predicate: NSPredicate(value: true))
+        query.sortDescriptors = [sortDescriptor]
         
         privateDatabase.perform(query, inZoneWith: nil) { results, error in
             if error != nil {
