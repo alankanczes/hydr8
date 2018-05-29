@@ -8,17 +8,17 @@
 import UIKit
 import CloudKit
 
-class ViewController: UIViewController, UITextViewDelegate {
+class MainViewController: UIViewController, UITextViewDelegate {
     
     //MARK: Properties
     @IBOutlet weak var sensorNameLabel: UILabel!
     @IBOutlet weak var sensorNameTextField: UITextField!
-    @IBOutlet weak var disconnectButton: UIButton!
     @IBOutlet weak var statusLog: UITextView!
     @IBOutlet weak var statusLogLabel: UILabel!
-    @IBOutlet weak var mainView: UIImageView!
     @IBOutlet weak var sensorValueLabel: UILabel!
     @IBOutlet weak var sensorValueTextField: UITextField!
+    @IBOutlet weak var disconnectButton: UIButton!
+    @IBOutlet weak var mainView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()        
@@ -40,7 +40,7 @@ class ViewController: UIViewController, UITextViewDelegate {
         // Setup Log
         Log.setLog(statusLog:statusLog, showLogLevels: [.info, .warn, .error]);
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.tapLogHeader))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.tapLogHeader))
         statusLogLabel.isUserInteractionEnabled = true
         statusLogLabel.addGestureRecognizer(tap)
         
@@ -74,9 +74,28 @@ class ViewController: UIViewController, UITextViewDelegate {
         statusLog.text = ""
     }
     
-    
-    @IBAction func disconnectButtonPressed() {
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
         
+        Log.write("Segue: \(segue) \(String(describing: segue.identifier))")
+        if segue.identifier == "MainToSessionsSeque"{
+            navigationItem.title = "Back to main" // Not working!
+            
+            // Get the new view controller using segue.destinationViewController.
+            //self.sessionPopupViewController = segue.destination as? SessionPopupViewController
+            
+            // Pass the selected object to the new view controller.
+            //sessionPopupViewController.session = self.session
+        }
+
+    }
+
+    @IBAction func disconnectButtonPressed(_ sender: UIButton) {
+
         clearLog()
         Log.write("*** Disconnect button tapped...", .detail)
         

@@ -26,6 +26,8 @@ class Session: NSObject {
    var endTime: Date!
    var sensorLogs: [String: SensorLog] = [:]
    
+   
+   
    // MARK: - Initializers
    // Since a new record may not have yet be persisted to the database, let it create a blank one
    init?(remoteRecord: CKRecord) {
@@ -62,6 +64,16 @@ class Session: NSObject {
    
    convenience init(startTime: Date!, endTime: Date?) {
       self.init(name: "Started: \(startTime!)", startTime: startTime, endTime: endTime)
+   }
+   
+   func getSessionLog(row: Int) -> SensorLog? {
+      let keys = sensorLogs.keys.sorted()
+      var sensorLog : SensorLog? = nil
+      if (row) <= keys.count {
+         let deviceUuid = keys[row-1]
+         sensorLog = sensorLogs[deviceUuid]!
+      }
+      return sensorLog
    }
    
    /* Save the record to the database */
@@ -140,9 +152,8 @@ class Session: NSObject {
    func recordMovement(deviceUuid: String, dataArray: [Int16]) {
       if let sensorLog = sensorLogs[deviceUuid] {
          // CHECK THAT VALUES IS
-         Log.write("Found sensorlog for device \(deviceUuid), appending data array to it.", .debug)
-         sensorLog.rawMovementDataArray.append(contentsOf: dataArray)
-         Log.write("Found sensorlog for device \(deviceUuid), arrayCount=\(sensorLog.rawMovementDataArray.count), byteCount=\(sensorLog.rawMovementDataArray.count * 2)", .info)
+            sensorLog.rawMovementDataArray.append(contentsOf: dataArray)
+         Log.write("Found sensorlog for device \(deviceUuid), arrayCount=\(sensorLog.rawMovementDataArray.count), byteCount=\(sensorLog.rawMovementDataArray.count * 2)", .debug)
          // Don't save every time...
          // sensorLog.save()
       } else {

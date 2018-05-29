@@ -1,21 +1,19 @@
 //
-//  SessionTableViewController.swift
+//  SensorLogTableViewController.swift
 //  Hydr8
 //
-//  Created by Alan Kanczes on 3/31/18.
+//  Created by Alan Kanczes on 5/28/18.
 //  Copyright © 2018 Alan Kanczes. All rights reserved.
 //
 
+import Foundation
+
 import UIKit
 
-class SessionTableViewController: UITableViewController {
+class SensorLogTableViewController: UITableViewController {
+    
     var session: Session?
-    var sessionPopupViewController: SessionPopupViewController?
-    
 
-    @IBOutlet weak var addButton: UIBarButtonItem!
-    @IBOutlet weak var backButton: UINavigationItem!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,10 +24,7 @@ class SessionTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         // Don in Model -- SessionManager.sharedManager.fetchAll()
         tableView.reloadData()
-        
-        //Set so sessionmanager can update the view
-        SessionManager.sharedManager.sessionTableViewController = self
-        
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -37,21 +32,9 @@ class SessionTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func addSession(_ sender: Any) {
-        
-        //Log.clear()
-        SessionManager.sharedManager.sessionTableViewController = self
-        Log.write("*** Add session tapped... creating a new session", .info)
-        SessionManager.sharedManager.addSession()
-        tableView.reloadData()
-        
-    }
-    
-    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
@@ -68,20 +51,19 @@ class SessionTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return SessionManager.sharedManager.items.count
+        return (session?.sensorLogs.count)!
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SessionCell", for: indexPath)
-        let session = SessionManager.sharedManager.items[indexPath.row]
-        if let date = session.startTime {
-            cell.textLabel?.text = "Session Start: \(date)"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SensorLogCell", for: indexPath)
+        
+        if let sessionLog = session?.getSessionLog(row: indexPath.count) {
+            cell.textLabel?.text = sessionLog.deviceUuid
         } else {
-            cell.textLabel?.text = "Started: nil"
+            cell.textLabel?.text = "NO DEVICE ID FOUND!"
         }
         
-        cell.detailTextLabel?.text = "Sensors used: \(session.sensorLogs.count)"
+        cell.detailTextLabel?.text = "Sensors used: \(session?.sensorLogs.count)"
         
         return cell
     }
@@ -93,6 +75,7 @@ class SessionTableViewController: UITableViewController {
     // Override to support editing the table view.
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+       /*
         if editingStyle == .delete {
             SessionManager.sharedManager.deleteSession(row: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -101,6 +84,7 @@ class SessionTableViewController: UITableViewController {
             SessionManager.sharedManager.addSession()
             tableView.insertRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
         }
+         */
     }
     
     
@@ -124,44 +108,41 @@ class SessionTableViewController: UITableViewController {
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
         Log.write("Segue: \(segue) \(String(describing: segue.identifier))")
-        if segue.identifier == "Main"{
-            navigationItem.title = "Back to main"
-        }
-        
-        if segue.identifier == "SessionCellToSessionDetailsSeque"{
-            navigationItem.title = "Sensor Details"
-            
-            // Get the new view controller using segue.destinationViewController.
-            self.sessionPopupViewController = segue.destination as? SessionPopupViewController
-            
-            // Pass the selected object to the new view controller.
-            //sessionPopupViewController.session = self.session
+        if segue.identifier == "SensorLogCellToSensorLogDetailsSeque"{
+            navigationItem.title = "To Sensor Log Details"
         }
         
     }
     
-    // For some reason, the prepare(for seque:, sender:) is called first, making this hack to set the session required.
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //getting the index path of selected row
         ///let indexPath = tableView.indexPathForSelectedRow
         //getting the current cell from the index path
         ///let currentCell = tableView.cellForRow(at: indexPath!)! as UITableViewCell
         
+        var title = "No Sensor Log found for selected cell. How?!?"
+        var message = "No data for this sensorlog"
+        
         let session = SessionManager.sharedManager.getSession(row: indexPath.row)
-    
-        var title = "Session: " + session.name
-        var message = "Sensor logs: \(session.sensorLogs.count)"
+        /* For popup
+        title = "Session: " + session.name
+        message = "Sensor logs: \(session.sensorLogs.count)"
         
+        for sensorLog in session.sensorLogs {
+            message.append("\n\(sensorLog.key), cnt=\(sensorLog.value.rawMovementDataArray.count)")
+        }
         
-        // Pass the selected object to the new view controller.
-        sessionPopupViewController?.session = session
-        self.session = session
+        let vc = UIAlertController(title: title, message:  message, preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "Close", style: .default, handler: nil)
+        vc.addAction(defaultAction)
+        
+        present(vc, animated: true, completion: nil)
+        */
         
     }
 }
+

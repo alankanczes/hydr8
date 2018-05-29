@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Hydr8" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="Hydr8" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -99,10 +99,10 @@
                                                     <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="5SF-Ev-GII" kind="show" id="K1m-7S-dko"/>
+                                                    <segue destination="5SF-Ev-GII" kind="show" identifier="MainToSessionsSeque" id="K1m-7S-dko"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tge-Tc-hHr">
+                                            <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="Disconnect Button" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tge-Tc-hHr">
                                                 <rect key="frame" x="276" y="0.0" width="138" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <size key="titleShadowOffset" width="1" height="0.0"/>
@@ -111,7 +111,7 @@
                                                     <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="disconnectButtonPressed" destination="BYZ-38-t0r" eventType="touchUpInside" id="6cQ-TO-ITe"/>
+                                                    <action selector="disconnectButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3Mr-k7-MHF"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -170,8 +170,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="disconnectButton" destination="Tge-Tc-hHr" id="J0S-Na-aBr"/>
-                        <outlet property="mainView" destination="XSk-Nd-AvG" id="edL-dF-SVG"/>
+                        <outlet property="disconnectButton" destination="Tge-Tc-hHr" id="gDb-Z1-GKn"/>
+                        <outlet property="mainView" destination="XSk-Nd-AvG" id="hLh-nF-Lla"/>
                         <outlet property="sensorNameLabel" destination="4P7-K8-PCv" id="E0d-LJ-09H"/>
                         <outlet property="sensorNameTextField" destination="8QK-mx-mG2" id="6Md-Kq-ThA"/>
                         <outlet property="sensorValueLabel" destination="LdK-AV-ICt" id="lo8-np-Vdp"/>
@@ -297,7 +297,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="VIO-c8-2Du" kind="presentation" identifier="SessionDetailsPopOverSeque" trigger="accessoryAction" id="P78-1Z-slx"/>
+                                    <segue destination="VIO-c8-2Du" kind="show" identifier="SessionCellToSessionDetailsSeque" id="Mpy-U4-VSN"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -307,7 +307,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Sessions" id="41u-An-7rT">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="Kc3-cT-gxz">
+                        <barButtonItem key="leftBarButtonItem" title="Back to Main" id="Kc3-cT-gxz">
                             <connections>
                                 <action selector="Back:" destination="Fxy-kS-s8e" id="yIU-bk-PG3"/>
                             </connections>
@@ -335,22 +335,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nYA-nh-qaJ">
+                                <rect key="frame" x="192" y="558" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I3j-6Q-GP8">
-                                <rect key="frame" x="34" y="61" width="345" height="615"/>
+                                <rect key="frame" x="35" y="61" width="345" height="615"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wm0-Xb-wuh">
-                                        <rect key="frame" x="153" y="574" width="39" height="30"/>
-                                        <size key="titleShadowOffset" width="1" height="1"/>
-                                        <state key="normal" title="Close">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="closePopup:" destination="VIO-c8-2Du" eventType="touchUpInside" id="NG4-RB-gza"/>
-                                        </connections>
-                                    </button>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LLB-It-4Ji">
-                                        <rect key="frame" x="20" y="107" width="305" height="459"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LLB-It-4Ji">
+                                        <rect key="frame" x="20" y="107" width="305" height="267"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="459" id="Rdt-9v-E6s"/>
@@ -371,15 +364,21 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vgd-fh-s49">
+                                        <rect key="frame" x="89" y="451" width="167" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Sensor Logs"/>
+                                        <connections>
+                                            <segue destination="rhi-1V-liw" kind="show" identifier="SessionDetailsToSensorLogsSeque" id="tgv-Zs-UDw"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.51678679555121287" green="0.59550519376955569" blue="0.66666668653488159" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="LLB-It-4Ji" firstAttribute="trailing" secondItem="cya-EK-cys" secondAttribute="trailing" id="2Ft-Xo-lRg"/>
                                     <constraint firstItem="LLB-It-4Ji" firstAttribute="leading" secondItem="I3j-6Q-GP8" secondAttribute="leading" constant="20" id="8N5-pf-AWQ"/>
-                                    <constraint firstItem="Wm0-Xb-wuh" firstAttribute="centerX" secondItem="I3j-6Q-GP8" secondAttribute="centerX" id="Bs3-V4-jdb"/>
                                     <constraint firstAttribute="width" constant="345" id="LSa-kA-vFk"/>
                                     <constraint firstAttribute="height" constant="615" id="RmT-gY-Ksl"/>
-                                    <constraint firstItem="Wm0-Xb-wuh" firstAttribute="top" secondItem="LLB-It-4Ji" secondAttribute="bottom" constant="8" symbolic="YES" id="UYm-PF-wD8"/>
                                     <constraint firstItem="odc-Nc-PJQ" firstAttribute="centerX" secondItem="I3j-6Q-GP8" secondAttribute="centerX" id="W7E-1i-XL2"/>
                                     <constraint firstItem="LLB-It-4Ji" firstAttribute="top" secondItem="cya-EK-cys" secondAttribute="bottom" constant="15" id="YP0-M0-AEc"/>
                                     <constraint firstItem="LLB-It-4Ji" firstAttribute="leading" secondItem="cya-EK-cys" secondAttribute="leading" id="aFq-KM-O6R"/>
@@ -403,7 +402,78 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a3S-mp-JmI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1671.0144927536232" y="963.58695652173924"/>
+            <point key="canvasLocation" x="1683" y="959"/>
+        </scene>
+        <!--Sensor Log Table View Controller-->
+        <scene sceneID="Nf6-LM-PGy">
+            <objects>
+                <tableViewController id="rhi-1V-liw" customClass="SensorLogTableViewController" customModule="Hydr8" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="BcN-tp-bd5">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SensorLogCell" textLabel="MDy-Mf-iUR" detailTextLabel="9PW-0N-bMc" style="IBUITableViewCellStyleSubtitle" id="tOB-3p-zgM">
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tOB-3p-zgM" id="woV-yY-69L">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MDy-Mf-iUR">
+                                            <rect key="frame" x="20.000000000000004" y="5" width="33.333333333333336" height="20.333333333333332"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9PW-0N-bMc">
+                                            <rect key="frame" x="19.999999999999996" y="25.333333333333332" width="43.666666666666664" height="14.333333333333334"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="T3l-fi-okJ" kind="show" identifier="SensorLogCellToSensorLogDetailsSeque" id="jP2-au-cAa"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="rhi-1V-liw" id="cwJ-BB-36S"/>
+                            <outlet property="delegate" destination="rhi-1V-liw" id="sne-0a-kHC"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P9e-gu-6A9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2468" y="965"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Jbx-lW-3by">
+            <objects>
+                <viewController id="T3l-fi-okJ" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5mF-Wf-5Nq">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Not Done" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sKW-N7-PHz">
+                                <rect key="frame" x="75" y="177" width="73" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="OtF-sv-9vM"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="in1-su-f2A" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3238" y="964"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gP9-da-0sc">
