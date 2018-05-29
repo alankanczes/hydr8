@@ -24,7 +24,7 @@
 		E7A94FB52054759A00CE2B6F /* XyzCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A94FB42054759A00CE2B6F /* XyzCoordinate.swift */; };
 		E7A94FCA2055A36D00CE2B6F /* SensorTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A94FC92055A36D00CE2B6F /* SensorTag.swift */; };
 		E7F0ECD41FCA1E0200F97EE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F0ECD31FCA1E0200F97EE9 /* AppDelegate.swift */; };
-		E7F0ECD61FCA1E0200F97EE9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F0ECD51FCA1E0200F97EE9 /* ViewController.swift */; };
+		E7F0ECD61FCA1E0200F97EE9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F0ECD51FCA1E0200F97EE9 /* MainViewController.swift */; };
 		E7F0ECD91FCA1E0200F97EE9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7F0ECD71FCA1E0200F97EE9 /* Main.storyboard */; };
 		E7F0ECDB1FCA1E0200F97EE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7F0ECDA1FCA1E0200F97EE9 /* Assets.xcassets */; };
 		E7F0ECDE1FCA1E0200F97EE9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7F0ECDC1FCA1E0200F97EE9 /* LaunchScreen.storyboard */; };
@@ -64,7 +64,7 @@
 		E7A94FC92055A36D00CE2B6F /* SensorTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTag.swift; sourceTree = "<group>"; };
 		E7F0ECD01FCA1E0200F97EE9 /* Hydr8.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hydr8.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7F0ECD31FCA1E0200F97EE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E7F0ECD51FCA1E0200F97EE9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E7F0ECD51FCA1E0200F97EE9 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E7F0ECD81FCA1E0200F97EE9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E7F0ECDA1FCA1E0200F97EE9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E7F0ECDD1FCA1E0200F97EE9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -142,7 +142,7 @@
 				E74075A1206FF1F30084DF86 /* DeviceTableViewController.swift */,
 				E74075AC207980B30084DF86 /* SessionTableViewController.swift */,
 				E767C1BE20BCA2B900A219A2 /* SensorLogTableViewController.swift */,
-				E7F0ECD51FCA1E0200F97EE9 /* ViewController.swift */,
+				E7F0ECD51FCA1E0200F97EE9 /* MainViewController.swift */,
 				E7F0ECD71FCA1E0200F97EE9 /* Main.storyboard */,
 				E7496F4E208D2DA200F30C9F /* SessionPopupViewController.swift */,
 				E7F0ECDA1FCA1E0200F97EE9 /* Assets.xcassets */,
@@ -311,7 +311,7 @@
 				E74075AD207980B30084DF86 /* SessionTableViewController.swift in Sources */,
 				E7594C5D20267CCE006C763A /* Log.swift in Sources */,
 				E7F4C573204CA439005DFB7D /* UserInfo.swift in Sources */,
-				E7F0ECD61FCA1E0200F97EE9 /* ViewController.swift in Sources */,
+				E7F0ECD61FCA1E0200F97EE9 /* MainViewController.swift in Sources */,
 				E7F0ECD41FCA1E0200F97EE9 /* AppDelegate.swift in Sources */,
 				E7A94FB52054759A00CE2B6F /* XyzCoordinate.swift in Sources */,
 			);

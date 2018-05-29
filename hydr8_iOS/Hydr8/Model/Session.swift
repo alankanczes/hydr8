@@ -66,11 +66,11 @@ class Session: NSObject {
       self.init(name: "Started: \(startTime!)", startTime: startTime, endTime: endTime)
    }
    
-   func getSessionLog(row: Int) -> SensorLog? {
+   func getSensorLog(row: Int) -> SensorLog? {
       let keys = sensorLogs.keys.sorted()
       var sensorLog : SensorLog? = nil
-      if (row) <= keys.count {
-         let deviceUuid = keys[row-1]
+      if (row) < keys.count {
+         let deviceUuid = keys[row]
          sensorLog = sensorLogs[deviceUuid]!
       }
       return sensorLog

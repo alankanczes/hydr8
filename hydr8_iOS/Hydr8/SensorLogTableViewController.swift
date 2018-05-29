@@ -51,19 +51,21 @@ class SensorLogTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        Log.write("Session.sensorLogs.count: \(String(describing: session?.sensorLogs.count))")
         return (session?.sensorLogs.count)!
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SensorLogCell", for: indexPath)
         
-        if let sessionLog = session?.getSessionLog(row: indexPath.count) {
-            cell.textLabel?.text = sessionLog.deviceUuid
+        if let sensorLog = session?.getSensorLog(row: indexPath.row) {
+            cell.textLabel?.text = sensorLog.deviceUuid
+            cell.detailTextLabel?.text = "Observations: \(String(describing: sensorLog.rawMovementDataArray.count))"
         } else {
             cell.textLabel?.text = "NO DEVICE ID FOUND!"
+            cell.detailTextLabel?.text = "Observations: NO SENSOR LOG FOUND!"
         }
         
-        cell.detailTextLabel?.text = "Sensors used: \(session?.sensorLogs.count)"
         
         return cell
     }
@@ -113,7 +115,7 @@ class SensorLogTableViewController: UITableViewController {
         
         Log.write("Segue: \(segue) \(String(describing: segue.identifier))")
         if segue.identifier == "SensorLogCellToSensorLogDetailsSeque"{
-            navigationItem.title = "To Sensor Log Details"
+            navigationItem.title = "Sensor Logs"
         }
         
     }

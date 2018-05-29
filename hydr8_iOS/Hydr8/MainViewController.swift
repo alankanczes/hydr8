@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //
 //  Created by Alan Kanczes on 11/25/17.
 //  Copyright © 2017 Alan Kanczes. All rights reserved.

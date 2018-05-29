@@ -331,7 +331,7 @@
         <scene sceneID="AnA-9z-pjs">
             <objects>
                 <viewController storyboardIdentifier="SessionDetailsPopupId" id="VIO-c8-2Du" customClass="SessionPopupViewController" customModule="Hydr8" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="kCm-8z-5UR">
+                    <view key="view" contentMode="scaleToFill" id="kCm-8z-5UR" userLabel="Session Details">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -460,7 +460,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Not Done" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sKW-N7-PHz">
-                                <rect key="frame" x="75" y="177" width="73" height="21"/>
+                                <rect key="frame" x="20" y="103" width="73" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
