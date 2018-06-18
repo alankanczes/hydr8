@@ -14,6 +14,7 @@ class PlaybackViewController: UIViewController {
     var scnView: SCNView!
     var scnScene: SCNScene!
     var cameraNode: SCNNode!
+    var randomNode: SCNNode?
     
     // array of String:SCNNode - String is sensorName
     var sensorNodes: [String:SCNNode] = [:]
@@ -24,9 +25,8 @@ class PlaybackViewController: UIViewController {
         setupView()
         setupScene()
         setupCamera()
-        // Random Shape spawnShape()
+        spawnShape()  // Spawn a random shape
         addBody()
-        cameraNode.position = SCNVector3(x: 0, y: 5, z: 10)
 
     }
     
@@ -46,8 +46,9 @@ class PlaybackViewController: UIViewController {
     func setupScene() {
         scnScene = SCNScene()
         scnView.scene = scnScene
+        scnView.backgroundColor = UIColor.blue
         //scnScene.background.contents = "Assets.xcassets/water-background-42.jpg"
-        
+
     }
     
     func setupCamera() {
@@ -113,23 +114,24 @@ class PlaybackViewController: UIViewController {
         var geometry:SCNGeometry
         switch ShapeType.random() {
         case ShapeType.sphere:
-            geometry = SCNSphere(radius: 1.0)
+            geometry = SCNSphere(radius: 0.1)
         case ShapeType.capsule:
-            geometry = SCNCapsule(capRadius: 0.5, height: 1.0)
+            geometry = SCNCapsule(capRadius: 0.05, height: 0.1)
         case ShapeType.cone:
-            geometry = SCNCone(topRadius: 0.1, bottomRadius: 1.0, height: 1.0)
+            geometry = SCNCone(topRadius: 0.1, bottomRadius: 1.0, height: 0.1)
         case ShapeType.cylinder:
-            geometry = SCNCylinder(radius: 1.0, height: 1.0)
+            geometry = SCNCylinder(radius: 0.1, height: 0.1)
         case ShapeType.pyramid:
-            geometry = SCNPyramid(width: 1.0, height: 1.0, length: 1.0)
+            geometry = SCNPyramid(width: 0.1, height: 0.1, length: 0.1)
         case ShapeType.torus:
-            geometry = SCNTorus(ringRadius: 1.0, pipeRadius: 0.25)
+            geometry = SCNTorus(ringRadius: 0.1, pipeRadius: 0.25)
         default:
-            geometry = SCNBox(width: 1.0, height: 1.0, length: 1.0,
+            geometry = SCNBox(width: 0.1, height: 0.1, length: 0.1,
                               chamferRadius: 0.0)
         }
         
         let geometryNode = SCNNode(geometry: geometry)
+        randomNode=geometryNode
         scnScene.rootNode.addChildNode(geometryNode)
     }
     
