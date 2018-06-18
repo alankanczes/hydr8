@@ -20,6 +20,8 @@
 		E7594C5D20267CCE006C763A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7594C5C20267CCE006C763A /* Log.swift */; };
 		E767C1BF20BCA2BA00A219A2 /* SensorLogTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E767C1BE20BCA2B900A219A2 /* SensorLogTableViewController.swift */; };
 		E76ECB5C203B589D003D24CD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76ECB5B203B589D003D24CD /* CloudKit.framework */; };
+		E77706EA20CDDD1800F02270 /* PlaybackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77706E920CDDD1700F02270 /* PlaybackViewController.swift */; };
+		E77706EC20CDDDC600F02270 /* ShapeTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77706EB20CDDDC600F02270 /* ShapeTypeEnum.swift */; };
 		E7A94FB3205473FC00CE2B6F /* SensorTagMovement.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A94FB2205473FC00CE2B6F /* SensorTagMovement.swift */; };
 		E7A94FB52054759A00CE2B6F /* XyzCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A94FB42054759A00CE2B6F /* XyzCoordinate.swift */; };
 		E7A94FCA2055A36D00CE2B6F /* SensorTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A94FC92055A36D00CE2B6F /* SensorTag.swift */; };
@@ -59,6 +61,8 @@
 		E767C1BE20BCA2B900A219A2 /* SensorLogTableViewController.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = SensorLogTableViewController.swift; sourceTree = "<group>"; };
 		E76ECB5A203B5899003D24CD /* Hydr8.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Hydr8.entitlements; sourceTree = "<group>"; };
 		E76ECB5B203B589D003D24CD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		E77706E920CDDD1700F02270 /* PlaybackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackViewController.swift; sourceTree = "<group>"; };
+		E77706EB20CDDDC600F02270 /* ShapeTypeEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeTypeEnum.swift; sourceTree = "<group>"; };
 		E7A94FB2205473FC00CE2B6F /* SensorTagMovement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTagMovement.swift; sourceTree = "<group>"; };
 		E7A94FB42054759A00CE2B6F /* XyzCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XyzCoordinate.swift; sourceTree = "<group>"; };
 		E7A94FC92055A36D00CE2B6F /* SensorTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTag.swift; sourceTree = "<group>"; };
@@ -139,6 +143,8 @@
 				E7F4C571204CA42A005DFB7D /* Model */,
 				E76ECB5A203B5899003D24CD /* Hydr8.entitlements */,
 				E7F0ECD31FCA1E0200F97EE9 /* AppDelegate.swift */,
+				E77706E920CDDD1700F02270 /* PlaybackViewController.swift */,
+				E77706EB20CDDDC600F02270 /* ShapeTypeEnum.swift */,
 				E74075A1206FF1F30084DF86 /* DeviceTableViewController.swift */,
 				E74075AC207980B30084DF86 /* SessionTableViewController.swift */,
 				E767C1BE20BCA2B900A219A2 /* SensorLogTableViewController.swift */,
@@ -295,6 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E77706EA20CDDD1800F02270 /* PlaybackViewController.swift in Sources */,
 				E7F4C575204CA951005DFB7D /* Model.swift in Sources */,
 				E74075A4206FF52B0084DF86 /* SensorTagManager.swift in Sources */,
 				E7496F51208D732E00F30C9F /* DataAssetHelper.swift in Sources */,
@@ -313,6 +320,7 @@
 				E7F4C573204CA439005DFB7D /* UserInfo.swift in Sources */,
 				E7F0ECD61FCA1E0200F97EE9 /* MainViewController.swift in Sources */,
 				E7F0ECD41FCA1E0200F97EE9 /* AppDelegate.swift in Sources */,
+				E77706EC20CDDDC600F02270 /* ShapeTypeEnum.swift in Sources */,
 				E7A94FB52054759A00CE2B6F /* XyzCoordinate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -477,7 +485,7 @@
 				CURRENT_PROJECT_VERSION = 0.01a;
 				DEVELOPMENT_TEAM = 5EWMFFD324;
 				INFOPLIST_FILE = Hydr8/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_VERSION = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hydr8.Hydration-Testing";
@@ -497,7 +505,7 @@
 				CURRENT_PROJECT_VERSION = 0.01a;
 				DEVELOPMENT_TEAM = 5EWMFFD324;
 				INFOPLIST_FILE = Hydr8/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_VERSION = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hydr8.Hydration-Testing";

@@ -36,7 +36,7 @@ class UserInfo {
         }
         completion(userRecordID, nil)
     }
-    
+/*
     func userInfo(_ recordID: CKRecordID!, completion:(_ userInfo: CKUserIdentity?, _ error: NSError?)->()) {
         // Capability not yet implemented.
         completion(nil, nil)
@@ -60,6 +60,7 @@ class UserInfo {
             }
         }
     }
+ */
     
     func findContacts(_ completion: (_ userInfos:[AnyObject]?, _ error: NSError?)->()) {
         completion([CKRecordID](), nil)
