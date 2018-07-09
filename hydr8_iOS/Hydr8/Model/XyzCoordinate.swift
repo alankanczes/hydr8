@@ -11,20 +11,20 @@ import Foundation
 
 class XyzCoordinate: NSObject {
 
-    var xValue: Double;
-    var yValue: Double;
-    var zValue: Double;
+    var x: Double;
+    var y: Double;
+    var z: Double;
 
     override var description : String {
         get {
-            return "[\(xValue), \(yValue), \(zValue)]"
+            return "[\(x), \(y), \(z)]"
         }
     }
     
     init (x:Double, y:Double, z:Double) {
-        xValue = x;
-        yValue = y;
-        zValue = z;
+        self.x = x;
+        self.y = y;
+        self.z = z;
     }
     
 }

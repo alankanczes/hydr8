@@ -114,10 +114,17 @@ class SensorLogTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         
         Log.write("Segue: \(segue) \(String(describing: segue.identifier))")
-        if segue.identifier == "SensorLogCellToSensorLogDetailsSeque"{
+        if segue.identifier == "SensorLogCellToSensorLogDetailsSegue"{
             navigationItem.title = "Sensor Logs"
         }
         
+        
+        // Get the new view controller using segue.destinationViewController.
+        let playbackViewController = segue.destination as! PlaybackViewController
+        
+        // Pass the selected object to the new view controller.
+        playbackViewController.session = self.session
+
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -129,11 +136,14 @@ class SensorLogTableViewController: UITableViewController {
         var title = "No Sensor Log found for selected cell. How?!?"
         var message = "No data for this sensorlog"
         
-        let session = SessionManager.sharedManager.getSession(row: indexPath.row)
-        /* For popup
+        /* For popup - FIXME: Delete this stuff?
         title = "Session: " + session.name
         message = "Sensor logs: \(session.sensorLogs.count)"
+         */
         
+        let sensorLog = session?.getSensorLog(row: indexPath.row)
+        
+        /*
         for sensorLog in session.sensorLogs {
             message.append("\n\(sensorLog.key), cnt=\(sensorLog.value.rawMovementDataArray.count)")
         }

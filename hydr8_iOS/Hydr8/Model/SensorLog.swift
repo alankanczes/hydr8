@@ -13,10 +13,17 @@ enum RemoteSensorLog {
     //static let rawMovementDataArray = "rawMovementDataArray"
     static let deviceUuid = "DeviceUuid"
     static let sessionReference = "SessionReference"
+    
 }
 
 
 class SensorLog: NSObject {
+    
+    static let OFFSET: Int = 0
+    static let RECORD_ENTRY_COUNT: Int = 9
+    static let ENTRY_SIZE: Int = 2
+    static let RECORD_SIZE = RECORD_ENTRY_COUNT * ENTRY_SIZE
+
     
     // MARK: - Properties
     var remoteRecord: CKRecord!
@@ -165,6 +172,28 @@ class SensorLog: NSObject {
         get {
             return "\(deviceUuid), cnt=\(rawMovementDataArray.count)"
         }
+    }
+    
+    // Return the movement array at requested position - record number starting at 0
+    func getMovementRecord(atIndex: Int) -> SensorTagMovement? {
+        
+        let startPosition = SensorLog.OFFSET + SensorLog.RECORD_ENTRY_COUNT * atIndex
+        if startPosition >= self.rawMovementDataArray.count {
+            Log.write("No position data for sensorlLog.rawMovementDataArray atIndex: \(atIndex)", .debug)
+            return nil
+        }
+        let endPosition = SensorLog.OFFSET + SensorLog.RECORD_ENTRY_COUNT * (atIndex + 1)
+        if endPosition > self.rawMovementDataArray.count {
+            Log.write("CORRUPTED RECORD! Requested entry from \(startPosition) to \(endPosition) atIndex: \(atIndex) exceeds size of sensor array: \(self.rawMovementDataArray.count)", .error)
+            return nil
+        }
+        
+        // Uh, a little hokey, but may work
+        let arraySlice = self.rawMovementDataArray[startPosition..<endPosition]
+        let movementArray = Array(arraySlice)
+        let sensorTagMovementEntry = SensorTagMovement(data: movementArray)
+        return sensorTagMovementEntry
+    
     }
 
 }

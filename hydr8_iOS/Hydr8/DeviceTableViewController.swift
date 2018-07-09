@@ -122,7 +122,7 @@ class DeviceTableViewController: UITableViewController {
         
         Log.write("Segue: \(segue) \(String(describing: segue.identifier))")
         if segue.identifier == "Main"{
-            navigationItem.title = "Back to main"
+            navigationItem.title = "Back to main DTV"
         }
         
     }

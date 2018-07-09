@@ -20,6 +20,8 @@ class SessionPopupViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         sessionNameTextField.text = session?.name
+        sessionDetailsTextView.text = "Test"
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,6 +37,10 @@ class SessionPopupViewController: UIViewController {
         super.prepare(for: segue, sender: sender)
   
         Log.write("Segue: \(segue) \(String(describing: segue.identifier))")
+        if segue.identifier == "SessionDetailsToSensorLogsSegue"{
+            navigationItem.title = "Session Details"
+        }
+        
         // Get the new view controller using segue.destinationViewController.
         let sensorLogTableViewController = segue.destination as! SensorLogTableViewController
         

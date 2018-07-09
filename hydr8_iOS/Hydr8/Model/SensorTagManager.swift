@@ -42,7 +42,7 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
     var temperatureCharacteristic:CBCharacteristic?
     var movementCharacteristic:CBCharacteristic?
     var deviceInformationCharacteristic:CBCharacteristic?
-
+    
     // Initialize the central manager (shouldn't this be lazily done to prevent early device activation?
     // Or do you always want to immediately connect?
     override init() {
@@ -51,7 +51,7 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
                                           queue: nil)
     }
     
-     func printSensorTags() {
+    func printSensorTags() {
         print ("SensorTags: ")
         for (sensorTag) in items {
             Log.write("\tTag: \(sensorTag.peripheral.identifier.uuidString)")
@@ -66,7 +66,7 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
         }
         return nil;
     }
-
+    
     // Invoked when the central manager’s state is updated.
     public func centralManagerDidUpdateState(_ central: CBCentralManager) {
         var showAlert = true
@@ -253,7 +253,7 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
      Note that when a peripheral is disconnected, all of its services, characteristics, and characteristic descriptors are invalidated.
      */
     public func centralManager(  _ central: CBCentralManager,
-                          didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+                                 didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         Log.write("**** DISCONNECTED FROM DEVICE", .info)
         
         
@@ -345,7 +345,7 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
             return
         }
         
-        Log.write("Discovered characteristics for service: \(service.uuid).", .detail)
+        Log.write("Discovered characteristics for service: \(service.uuid).", .info)
         
         if let characteristics = service.characteristics {
             var enableValue:UInt16 = 0xFF
@@ -353,11 +353,11 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
             
             for characteristic in characteristics {
                 
-                Log.write("Characteristic: \(characteristic) value: \(String(describing: characteristic.value)))", .detail)
+                Log.write("Characteristic: \(characteristic) value: \(String(describing: characteristic.value)))", .info)
                 
                 // SET ALL PERIPHERALS TO NOTIFY!
                 sensorTag?.setNotifyValue(true, for: characteristic)
-                Log.write("Setting notify to true for \(characteristic.uuid.uuidString)", .detail)
+                Log.write("Setting notify to true for \(characteristic.uuid.uuidString)", .info)
                 
                 if (false && (characteristic.uuid.uuidString == SensorTag.SystemIdCharacteristicUUID)) {
                     if let value = characteristic.value {
@@ -377,20 +377,41 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
                 // Device Information Characteristic
                 if characteristic.uuid == CBUUID(string: SensorTag.DeviceInformationServiceUUID) {
                     // Read the Serial Number
-                    Log.write("Get the serial number from Device Information Service.", .debug)
+                    Log.write("Get the serial number from Device Information Service.", .info)
                     deviceInformationCharacteristic = characteristic
                 }
                 
                 // Movement Notification Characteristic
-                if characteristic.uuid == CBUUID(string: SensorTag.NotificationUUID) {
+                if characteristic.uuid == CBUUID(string: SensorTag.MovementNotificationUUID) {
                     // Enable the Movement Sensor notifications
                     Log.write("Enable the Movement notifications.", .info)
+
+                    enableValue = 0x0001
+                    enableBytes = NSData(bytes: &enableValue, length: MemoryLayout<UInt16>.size)
+                    sensorTag?.writeValue(enableBytes as Data, for: characteristic, type: .withResponse)
+
+                    // Save off the characteristic for later use / access
                     movementCharacteristic = characteristic
                 }
                 
-                // Movement Configuration Characteristic
+                /* Movement Configuration Characteristic
+                0    Gyroscope z axis enable
+                1    Gyroscope y axis enable
+                2    Gyroscope x axis enable
+                3    Accelerometer z axis enable
+                4    Accelerometer y axis enable
+                5    Accelerometer x axis enable
+                6    Magnetometer enable (all axes)
+                7    Wake-On-Motion Enable
+                8:9    Accelerometer range (0=2G, 1=4G, 2=8G, 3=16G)
+                10:15    Not used
+                 0 1 1 1   1 1 1 1 = 0x7f for 2g
+                 0 0 0 1  0 1 1 1   1 1 1 1 0x17f for 4g
+                */
                 if characteristic.uuid == CBUUID(string: SensorTag.MovementConfigUUID) {
-                    Log.write("Enable all of the movement sensors.", .info)
+                    enableValue = 0x017f
+                    enableBytes = NSData(bytes: &enableValue, length: MemoryLayout<UInt16>.size)
+                    Log.write("Enable all of the movement sensors, 2G, disable Wake-On-Motion (i.e. always send data)", .info)
                     sensorTag?.writeValue(enableBytes as Data, for: characteristic, type: .withResponse)
                 }
                 
@@ -398,7 +419,7 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
                 if characteristic.uuid == CBUUID(string: SensorTag.MovementPeriodUUID) {
                     enableValue = 0x01
                     enableBytes = NSData(bytes: &enableValue, length: MemoryLayout<UInt16>.size)
-                    Log.write("Set notification period to: \(enableValue) ", .info)
+                    Log.write("Set movement notification period to: \(enableValue) ", .info)
                     sensorTag?.writeValue(enableBytes as Data, for: characteristic, type: .withResponse)
                 }
             }
@@ -479,24 +500,32 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
         }
         
         let dataForRow = getRowForUuid(peripheral.identifier.uuidString)
-
+        
         sensorNameTextField?.text = "Device: \(dataForRow ?? 0) \(peripheral.identifier.uuidString)"
-
+        
         // extract the data from the characteristic's value property and display the value based on the characteristic type
         if let dataBytes = characteristic.value {
             if characteristic.uuid == CBUUID(string: SensorTag.TemperatureDataUUID) {
                 Log.write("Got Temp", .debug)
                 displayTemperature(data: dataBytes as NSData)
             } else if characteristic.uuid == CBUUID(string: SensorTag.MovementDataUUID) {
+                
                 Log.write("Got Movement", .debug)
-                displayMovement(data: dataBytes as NSData)
-                    // We'll get 18 bytes of data back, so we divide the byte count by two
-                    // because we're creating an array that holds 9 16-bit (two-byte) values
-                    let data = dataBytes as NSData
-                    let dataLength = data.length / MemoryLayout<UInt16>.size
-                    var dataArray = [Int16](repeating: 0, count:dataLength)
-                    data.getBytes(&dataArray, length: dataLength * MemoryLayout<Int16>.size)
+                
+                // We'll get 18 bytes of data back, so we divide the byte count by two
+                // because we're creating an array that holds 9 16-bit (two-byte) values
+                let data = dataBytes as NSData
+                let dataLength = data.length / MemoryLayout<UInt16>.size
+                var dataArray = [Int16](repeating: 0, count:dataLength)
+                data.getBytes(&dataArray, length: dataLength * MemoryLayout<Int16>.size)
                 SessionManager.sharedManager.recordMovement(deviceUuid: peripheral.identifier.uuidString, dataArray: dataArray)
+                
+                if let activeSession = SessionManager.sharedManager.getActiveSession() {
+                    if let sensorLog = activeSession.getSensorLog(row: 0) {
+                     displayReadingCount(count: sensorLog.rawMovementDataArray.count)
+                    }
+                }
+
             } else if characteristic.uuid == CBUUID(string: SensorTag.KeySensorDataUUID) {
                 Log.write("Got Key Press", .debug)
                 displayKeyPress(data: dataBytes as NSData)
@@ -506,7 +535,7 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
             }
         }
     }
-
+    
     func disconnectDevice(_ sensorTag:CBPeripheral?) {
         Log.write("*** Disconnecting device: \(String(describing: sensorTag))", .debug)
         
@@ -516,7 +545,7 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
         }
         SessionManager.sharedManager.saveSession()
     }
-
+    
     
     func displayTemperature(data:NSData) {
         // We'll get four bytes of data back, so we divide the byte count by two
@@ -581,6 +610,15 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
     }
     
     
+    func displayReadingCount(count: Int) {
+        if UIApplication.shared.applicationState == .active {
+            let message = "Observations: \(count / 9), bytes: \(String(describing: count))"
+            sensorValueTextField?.text = message
+            Log.write(message, .debug)
+        }
+    }
+    
+    
     func displayMovement(data:NSData) {
         // We'll get four bytes of data back, so we divide the byte count by two
         // because we're creating an array that holds two 16-bit (two-byte) values
@@ -589,9 +627,9 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
         data.getBytes(&dataArray, length: dataLength * MemoryLayout<Int16>.size)
         
         Log.write("Data: \(data), dataArray: \(dataArray)", .detail)
-
         
-        //The data consists of nine 16-bit signed values, one for each axis. The order in the data is Gyroscope, Accelerometer, Magnetomer. [0,1,2] Gyroscope; [3,4,5] Accelerometer; [6,7,8] Magnetometer
+        
+        //The data consists of nine 16-bit signed values, one for each axis. The order in the data is Gyroscope, Accelerometer, Magnetometer. [0,1,2] Gyroscope; [3,4,5] Accelerometer; [6,7,8] Magnetometer
         
         // Gyrometer
         self.movement = SensorTagMovement(data: dataArray)

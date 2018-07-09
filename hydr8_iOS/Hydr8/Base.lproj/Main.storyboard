@@ -99,7 +99,7 @@
                                                     <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="5SF-Ev-GII" kind="show" identifier="MainToSessionsSeque" id="K1m-7S-dko"/>
+                                                    <segue destination="5SF-Ev-GII" kind="show" identifier="MainToSessionsSegue" id="K1m-7S-dko"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="Disconnect Button" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tge-Tc-hHr">
@@ -301,7 +301,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="VIO-c8-2Du" kind="show" identifier="SessionCellToSessionDetailsSeque" id="Mpy-U4-VSN"/>
+                                    <segue destination="VIO-c8-2Du" kind="show" identifier="SessionCellToSessionDetailsSegue" id="Mpy-U4-VSN"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -346,18 +346,16 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I3j-6Q-GP8">
                                 <rect key="frame" x="35" y="61" width="345" height="615"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LLB-It-4Ji">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LLB-It-4Ji">
                                         <rect key="frame" x="20" y="107" width="305" height="267"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="459" id="Rdt-9v-E6s"/>
-                                        </constraints>
                                         <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Session Name" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cya-EK-cys">
-                                        <rect key="frame" x="20" y="62" width="305" height="30"/>
+                                        <rect key="frame" x="116" y="62" width="113" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -368,27 +366,29 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vgd-fh-s49">
-                                        <rect key="frame" x="89" y="451" width="167" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Sensor Logs"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vgd-fh-s49">
+                                        <rect key="frame" x="89" y="447" width="167" height="34"/>
+                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <size key="titleShadowOffset" width="1" height="1"/>
+                                        <state key="normal" title="Sensor Logs">
+                                            <color key="titleShadowColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <connections>
-                                            <segue destination="rhi-1V-liw" kind="show" identifier="SessionDetailsToSensorLogsSeque" id="tgv-Zs-UDw"/>
+                                            <segue destination="rhi-1V-liw" kind="show" identifier="SessionDetailsToSensorLogsSegue" id="tgv-Zs-UDw"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.51678679555121287" green="0.59550519376955569" blue="0.66666668653488159" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstItem="LLB-It-4Ji" firstAttribute="trailing" secondItem="cya-EK-cys" secondAttribute="trailing" id="2Ft-Xo-lRg"/>
-                                    <constraint firstItem="LLB-It-4Ji" firstAttribute="leading" secondItem="I3j-6Q-GP8" secondAttribute="leading" constant="20" id="8N5-pf-AWQ"/>
+                                    <constraint firstItem="Vgd-fh-s49" firstAttribute="leading" secondItem="I3j-6Q-GP8" secondAttribute="leading" constant="89" id="EkT-MY-mru"/>
                                     <constraint firstAttribute="width" constant="345" id="LSa-kA-vFk"/>
                                     <constraint firstAttribute="height" constant="615" id="RmT-gY-Ksl"/>
+                                    <constraint firstAttribute="trailing" secondItem="Vgd-fh-s49" secondAttribute="trailing" constant="89" id="VwT-6q-a22"/>
                                     <constraint firstItem="odc-Nc-PJQ" firstAttribute="centerX" secondItem="I3j-6Q-GP8" secondAttribute="centerX" id="W7E-1i-XL2"/>
-                                    <constraint firstItem="LLB-It-4Ji" firstAttribute="top" secondItem="cya-EK-cys" secondAttribute="bottom" constant="15" id="YP0-M0-AEc"/>
-                                    <constraint firstItem="LLB-It-4Ji" firstAttribute="leading" secondItem="cya-EK-cys" secondAttribute="leading" id="aFq-KM-O6R"/>
                                     <constraint firstItem="odc-Nc-PJQ" firstAttribute="top" secondItem="I3j-6Q-GP8" secondAttribute="top" constant="25" id="bOT-k8-Emk"/>
                                     <constraint firstItem="cya-EK-cys" firstAttribute="top" secondItem="odc-Nc-PJQ" secondAttribute="bottom" constant="16" id="i2e-EM-dpw"/>
                                     <constraint firstItem="cya-EK-cys" firstAttribute="centerX" secondItem="I3j-6Q-GP8" secondAttribute="centerX" id="le6-tR-ghp"/>
+                                    <constraint firstAttribute="bottom" secondItem="Vgd-fh-s49" secondAttribute="bottom" constant="134" id="qgM-ag-T1v" userLabel="Sensor Logs.bottom = bottom - 5"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -441,7 +441,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="veG-0p-akW" kind="show" id="pbI-BO-1oR"/>
+                                    <segue destination="veG-0p-akW" kind="show" identifier="SensorLogCellToSensorLogDetailsSegue" id="pbI-BO-1oR"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

@@ -51,11 +51,16 @@
  */
 
 
-enum AccelerometerRange: Int {
-    case g2 = 0, g4, g8, g16
+import Foundation
+
+
+enum Gforce: Double {
+    case g2 = 2.0
+    case g4 = 4.0
+    case g8 = 8.0
+    case g16 = 16.0
 }
 
-import Foundation
 
 class SensorTagMovement: NSObject {
     
@@ -63,18 +68,19 @@ class SensorTagMovement: NSObject {
     static var ACCELEROMETER_OFFSET = 1 * 6
     static var MAGNOMETER_OFFSET = 2 * 6
 
-    var gyroscopeValue: XyzCoordinate
-    var accelerometerValue: XyzCoordinate
-    var magnometerValue: XyzCoordinate
+    let gyroscopeValue: XyzCoordinate
+    let accelerometerValue: XyzCoordinate
+    let magnetometerValue: XyzCoordinate
 
     override var description : String {
         get {
-            return "G\(gyroscopeValue) A\(accelerometerValue) M\(magnometerValue)"
+            return "G\(String(describing: gyroscopeValue)) A\(String(describing: accelerometerValue)) M\(String(describing: magnetometerValue))"
         }
     }
     
     init (data: [Int16]) {
-        //Log.write("Array length: \(data.count)")
+        //super.init()
+        //Log.write("SensorTagMovement rawDataArray length: \(data.count)", .detail)
         
         var x: Double
         var y: Double
@@ -83,24 +89,22 @@ class SensorTagMovement: NSObject {
         x = (Double(data[SensorTagMovement.GYRO_OFFSET+0]) / 32768.0) * 255
         y = (Double(data[SensorTagMovement.GYRO_OFFSET+1]) / 32768.0) * 255
         z = (Double(data[SensorTagMovement.GYRO_OFFSET+2])  / 32768.0) * 255
-        
         gyroscopeValue = XyzCoordinate(x: x, y: y, z: z)
 
-        x = (Double(data[SensorTagMovement.ACCELEROMETER_OFFSET+0]) / 32768.0) * 8
-        y = (Double(data[SensorTagMovement.ACCELEROMETER_OFFSET+1]) / 32768.0) * 8
-        z = (Double(data[SensorTagMovement.ACCELEROMETER_OFFSET+2]) / 32768.0) * 8
-
+        // Acceleration = (Raw data value) / (32768 / gForce)
+        x = SensorTagMovement.sensorMpu9250AccConvert(gForce: .g2, rawData: data[SensorTagMovement.ACCELEROMETER_OFFSET+0])
+        y = SensorTagMovement.sensorMpu9250AccConvert(gForce: .g2, rawData: data[SensorTagMovement.ACCELEROMETER_OFFSET+1])
+        z = SensorTagMovement.sensorMpu9250AccConvert(gForce: .g2, rawData: data[SensorTagMovement.ACCELEROMETER_OFFSET+2])
         accelerometerValue = XyzCoordinate(x: x, y: y, z: z)
 
         x = (Double(data[SensorTagMovement.ACCELEROMETER_OFFSET+0]) / 32768) * 4912
         y = (Double(data[SensorTagMovement.ACCELEROMETER_OFFSET+1]) / 32768) * 4912
         z = (Double(data[SensorTagMovement.ACCELEROMETER_OFFSET+2]) / 32768) * 4912
-
-        magnometerValue = XyzCoordinate(x: x, y: y, z: z)
+        magnetometerValue = XyzCoordinate(x: x, y: y, z: z)
 
      }
     
-    func sensorMpu9250GyroConvert(data: Int16) -> Double
+    static func sensorMpu9250GyroConvert(data: Int16) -> Double
     {
         //-- calculate rotation, unit deg/s, range -250, +250
         return (Double(data) * 1.0) / (65536.0 / 500.0);
@@ -109,24 +113,10 @@ class SensorTagMovement: NSObject {
     /*
         Accelerometer raw data make up bytes 6-11 of the data from the movement service, in the order X, Y, Z axis. Data from each axis consists of two bytes, encoded as a signed integer. For conversion from accelerometer raw data to Gravity (G), use the algorithm below on each the three 16-bit values in the incoming data, one for each axis.
     */
-    func sensorMpu9250AccConvert(accelerometerRange: AccelerometerRange, rawData: Int16) -> Double
+    static func sensorMpu9250AccConvert(gForce: Gforce, rawData: Int16) -> Double
     {
-        var v: Double;
         
-        switch accelerometerRange {
-        case .g2:
-            //-- calculate acceleration, unit G, range -2, +2
-            v = (Double(rawData) * 1.0) / (32768.0/2);
-        case .g4:
-            //-- calculate acceleration, unit G, range -4, +4
-            v = (Double(rawData) * 1.0) / (32768.0/4);
-        case .g8:
-            //-- calculate acceleration, unit G, range -8, +8
-            v = (Double(rawData) * 1.0) / (32768.0/8);
-        case .g16:
-            //-- calculate acceleration, unit G, range -16, +16
-            v = (Double(rawData) * 1.0) / (32768.0/16);
-        }
+        let v = (Double(rawData) * 1.0) / (32768.0/gForce.rawValue);
         
         return v;
     }
@@ -135,7 +125,7 @@ class SensorTagMovement: NSObject {
     /*
      Magnetometer raw data make up bytes 12-17 of the data from the movement service, in the order X, Y, Z axis. Data from each axis consists of two bytes, encoded as a signed integer. The conversion is done in the SensorTag firmware so there is no calculation involved apart from changing the integer to a float if required. The measurement unit is uT (micro Tesla).
      */
-    func sensorMpu9250MagConvert(data: Int16) -> Double
+    static func sensorMpu9250MagConvert(data: Int16) -> Double
     {
         //-- calculate magnetism, unit uT, range +-4900
         return 1.0 * Double(data);

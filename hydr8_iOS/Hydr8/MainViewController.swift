@@ -82,8 +82,8 @@ class MainViewController: UIViewController, UITextViewDelegate {
         // Pass the selected object to the new view controller.
         
         Log.write("Segue: \(segue) \(String(describing: segue.identifier))")
-        if segue.identifier == "MainToSessionsSeque"{
-            navigationItem.title = "Back to main" // Not working!
+        if segue.identifier == "MainToSessionsSegue"{
+            navigationItem.title = "Back to main MVC" // Not working!
             
             // Get the new view controller using segue.destinationViewController.
             //self.sessionPopupViewController = segue.destination as? SessionPopupViewController

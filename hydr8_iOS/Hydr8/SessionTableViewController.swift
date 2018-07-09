@@ -131,11 +131,11 @@ class SessionTableViewController: UITableViewController {
         
         Log.write("Segue: \(segue) \(String(describing: segue.identifier))")
         if segue.identifier == "Main"{
-            navigationItem.title = "Back to main"
+            navigationItem.title = "Back to main STV"
         }
         
-        if segue.identifier == "SessionCellToSessionDetailsSeque"{
-            navigationItem.title = "Sensor Details"
+        if segue.identifier == "SessionCellToSessionDetailsSegue"{
+            navigationItem.title = "Session List"
             
             // Get the new view controller using segue.destinationViewController.
             self.sessionPopupViewController = segue.destination as? SessionPopupViewController

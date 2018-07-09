@@ -124,7 +124,7 @@ public class SessionManager: NSObject {
         }
     }
  
-    // Lookup the active session and record the movement, if there is one.
+    // Lookup the active session and record the movement, if there is one.  Array Size is currently 9 of Int16 (2 bytes)  This needs to be abstracted!
     func recordMovement(deviceUuid: String, dataArray: [Int16]) {
         if let session = getActiveSession() {
             session.recordMovement(deviceUuid: deviceUuid, dataArray:  dataArray)

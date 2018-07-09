@@ -57,7 +57,6 @@ class SensorTag: NSObject {
     // Adveristier Name for Device
     static let DeviceName = "CC2650 SensorTag"
     
-    static let NotificationUUID = "F0002902-0451-4000-B000-000000000000"
     
     // Primary
     //static let PrimaryServiceUUID = "F000AA80-0451-4000-B000-000000000000"
@@ -67,6 +66,8 @@ class SensorTag: NSObject {
     static let BatteryServiceUUID = "180F"
 
     // Movement
+    static let MovementNotificationUUID = "F0002902-0451-4000-B000-000000000000"
+
     static let MovementServiceUUID = "F000AA80-0451-4000-B000-000000000000"
     static let MovementDataUUID = "F000AA81-0451-4000-B000-000000000000"
     static let MovementConfigUUID = "F000AA82-0451-4000-B000-000000000000"
@@ -302,11 +303,12 @@ class SensorTag: NSObject {
     }
     
     // Get Accelerometer values
-    class func getAccelerometerData(value: NSData) -> [Double] {
+    class func getAccelerometerData(value: NSData, gValue: Int) -> [Double] {
+        let gDivisor:Double = Double(32768 / gValue)
         let dataFromSensor = dataToSignedBytes8(value: value)
-        let xVal = Double(dataFromSensor[0]) / 64
-        let yVal = Double(dataFromSensor[1]) / 64
-        let zVal = Double(dataFromSensor[2]) / 64 * -1
+        let xVal = Double(dataFromSensor[0]) / gDivisor
+        let yVal = Double(dataFromSensor[1]) / gDivisor
+        let zVal = Double(dataFromSensor[2]) / gDivisor
         return [xVal, yVal, zVal]
     }
     
@@ -337,6 +339,13 @@ class SensorTag: NSObject {
     
     override public var description: String {
         return "Device: \(self.peripheral.identifier.uuidString)"
+    }
+    
+    enum Gforce :Int{
+        case g2
+        case g4
+        case g8
+        case g16
     }
 
 }

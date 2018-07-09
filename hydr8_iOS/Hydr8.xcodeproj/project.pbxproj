@@ -15,6 +15,7 @@
 		E74075A4206FF52B0084DF86 /* SensorTagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74075A3206FF52B0084DF86 /* SensorTagManager.swift */; };
 		E74075A620719D520084DF86 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74075A520719D520084DF86 /* Constants.swift */; };
 		E74075AD207980B30084DF86 /* SessionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74075AC207980B30084DF86 /* SessionTableViewController.swift */; };
+		E748759D20DEF3C9000DF5F0 /* SensorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E748759C20DEF3C9000DF5F0 /* SensorNode.swift */; };
 		E7496F4F208D2DA200F30C9F /* SessionPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7496F4E208D2DA200F30C9F /* SessionPopupViewController.swift */; };
 		E7496F51208D732E00F30C9F /* DataAssetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7496F50208D732E00F30C9F /* DataAssetHelper.swift */; };
 		E7594C5D20267CCE006C763A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7594C5C20267CCE006C763A /* Log.swift */; };
@@ -55,6 +56,7 @@
 		E74075A3206FF52B0084DF86 /* SensorTagManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTagManager.swift; sourceTree = "<group>"; };
 		E74075A520719D520084DF86 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E74075AC207980B30084DF86 /* SessionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTableViewController.swift; sourceTree = "<group>"; };
+		E748759C20DEF3C9000DF5F0 /* SensorNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorNode.swift; sourceTree = "<group>"; };
 		E7496F4E208D2DA200F30C9F /* SessionPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionPopupViewController.swift; sourceTree = "<group>"; };
 		E7496F50208D732E00F30C9F /* DataAssetHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAssetHelper.swift; sourceTree = "<group>"; };
 		E7594C5C20267CCE006C763A /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				E76ECB5A203B5899003D24CD /* Hydr8.entitlements */,
 				E7F0ECD31FCA1E0200F97EE9 /* AppDelegate.swift */,
 				E77706E920CDDD1700F02270 /* PlaybackViewController.swift */,
+				E748759C20DEF3C9000DF5F0 /* SensorNode.swift */,
 				E77706EB20CDDDC600F02270 /* ShapeTypeEnum.swift */,
 				E74075A1206FF1F30084DF86 /* DeviceTableViewController.swift */,
 				E74075AC207980B30084DF86 /* SessionTableViewController.swift */,
@@ -306,6 +309,7 @@
 				E74075A4206FF52B0084DF86 /* SensorTagManager.swift in Sources */,
 				E7496F51208D732E00F30C9F /* DataAssetHelper.swift in Sources */,
 				E7496F4F208D2DA200F30C9F /* SessionPopupViewController.swift in Sources */,
+				E748759D20DEF3C9000DF5F0 /* SensorNode.swift in Sources */,
 				E7F4C577204CAA90005DFB7D /* Session.swift in Sources */,
 				E767C1BF20BCA2BA00A219A2 /* SensorLogTableViewController.swift in Sources */,
 				E7A94FCA2055A36D00CE2B6F /* SensorTag.swift in Sources */,
