@@ -64,9 +64,9 @@ enum Gforce: Double {
 
 class SensorTagMovement: NSObject {
     
-    static var GYRO_OFFSET = 0 * 6
-    static var ACCELEROMETER_OFFSET = 1 * 6
-    static var MAGNOMETER_OFFSET = 2 * 6
+    static var GYRO_OFFSET = 3 * 0
+    static var ACCELEROMETER_OFFSET = 3 * 1
+    static var MAGNOMETER_OFFSET = 3 * 2
 
     let gyroscopeValue: XyzCoordinate
     let accelerometerValue: XyzCoordinate
@@ -80,7 +80,7 @@ class SensorTagMovement: NSObject {
     
     init (data: [Int16]) {
         //super.init()
-        //Log.write("SensorTagMovement rawDataArray length: \(data.count)", .detail)
+        Log.write("SensorTagMovement rawDataArray length: \(data.count)", .detail)
         
         var x: Double
         var y: Double
@@ -92,6 +92,14 @@ class SensorTagMovement: NSObject {
         gyroscopeValue = XyzCoordinate(x: x, y: y, z: z)
 
         // Acceleration = (Raw data value) / (32768 / gForce)
+        /*
+            
+        accPoint.x = (((float)((int16_t)((vals[6] & 0xff) | (((int16_t)vals[7] << 8) & 0xff00)))/ (float) 32768) * 8) * 1;
+        accPoint.y = (((float)((int16_t)((vals[8] & 0xff) | (((int16_t)vals[9] << 8) & 0xff00))) / (float) 32768) * 8) * 1;
+        accPoint.z = (((float)((int16_t)((vals[10] & 0xff) | (((int16_t)vals[11] << 8) & 0xff00)))/ (float) 32768) * 8) * 1;
+         */
+        
+        
         x = SensorTagMovement.sensorMpu9250AccConvert(gForce: .g2, rawData: data[SensorTagMovement.ACCELEROMETER_OFFSET+0])
         y = SensorTagMovement.sensorMpu9250AccConvert(gForce: .g2, rawData: data[SensorTagMovement.ACCELEROMETER_OFFSET+1])
         z = SensorTagMovement.sensorMpu9250AccConvert(gForce: .g2, rawData: data[SensorTagMovement.ACCELEROMETER_OFFSET+2])
@@ -116,8 +124,9 @@ class SensorTagMovement: NSObject {
     static func sensorMpu9250AccConvert(gForce: Gforce, rawData: Int16) -> Double
     {
         
-        let v = (Double(rawData) * 1.0) / (32768.0/gForce.rawValue);
-        
+        //let v = (Double(rawData) * 1.0) / (32768.0/gForce.rawValue);
+        let v = ((Double(rawData) / Double(32768)) * Double(8.0)) / gForce.rawValue;
+
         return v;
     }
     
