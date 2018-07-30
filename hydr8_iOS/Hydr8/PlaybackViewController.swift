@@ -35,9 +35,24 @@ enum SensorPosition {
     case rightFoot
 }
 
-struct SensorLogNode {
-    let scnNode: SCNNode
+class SCNNodeWithLog : SCNNode {
+    
     var sensorLog: SensorLog?
+
+    init(geometry: SCNGeometry, sensorLog: SensorLog?) {
+        super.init()
+        self.geometry = geometry
+        self.sensorLog = sensorLog
+    }
+    
+    init(geometry: SCNGeometry) {
+        super.init()
+        self.geometry = geometry
+    }
+    /* Xcode required this */
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 class PlaybackViewController: UIViewController {
@@ -52,7 +67,7 @@ class PlaybackViewController: UIViewController {
     var currentIndex = 0
     
     // array of String:SCNNode - String is sensorName
-    var sensorLogNodes: [SensorPosition:SensorLogNode] = [:]
+    var sensorLogNodes: [SensorPosition:SCNNodeWithLog] = [:]
 
     var session: Session?
 
@@ -122,12 +137,12 @@ class PlaybackViewController: UIViewController {
             //sensorLogNode.scnNode.physicsBody?.applyForce(force, at: position, asImpulse: true)
             //sensorLogNode.scnNode.physicsBody?.applyForce(force, asImpulse: true)
             
-            let oldPosition = sensorLogNode.scnNode.position
+            let oldPosition = sensorLogNode.position
             let newPosition = SCNVector3(x: oldPosition.x + force.x, y: oldPosition.y + force.y, z: oldPosition.z + force.z)
 
             /* let newPosition = SCNVector3(x: Float((sensorMovementRecord.accelerometerValue.x)), y: Float((sensorMovementRecord.accelerometerValue.y)), z: Float((sensorMovementRecord.accelerometerValue.z))) */
             
-            sensorLogNode.scnNode.position = newPosition
+            sensorLogNode.position = newPosition
         }
 
         currentIndex = currentIndex + 1
@@ -135,59 +150,59 @@ class PlaybackViewController: UIViewController {
     }
     
     func addBody(){
-        var geometryNode: SCNNode
+        var geometryNode: SCNNodeWithLog
         
         // Set up geometry for sensor
         var geometry:SCNGeometry
         geometry = SCNCapsule(capRadius: 0.05, height: 0.2)
         
         // Left Leg
-        geometryNode = SCNNode(geometry: geometry)
+        geometryNode = SCNNodeWithLog(geometry: geometry, sensorLog: session?.getSensorLog(row: 0))
         geometryNode.position = SCNVector3(x: -0.5, y:-0.5, z:0)
         geometryNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         scnScene.rootNode.addChildNode(geometryNode)
-        sensorLogNodes[.leftFoot] = SensorLogNode(scnNode: geometryNode, sensorLog: session?.getSensorLog(row: 0))
+        sensorLogNodes[.leftFoot] = geometryNode
         Log.write("Added \(SensorPosition.leftFoot)")
         
         // Right Leg
-        geometryNode = SCNNode(geometry: geometry)
+        geometryNode = SCNNodeWithLog(geometry: geometry, sensorLog: session?.getSensorLog(row: 1))
         geometryNode.position = SCNVector3(x: 0.5, y:-0.5, z:0)
         geometryNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         scnScene.rootNode.addChildNode(geometryNode)
-        sensorLogNodes[.rightFoot] = SensorLogNode(scnNode: geometryNode, sensorLog: session?.getSensorLog(row: 1))
+        sensorLogNodes[.rightFoot] = geometryNode
         Log.write("Added \(SensorPosition.rightFoot)")
 
         // Left Arm
-        geometryNode = SCNNode(geometry: geometry)
+        geometryNode = SCNNodeWithLog(geometry: geometry, sensorLog: nil)
         geometryNode.position = SCNVector3(x: -0.5, y:0.5, z:0)
         geometryNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         scnScene.rootNode.addChildNode(geometryNode)
-        sensorLogNodes[.leftHand] = SensorLogNode(scnNode: geometryNode, sensorLog: nil)
+        sensorLogNodes[.leftHand] = geometryNode
         Log.write("Added \(SensorPosition.leftHand)")
 
         
         // Right Arm
-        geometryNode = SCNNode(geometry: geometry)
+        geometryNode = SCNNodeWithLog(geometry: geometry, sensorLog: nil)
         geometryNode.position = SCNVector3(x: 0.5, y:0.5, z:0)
         geometryNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         scnScene.rootNode.addChildNode(geometryNode)
-        sensorLogNodes[.rightHand] = SensorLogNode(scnNode: geometryNode, sensorLog: nil)
+        sensorLogNodes[.rightHand] = geometryNode
         Log.write("Added \(SensorPosition.rightHand)")
 
         // Chest
-        geometryNode = SCNNode(geometry: geometry)
+        geometryNode = SCNNodeWithLog(geometry: geometry, sensorLog: nil)
         geometryNode.position = SCNVector3(x: 0.0, y:0.5, z:0)
         geometryNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         scnScene.rootNode.addChildNode(geometryNode)
-        sensorLogNodes[.chest] = SensorLogNode(scnNode: geometryNode, sensorLog: nil)
+        sensorLogNodes[.chest] = geometryNode
         Log.write("Added \(SensorPosition.chest)")
 
         // Head
-        geometryNode = SCNNode(geometry: geometry)
+        geometryNode = SCNNodeWithLog(geometry: geometry, sensorLog: nil)
         geometryNode.position = SCNVector3(x: 0.0, y:1.0, z:0)
         geometryNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         scnScene.rootNode.addChildNode(geometryNode)
-        sensorLogNodes[.head] = SensorLogNode(scnNode: geometryNode, sensorLog: nil)
+        sensorLogNodes[.head] = geometryNode
         Log.write("Added \(SensorPosition.head)")
 
     }
