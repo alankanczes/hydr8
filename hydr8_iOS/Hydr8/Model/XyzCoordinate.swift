@@ -10,11 +10,11 @@ import Foundation
 
 
 class XyzCoordinate: NSObject {
-
+    
     var x: Double;
     var y: Double;
     var z: Double;
-
+    
     override var description : String {
         get {
             return "[\(x), \(y), \(z)]"
@@ -25,6 +25,16 @@ class XyzCoordinate: NSObject {
         self.x = x;
         self.y = y;
         self.z = z;
+    }
+    
+    func getTabDelimitedValues() -> String {
+        var message = ""
+
+        message += "\(x),"
+        message += "\t\(y),"
+        message += "\t\(z)"
+        
+        return message
     }
     
 }

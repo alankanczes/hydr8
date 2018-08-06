@@ -129,8 +129,12 @@ class PlaybackViewController: UIViewController {
                 Log.write("No movement record for sensorPosition: \(sensorPosition) for index: \(currentIndex) ", .detail)
                 continue
             }
-            Log.write("Changing sensorPosition: \(sensorPosition) for index: \(currentIndex) - x: \(String(describing: sensorMovementRecord.accelerometerValue.x)), y: \(sensorMovementRecord.accelerometerValue.y), z: \(sensorMovementRecord.accelerometerValue.z) ", .info)
-
+            
+            //Log.write("Changing sensorPosition: \(sensorPosition) for index: \(currentIndex) - x: \(String(describing: sensorMovementRecord.accelerometerValue.x)), y: \(sensorMovementRecord.accelerometerValue.y), z: \(sensorMovementRecord.accelerometerValue.z) ", .info)
+            
+            Log.write("ROW: \(currentIndex)"
+                + ",\t" + sensorMovementRecord.getTabDelimitedDataValues(withHeader: true)
+                , .info)
             
             let force = SCNVector3(x: Float((sensorMovementRecord.accelerometerValue.x)), y: Float((sensorMovementRecord.accelerometerValue.y)), z: Float((sensorMovementRecord.accelerometerValue.z)))
             //let sensorPosition = SCNVector3(x: 0.05, y: 0.05, z: 0.05)
