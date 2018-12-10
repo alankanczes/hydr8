@@ -1,22 +1,23 @@
 //
-//  SensorTagManager.swift
+//  MbientManager.swift
+//  YogaTrack
 //
-//  Manage the Sensor Tag devices that we are connected to, and keep a static reference as a singleton
-//
-//  Created by Alan Kanczes on 3/31/18.
+//  Created by Alan Kanczes on 12/9/18.
 //  Copyright © 2018 Alan Kanczes. All rights reserved.
 //
-
 
 import Foundation
 import CoreBluetooth
 import UIKit
 
-public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
+import MetaWear
+import MetaWearCpp
+
+public class MbientManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
-    static let sharedManager: SensorTagManager = SensorTagManager()
+    static let sharedManager: MbientManager = MbientManager()
     
-    // HACKY Related view controllers 
+    // HACKY Related view controllers
     var deviceTableViewController: UITableViewController?
     var sessionTableViewController: UITableViewController?
     var currentUIController: UIViewController?
@@ -143,6 +144,29 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
             Log.write("> Searching", .debug)
             _ = Timer(timeInterval: timerScanInterval, target: self, selector: #selector(pauseScan), userInfo: nil, repeats: false)
             centralManager.scanForPeripherals(withServices: nil, options: nil)
+            
+            MetaWearScanner.shared.startScan(allowDuplicates: true) { (device) in
+                // We found a MetaWear board, see if it is close
+                if device.rssi.intValue > -50 {
+                    // Hooray! We found a MetaWear board, so stop scanning for more
+                    MetaWearScanner.shared.stopScan()
+                    // Connect to the board we found
+                    device.connectAndSetup().continueWith { t in
+                        if let error = t.error {
+                            // Sorry we couldn't connect
+                            print(error)
+                        } else {
+                            // Hooray! We connected to a MetaWear board, so flash its LED!
+                            var pattern = MblMwLedPattern()
+                            mbl_mw_led_load_preset_pattern(&pattern, MBL_MW_LED_PRESET_PULSE)
+                            mbl_mw_led_stop_and_clear(device.board)
+                            mbl_mw_led_write_pattern(device.board, &pattern, MBL_MW_LED_COLOR_GREEN)
+                            mbl_mw_led_play(device.board)
+                        }
+                    }
+                }
+            }
+
             
         } else {
             //disconnectButton.isEnabled = true
@@ -385,29 +409,29 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
                 if characteristic.uuid == CBUUID(string: SensorTag.MovementNotificationUUID) {
                     // Enable the Movement Sensor notifications
                     Log.write("Enable the Movement notifications.", .info)
-
+                    
                     enableValue = 0x0001
                     enableBytes = NSData(bytes: &enableValue, length: MemoryLayout<UInt16>.size)
                     sensorTag?.writeValue(enableBytes as Data, for: characteristic, type: .withResponse)
-
+                    
                     // Save off the characteristic for later use / access
                     movementCharacteristic = characteristic
                 }
                 
                 /* Movement Configuration Characteristic
-                0    Gyroscope z axis enable
-                1    Gyroscope y axis enable
-                2    Gyroscope x axis enable
-                3    Accelerometer z axis enable
-                4    Accelerometer y axis enable
-                5    Accelerometer x axis enable
-                6    Magnetometer enable (all axes)
-                7    Wake-On-Motion Enable
-                8:9    Accelerometer range (0=2G, 1=4G, 2=8G, 3=16G)
-                10:15    Not used
+                 0    Gyroscope z axis enable
+                 1    Gyroscope y axis enable
+                 2    Gyroscope x axis enable
+                 3    Accelerometer z axis enable
+                 4    Accelerometer y axis enable
+                 5    Accelerometer x axis enable
+                 6    Magnetometer enable (all axes)
+                 7    Wake-On-Motion Enable
+                 8:9    Accelerometer range (0=2G, 1=4G, 2=8G, 3=16G)
+                 10:15    Not used
                  0 1 1 1   1 1 1 1 = 0x7f for 2g
                  0 0 0 1  0 1 1 1   1 1 1 1 0x17f for 4g
-                */
+                 */
                 if characteristic.uuid == CBUUID(string: SensorTag.MovementConfigUUID) {
                     enableValue = 0x017f
                     enableBytes = NSData(bytes: &enableValue, length: MemoryLayout<UInt16>.size)
@@ -524,10 +548,10 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
                 
                 if let activeSession = SessionManager.sharedManager.getActiveSession() {
                     if let sensorLog = activeSession.getSensorLog(row: 0) {
-                     displayReadingCount(count: sensorLog.rawMovementDataArray.count)
+                        displayReadingCount(count: sensorLog.rawMovementDataArray.count)
                     }
                 }
-
+                
             } else if characteristic.uuid == CBUUID(string: SensorTag.KeySensorDataUUID) {
                 Log.write("Got Key Press", .debug)
                 displayKeyPress(data: dataBytes as NSData)
@@ -651,12 +675,3 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
     
 }
 
-
-
-extension Data {
-    func copyBytes<T>(as _: T.Type) -> [T] {
-        return withUnsafeBytes { (bytes: UnsafePointer<T>) in
-            Array(UnsafeBufferPointer(start: bytes, count: count / MemoryLayout<T>.stride))
-        }
-    }
-}

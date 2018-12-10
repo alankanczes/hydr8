@@ -170,7 +170,7 @@ class SensorLog: NSObject {
     
     override var description : String {
         get {
-            return "\(deviceUuid), cnt=\(rawMovementDataArray.count)"
+            return "\(deviceUuid ?? "noDeviceUuid1"), cnt=\(rawMovementDataArray.count)"
         }
     }
     
@@ -194,6 +194,9 @@ class SensorLog: NSObject {
         let sensorTagMovementEntry = SensorTagMovement(data: movementArray)
         return sensorTagMovementEntry
     
+        
+        
+        
     }
 
 }

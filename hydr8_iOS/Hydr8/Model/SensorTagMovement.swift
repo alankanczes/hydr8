@@ -112,19 +112,18 @@ class SensorTagMovement: NSObject {
         
     }
     
-    func getTabDelimitedDataValues(withHeader: Bool) -> String{
+    func getDelimitedDataValues(_ withHeader: Bool, _ delimiter: String) -> String{
         
         var message = ""
-            if (withHeader) {
-                message += "A(x y z) G(x y z) M(x y z),\t"
-            }
-        message += accelerometerValue.getTabDelimitedValues()
-        message += ",\t" + gyroscopeValue.getTabDelimitedValues()
-        message += ",\t" + magnetometerValue.getTabDelimitedValues()
+        if (withHeader) {
+            message += "A(x y z) G(x y z) M(x y z)" + delimiter
+        }
+        message += accelerometerValue.getDelimitedValues(delimiter)
+        message += delimiter + gyroscopeValue.getDelimitedValues(delimiter)
+        message += delimiter + magnetometerValue.getDelimitedValues(delimiter)
         
         return message
     }
-    
     
     static func sensorMpu9250GyroConvert(data: Int16) -> Double
     {

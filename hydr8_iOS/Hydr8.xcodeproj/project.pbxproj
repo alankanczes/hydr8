@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24AEA08931E1A08937E7179C /* Pods_YogaTrack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18145B9048349C9936088E8 /* Pods_YogaTrack.framework */; };
 		E70E68E6207984ED00BF883F /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E68E5207984ED00BF883F /* SessionManager.swift */; };
 		E70E68E8207AA56700BF883F /* SensorLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E68E7207AA56700BF883F /* SensorLog.swift */; };
 		E720A31B1FF756F30006F399 /* Hydr8BandDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = E720A31A1FF756F30006F399 /* Hydr8BandDevice.swift */; };
@@ -23,9 +24,14 @@
 		E76ECB5C203B589D003D24CD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76ECB5B203B589D003D24CD /* CloudKit.framework */; };
 		E77706EA20CDDD1800F02270 /* PlaybackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77706E920CDDD1700F02270 /* PlaybackViewController.swift */; };
 		E77706EC20CDDDC600F02270 /* ShapeTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77706EB20CDDDC600F02270 /* ShapeTypeEnum.swift */; };
+		E7948073217D574500CDD112 /* MadgwickAHRS.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7948072217D574500CDD112 /* MadgwickAHRS.swift */; };
 		E7A94FB3205473FC00CE2B6F /* SensorTagMovement.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A94FB2205473FC00CE2B6F /* SensorTagMovement.swift */; };
 		E7A94FB52054759A00CE2B6F /* XyzCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A94FB42054759A00CE2B6F /* XyzCoordinate.swift */; };
 		E7A94FCA2055A36D00CE2B6F /* SensorTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A94FC92055A36D00CE2B6F /* SensorTag.swift */; };
+		E7E18C3721BE1BFB0044739D /* MbientManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E18C3621BE1BFB0044739D /* MbientManager.swift */; };
+		E7E18C3921BE1CA80044739D /* Mbient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E18C3821BE1CA80044739D /* Mbient.swift */; };
+		E7E6A184214DA2C1007D4ECF /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = E7E6A183214DA2C1007D4ECF /* Cartfile */; };
+		E7E6A196214DA66A007D4ECF /* MadgwickAHRS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E6A195214DA66A007D4ECF /* MadgwickAHRS.framework */; };
 		E7F0ECD41FCA1E0200F97EE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F0ECD31FCA1E0200F97EE9 /* AppDelegate.swift */; };
 		E7F0ECD61FCA1E0200F97EE9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F0ECD51FCA1E0200F97EE9 /* MainViewController.swift */; };
 		E7F0ECD91FCA1E0200F97EE9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7F0ECD71FCA1E0200F97EE9 /* Main.storyboard */; };
@@ -48,6 +54,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		66660A48C576A6194153E82B /* Pods-YogaTrack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogaTrack.release.xcconfig"; path = "Pods/Target Support Files/Pods-YogaTrack/Pods-YogaTrack.release.xcconfig"; sourceTree = "<group>"; };
+		76EA36D1A6AD09FD0A5ECBF4 /* Pods-YogaTrack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogaTrack.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YogaTrack/Pods-YogaTrack.debug.xcconfig"; sourceTree = "<group>"; };
+		D18145B9048349C9936088E8 /* Pods_YogaTrack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YogaTrack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E70E68E5207984ED00BF883F /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		E70E68E7207AA56700BF883F /* SensorLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorLog.swift; sourceTree = "<group>"; };
 		E720A31A1FF756F30006F399 /* Hydr8BandDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hydr8BandDevice.swift; sourceTree = "<group>"; };
@@ -65,10 +74,15 @@
 		E76ECB5B203B589D003D24CD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		E77706E920CDDD1700F02270 /* PlaybackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackViewController.swift; sourceTree = "<group>"; };
 		E77706EB20CDDDC600F02270 /* ShapeTypeEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeTypeEnum.swift; sourceTree = "<group>"; };
+		E7948072217D574500CDD112 /* MadgwickAHRS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MadgwickAHRS.swift; sourceTree = "<group>"; };
 		E7A94FB2205473FC00CE2B6F /* SensorTagMovement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTagMovement.swift; sourceTree = "<group>"; };
 		E7A94FB42054759A00CE2B6F /* XyzCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XyzCoordinate.swift; sourceTree = "<group>"; };
 		E7A94FC92055A36D00CE2B6F /* SensorTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTag.swift; sourceTree = "<group>"; };
-		E7F0ECD01FCA1E0200F97EE9 /* Hydr8.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hydr8.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7E18C3621BE1BFB0044739D /* MbientManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MbientManager.swift; sourceTree = "<group>"; };
+		E7E18C3821BE1CA80044739D /* Mbient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mbient.swift; sourceTree = "<group>"; };
+		E7E6A183214DA2C1007D4ECF /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		E7E6A195214DA66A007D4ECF /* MadgwickAHRS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MadgwickAHRS.framework; path = Carthage/Build/iOS/MadgwickAHRS.framework; sourceTree = "<group>"; };
+		E7F0ECD01FCA1E0200F97EE9 /* YogaTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YogaTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7F0ECD31FCA1E0200F97EE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E7F0ECD51FCA1E0200F97EE9 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E7F0ECD81FCA1E0200F97EE9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -88,8 +102,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7E6A196214DA66A007D4ECF /* MadgwickAHRS.framework in Frameworks */,
 				E73412051FF442E2001ACF83 /* CoreBluetooth.framework in Frameworks */,
 				E76ECB5C203B589D003D24CD /* CloudKit.framework in Frameworks */,
+				24AEA08931E1A08937E7179C /* Pods_YogaTrack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,11 +119,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C89A551D6C26B13789258A4C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				76EA36D1A6AD09FD0A5ECBF4 /* Pods-YogaTrack.debug.xcconfig */,
+				66660A48C576A6194153E82B /* Pods-YogaTrack.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		E73412031FF442E2001ACF83 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E7E6A195214DA66A007D4ECF /* MadgwickAHRS.framework */,
 				E76ECB5B203B589D003D24CD /* CloudKit.framework */,
 				E73412041FF442E2001ACF83 /* CoreBluetooth.framework */,
+				D18145B9048349C9936088E8 /* Pods_YogaTrack.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -122,18 +149,20 @@
 		E7F0ECC71FCA1E0200F97EE9 = {
 			isa = PBXGroup;
 			children = (
+				E7E6A183214DA2C1007D4ECF /* Cartfile */,
 				E74075A92071B8180084DF86 /* Images */,
 				E7F0ECD21FCA1E0200F97EE9 /* Hydr8 */,
 				E7F0ECE71FCA1E0200F97EE9 /* Hydr8Tests */,
 				E7F0ECD11FCA1E0200F97EE9 /* Products */,
 				E73412031FF442E2001ACF83 /* Frameworks */,
+				C89A551D6C26B13789258A4C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
 		E7F0ECD11FCA1E0200F97EE9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E7F0ECD01FCA1E0200F97EE9 /* Hydr8.app */,
+				E7F0ECD01FCA1E0200F97EE9 /* YogaTrack.app */,
 				E7F0ECE41FCA1E0200F97EE9 /* Hydr8Tests.xctest */,
 			);
 			name = Products;
@@ -183,9 +212,12 @@
 				E7A94FB2205473FC00CE2B6F /* SensorTagMovement.swift */,
 				E7A94FB42054759A00CE2B6F /* XyzCoordinate.swift */,
 				E7A94FC92055A36D00CE2B6F /* SensorTag.swift */,
+				E7E18C3821BE1CA80044739D /* Mbient.swift */,
 				E74075A3206FF52B0084DF86 /* SensorTagManager.swift */,
+				E7E18C3621BE1BFB0044739D /* MbientManager.swift */,
 				E70E68E5207984ED00BF883F /* SessionManager.swift */,
 				E74075A520719D520084DF86 /* Constants.swift */,
+				E7948072217D574500CDD112 /* MadgwickAHRS.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -193,21 +225,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E7F0ECCF1FCA1E0200F97EE9 /* Hydr8 */ = {
+		E7F0ECCF1FCA1E0200F97EE9 /* YogaTrack */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E7F0ECED1FCA1E0200F97EE9 /* Build configuration list for PBXNativeTarget "Hydr8" */;
+			buildConfigurationList = E7F0ECED1FCA1E0200F97EE9 /* Build configuration list for PBXNativeTarget "YogaTrack" */;
 			buildPhases = (
+				F256F3CBA606938ED4849E97 /* [CP] Check Pods Manifest.lock */,
 				E7F0ECCC1FCA1E0200F97EE9 /* Sources */,
 				E7F0ECCD1FCA1E0200F97EE9 /* Frameworks */,
 				E7F0ECCE1FCA1E0200F97EE9 /* Resources */,
+				E7E6A197214DA70A007D4ECF /* ShellScript */,
+				87A3C84E9CA1375C3A648C54 /* [CP] Embed Pods Frameworks */,
+				9201748456E8B8CBBF4DCCE1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Hydr8;
+			name = YogaTrack;
 			productName = Hydr8;
-			productReference = E7F0ECD01FCA1E0200F97EE9 /* Hydr8.app */;
+			productReference = E7F0ECD01FCA1E0200F97EE9 /* YogaTrack.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E7F0ECE31FCA1E0200F97EE9 /* Hydr8Tests */ = {
@@ -273,7 +309,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E7F0ECCF1FCA1E0200F97EE9 /* Hydr8 */,
+				E7F0ECCF1FCA1E0200F97EE9 /* YogaTrack */,
 				E7F0ECE31FCA1E0200F97EE9 /* Hydr8Tests */,
 			);
 		};
@@ -286,6 +322,7 @@
 			files = (
 				E7F0ECDE1FCA1E0200F97EE9 /* LaunchScreen.storyboard in Resources */,
 				E7F0ECDB1FCA1E0200F97EE9 /* Assets.xcassets in Resources */,
+				E7E6A184214DA2C1007D4ECF /* Cartfile in Resources */,
 				E7F0ECD91FCA1E0200F97EE9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,6 +336,80 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		87A3C84E9CA1375C3A648C54 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-YogaTrack/Pods-YogaTrack-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Bolts-Swift/BoltsSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/MetaWear/MetaWear.framework",
+				"${BUILT_PRODUCTS_DIR}/Zip/Zip.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BoltsSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MetaWear.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSDFULibrary.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YogaTrack/Pods-YogaTrack-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9201748456E8B8CBBF4DCCE1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YogaTrack/Pods-YogaTrack-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E7E6A197214DA70A007D4ECF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOs/MadgwickAHRS.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+		F256F3CBA606938ED4849E97 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YogaTrack-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E7F0ECCC1FCA1E0200F97EE9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -309,7 +420,9 @@
 				E74075A4206FF52B0084DF86 /* SensorTagManager.swift in Sources */,
 				E7496F51208D732E00F30C9F /* DataAssetHelper.swift in Sources */,
 				E7496F4F208D2DA200F30C9F /* SessionPopupViewController.swift in Sources */,
+				E7E18C3921BE1CA80044739D /* Mbient.swift in Sources */,
 				E748759D20DEF3C9000DF5F0 /* SensorNode.swift in Sources */,
+				E7948073217D574500CDD112 /* MadgwickAHRS.swift in Sources */,
 				E7F4C577204CAA90005DFB7D /* Session.swift in Sources */,
 				E767C1BF20BCA2BA00A219A2 /* SensorLogTableViewController.swift in Sources */,
 				E7A94FCA2055A36D00CE2B6F /* SensorTag.swift in Sources */,
@@ -319,6 +432,7 @@
 				E74075A2206FF1F30084DF86 /* DeviceTableViewController.swift in Sources */,
 				E74075A620719D520084DF86 /* Constants.swift in Sources */,
 				E70E68E6207984ED00BF883F /* SessionManager.swift in Sources */,
+				E7E18C3721BE1BFB0044739D /* MbientManager.swift in Sources */,
 				E74075AD207980B30084DF86 /* SessionTableViewController.swift in Sources */,
 				E7594C5D20267CCE006C763A /* Log.swift in Sources */,
 				E7F4C573204CA439005DFB7D /* UserInfo.swift in Sources */,
@@ -342,7 +456,7 @@
 /* Begin PBXTargetDependency section */
 		E7F0ECE61FCA1E0200F97EE9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E7F0ECCF1FCA1E0200F97EE9 /* Hydr8 */;
+			target = E7F0ECCF1FCA1E0200F97EE9 /* YogaTrack */;
 			targetProxy = E7F0ECE51FCA1E0200F97EE9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -482,12 +596,17 @@
 		};
 		E7F0ECEE1FCA1E0200F97EE9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 76EA36D1A6AD09FD0A5ECBF4 /* Pods-YogaTrack.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Hydr8/Hydr8.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0.01a;
 				DEVELOPMENT_TEAM = 5EWMFFD324;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Hydr8/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -502,12 +621,17 @@
 		};
 		E7F0ECEF1FCA1E0200F97EE9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 66660A48C576A6194153E82B /* Pods-YogaTrack.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Hydr8/Hydr8.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0.01a;
 				DEVELOPMENT_TEAM = 5EWMFFD324;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Hydr8/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -568,7 +692,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E7F0ECED1FCA1E0200F97EE9 /* Build configuration list for PBXNativeTarget "Hydr8" */ = {
+		E7F0ECED1FCA1E0200F97EE9 /* Build configuration list for PBXNativeTarget "YogaTrack" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E7F0ECEE1FCA1E0200F97EE9 /* Debug */,

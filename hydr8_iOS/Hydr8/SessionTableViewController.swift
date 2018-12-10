@@ -155,8 +155,8 @@ class SessionTableViewController: UITableViewController {
         
         let session = SessionManager.sharedManager.getSession(row: indexPath.row)
     
-        var title = "Session: " + session.name
-        var message = "Sensor logs: \(session.sensorLogs.count)"
+        //var title = "Session: " + session.name
+        //var message = "Sensor logs: \(session.sensorLogs.count)"
         
         
         // Pass the selected object to the new view controller.

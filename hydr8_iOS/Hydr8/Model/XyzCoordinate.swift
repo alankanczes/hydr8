@@ -27,12 +27,12 @@ class XyzCoordinate: NSObject {
         self.z = z;
     }
     
-    func getTabDelimitedValues() -> String {
+    func getDelimitedValues(_ delimiter: String) -> String {
         var message = ""
-
-        message += "\(x),"
-        message += "\t\(y),"
-        message += "\t\(z)"
+        
+        message += "\(x)" + delimiter
+        message += "\(y)" + delimiter
+        message += "\(z)"
         
         return message
     }

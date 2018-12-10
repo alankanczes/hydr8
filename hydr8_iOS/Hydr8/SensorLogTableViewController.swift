@@ -133,15 +133,15 @@ class SensorLogTableViewController: UITableViewController {
         //getting the current cell from the index path
         ///let currentCell = tableView.cellForRow(at: indexPath!)! as UITableViewCell
         
-        var title = "No Sensor Log found for selected cell. How?!?"
-        var message = "No data for this sensorlog"
+        //var title = "No Sensor Log found for selected cell. How?!?"
+        //var message = "No data for this sensorlog"
         
         /* For popup - FIXME: Delete this stuff?
         title = "Session: " + session.name
         message = "Sensor logs: \(session.sensorLogs.count)"
          */
         
-        let sensorLog = session?.getSensorLog(row: indexPath.row)
+        //let sensorLog = session?.getSensorLog(row: indexPath.row)
         
         /*
         for sensorLog in session.sensorLogs {
