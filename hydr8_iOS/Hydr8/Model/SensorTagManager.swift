@@ -207,6 +207,9 @@ public class SensorTagManager: NSObject, CBCentralManagerDelegate, CBPeripheralD
                 // Request a connection to the peripheral
                 centralManager.connect(sensorTag!, options: nil)
                 
+            } else if (peripheralName == Mbient.DeviceName) {
+                Log.write("MetaWear Device: \(peripheralName) FOUND! ADDING NOW!!!", .info)
+                pauseScan()
             } else {
                 Log.write("Ignoring non-standard device.", .debug)
             }
