@@ -6,6 +6,6 @@ target 'YogaTrack' do
   use_frameworks!
 
   # Pods for YogaTrack
-  pod "MetaWear", :subspecs => ['UI', 'AsyncUtils', 'Mocks', 'DFU']
+  pod 'MetaWear', :subspecs => ['UI', 'AsyncUtils', 'Mocks', 'DFU']
 
 end

@@ -38,7 +38,7 @@ class MainViewController: UIViewController, UITextViewDelegate {
         statusLogLabel.isUserInteractionEnabled = true
         
         // Setup Log
-        Log.setLog(statusLog:statusLog, showLogLevels: [.info, .warn, .error]);
+        Log.setLog(statusLog:statusLog, showLogLevels: [.info, .warn, .error, .debug]);
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.tapLogHeader))
         statusLogLabel.isUserInteractionEnabled = true

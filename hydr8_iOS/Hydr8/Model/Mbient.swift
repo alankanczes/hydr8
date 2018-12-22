@@ -55,8 +55,8 @@ import CoreBluetooth
 class Mbient: NSObject {
     
     // Adveristier Name for Device
-    static let DeviceName = "MbientLab"
-    
+    static let DeviceName = "MetaWear"
+    static let UUID = "EFB04547-926E-8778-B3A3-5C12F97BC311"
     
     // Primary
     //static let PrimaryServiceUUID = "F000AA80-0451-4000-B000-000000000000"
